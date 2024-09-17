@@ -1,0 +1,163 @@
+/*
+    1. TYPOGRAPHY SYSTEM
+
+    font sizes(px) 1 rem = 10px
+    10/12/14/16/20
+
+    font weighs:
+    Default:1
+
+    spacing Sytem(px)
+    2/3/4/6/7/8/9
+
+    2. colors
+    fonts: #555 #fff
+    Primary #4cff43 #00b6e7
+    Tints: #e6f8fd
+    Shades:
+    Accents:
+    Greys:
+    
+*/
+/* Header */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  /* font-size: 10px == 1 rem */
+  /* 10px /16px = 0.625 == 62,5%*/
+  font-size: 62.5%;
+}
+body {
+  font-family: sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  background: #fff;
+}
+.box1 {
+  width: auto;
+  height: 1rem;
+  background: #4cff43;
+}
+.main-nav-list {
+  list-style: none;
+  display: flex;
+  /* can use gap because of display:flex */
+  gap: 3.2rem;
+  align-items: center;
+}
+.main-nav-link:link,
+.main-nav-link:visited {
+  text-decoration: none;
+  color: #333;
+  font-weight: 300;
+  font-size: 1.5rem;
+  transition: all 0.5s;
+}
+.main-nav-link:hover,
+.main-nav-link:active {
+  color: #00b6e7;
+}
+/* cta == call to action */
+/* .nav-cta:link,
+.nav-cta:visited {
+  padding: 1.6rem 3.2rem;
+  border-radius: 1.5rem;
+} */
+.box2 {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 9.6rem;
+  padding: 0 48px;
+  background-color: #e6f8fd;
+  border-bottom: #555 solid 2px;
+}
+.box3 {
+  max-width: 150rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.box3-1 {
+  /* padding: 1%; */
+}
+.sectionBox3 {
+  background-color: #e6f8fd;
+  padding: 3rem 0;
+}
+.office-img {
+  width: 100%;
+}
+.topLogo {
+  width: 15rem;
+  height: 5rem;
+}
+.branding {
+  width: auto;
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 5rem;
+  margin-bottom: 3rem;
+  align-items: center;
+  color: #555;
+  gap: 9.6rem;
+}
+.branding-desc {
+  font-size: 1.5rem;
+  font-weight: 100;
+  line-height: 3rem;
+  /* color */
+  letter-spacing: -0.5px;
+  margin-bottom: 4rem;
+}
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  background-color: #5eff56;
+  font-size: 2rem;
+  padding: 1.6rem 3.2rem;
+  border-radius: 1.5rem;
+  text-decoration: none;
+  /* trick to change color when hover animation */
+  transition: all 1s;
+}
+.btn--full:link,
+.btn--full:visited {
+  background-color: #5eff56;
+  color: #fff;
+}
+.btn--full:hover,
+.btn--full:active {
+  background-color: #b3b3b3;
+  /* trick to add border inside */
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.btn--outline:link,
+.btn--outline:visited {
+  background-color: #fff;
+  color: #555;
+}
+.btn--outline:hover,
+.btn--outline:active {
+  background-color: #b3b3b3;
+  box-shadow: inset 0 0 0 3px #fff;
+}
+.margin-right-space {
+  margin-right: 1.3rem !important;
+}
+.social-media {
+  padding: 1rem;
+  margin: 2rem 6rem;
+}
+.social-media img {
+  width: 3.8rem;
+  height: 3.4rem;
+  border-radius: 3rem;
+}
