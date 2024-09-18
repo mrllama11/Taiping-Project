@@ -20,17 +20,64 @@
       </div>
       <nav class="main-nav">
         <ul class="main-nav-list">
-          <li><a class="main-nav-link" href="#">Home</a></li>
+          <li>
+            <a class="main-nav-link" href="http://127.0.0.1:5500/index.html"
+              >Home</a
+            >
+          </li>
           <li><a class="main-nav-link" href="#">News</a></li>
           <li><a class="main-nav-link" href="#">Our Product</a></li>
           <li><a class="main-nav-link" href="#">Claim</a></li>
           <li><a class="main-nav-link" href="#">Agency</a></li>
-          <li><a class="main-nav-link nav-cta" href="#">About Us</a></li>
+          <li>
+            <a class="main-nav-link" href="http://127.0.0.1:5500/aboutUs.html"
+              >About Us</a
+            >
+          </li>
           <li><a class="main-nav-link" href="#">Career With Us</a></li>
         </ul>
       </nav>
     </section>
     <section class="sectionBox3">
+      <div class="slideshow-container">
+        <!-- slider image with the number 1 -->
+        <div class="mySlides fade">
+          <div class="numberText">1/3</div>
+          <img
+            src="images/2020Banner2.jpg"
+            alt="PT China Taiping Insurance Indonesia Banner"
+            style="width: 100%"
+          />
+        </div>
+        <!-- slider image with the number 2 -->
+        <div class="mySlides fade">
+          <div class="numberText">2/3</div>
+          <img
+            src="images/2020Banner3.jpg"
+            alt="PT China Taiping Insurance Indonesia Banner"
+            style="width: 100%"
+          />
+        </div>
+        <!-- slider image with the number 3 -->
+        <div class="mySlides fade">
+          <div class="numberText">3/3</div>
+          <img
+            src="images/banner4.jpg"
+            alt="PT China Taiping Insurance Indonesia Banner"
+            style="width: 100%"
+          />
+        </div>
+      </div>
+      <br />
+      <!-- dots below the slides -->
+      <div style="text-align: center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+    </section>
+
+    <section class="sectionBox4">
       <div class="box3">
         <div class="box3-1">
           <h1 class="branding">Manage Your Risk , Enjoy Taiping Services</h1>
@@ -60,5 +107,40 @@
         </div>
       </div>
     </section>
+    <section class="valuable-customer">
+      <div class="container">
+        <h2 class="heading-value-cust">Our Clients</h2>
+        <div class="logos">
+          <img src="images/bankofchina_LOGO.gif" alt="Bank Of China" />
+          <img src="images/bank jasa jakarta.png" alt="Bank Jasa Jakarta" />
+          <img src="images/ICBC_logo.png" alt="ICBC" />
+          <img src="images/LOGO SUCOFINDO.png" alt="PT SUCOFINDO" />
+          <img src="images/Logo-Semen-Conch.png" alt="Semen-Conch" />
+        </div>
+      </div>
+    </section>
+    <section class="suggestion-products">
+      <div class="container">
+        <h2 class="suggestion-header">
+          Product's that you might be interested
+        </h2>
+        <div class="suggested-contents">
+          <div>
+            <img src="images/Fire-Insurance-min.webp" alt="Fire Insurance" />
+            <a href="#" class="btn btn--outline">fire insurance</a>
+          </div>
+          <div>
+            <img src="images/marine insurance.jpg" alt="Marine Insurance" />
+            <a href="#" class="btn btn--outline">Marine Insurance </a>
+          </div>
+          <div>
+            <img src="images/insuranceproduct1.png" alt="general Insurance" />
+            <a href="#" class="btn btn--outline">general insurance</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- always put this all below all the sections -->
+    <script src="js/javascript.js"></script>
   </body>
 </html>
