@@ -39,6 +39,31 @@ function showSlides() {
   dots[slideIndex - 1].className += " active";
 }
 
+// Get all FAQ items
+document.addEventListener("DOMContentLoaded", function () {
+  const faqItems = document.querySelectorAll(".tipcontent-item");
+  // to select all the child elements
+  faqItems.forEach((item) => {
+    const icon = item.querySelector(".icon");
+    const question = item.querySelector(".questions");
+    const hiddenBox = item.querySelector(".hidden-box");
+
+    // Function to toggle visibility
+    function toggleVisibility() {
+      item.classList.toggle("open");
+      if (item.classList.contains("open")) {
+        hiddenBox.style.display = "block";
+      } else {
+        hiddenBox.style.display = "none";
+      }
+    }
+
+    // Add click event listener to each icon and question text
+    icon.addEventListener("click", toggleVisibility);
+    question.addEventListener("click", toggleVisibility);
+  });
+});
+
 // Initialize the slideshow]
 showSlides();
 startSlides();
