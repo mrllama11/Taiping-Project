@@ -355,6 +355,7 @@ body {
   grid-row: 2/3;
   cursor: pointer;
 }
+
 /* ------------------------- */
 /* TIPS SECTION / FREQUENTLY ASKED QUESTIONS */
 /* ------------------------- */
@@ -425,4 +426,128 @@ body {
   line-height: 2.8rem;
   /* list-style-type: disc; */
   font-size: 1.5rem;
+}
+/* ------------------------- */
+/*FOOTER
+/* ------------------------- */
+.footer {
+  border-top: solid 0.3rem black;
+}
+.aboutUs-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.aboutUs-footer ol li a {
+  text-decoration: none;
+  line-height: 1.5rem;
+  color: #2e9928;
+}
+.aboutUs-footer ol li {
+  margin: 1rem;
+}
+.aboutUs-footer li {
+  /* clear the number */
+  list-style-type: none;
+}
+.ourProducts-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.ourProducts-footer ol li a {
+  text-decoration: none;
+  line-height: 1.5rem;
+  color: #2e9928;
+}
+.ourProducts-footer ol li {
+  margin: 1rem;
+}
+.ourProducts-footer li {
+  /* clear the number */
+  list-style-type: none;
+}
+.containerFooter {
+  max-width: 100%;
+  padding: 0 3.2rem;
+  margin: 0 auto;
+}
+.grid-Footer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: (2, 1fr);
+  column-gap: 3rem;
+  row-gap: 2rem;
+  padding: 4.5rem 0 3.2rem 0;
+}
+.grid-item-Footer {
+  background-color: #ececec;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  row-gap: 3rem;
+}
+.ourSocialmedia-footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.title-footer {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.ourSocialmedia-footer-icons img {
+  width: 3rem;
+  height: 3rem;
+}
+.address-footer {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.footer-text p {
+  font-size: 1.5rem;
+  font-weight: 100;
+  line-height: 3rem;
+  text-align: center;
+}
+.footer-nav-link:link,
+.footer-nav-link:visited {
+  text-decoration: none;
+  color: #2e9928;
+  font-weight: 300;
+  font-size: 1.5rem;
+  transition: all 0.5s;
+}
+.footer-nav-link:hover,
+.footer-nav-link:active {
+  color: #00b6e7;
+}
+.footer-companyLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo-1 {
+  width: 10rem;
+  height: 10rem;
+}
+.logo-2 {
+  width: 13rem;
+  height: 5rem;
+}
+.grid-item-Footer-1 {
+  grid-column: 3/4;
+  grid-row: 2/3;
+}
+.footer-copyright {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
