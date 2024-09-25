@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap//dist//css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="styless.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav
+      class="navbar navbar-expand-lg bg-light navbar-light border-bottom border-black fixed-top"
+    >
+      <div class="container">
+        <div
+          class="navbar-brand d-sm-flex d-md-flex align-items-center justify-content-center text-center gap-5 "
+        >
+          <img
+            src="imagesNpm/logosamping.png"
+            class="img-fluid my-2"
+            alt=""
+            width="200"
+            height="200"
+          />
+          <div class="d-sm-inline-flex d-md-flex my-2">
+            PT CHINA TAIPING INSURANCE INDONESIA
+          </div>
+          <div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navmenu"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="collapse text-center navbar-collapse" id="navmenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a href="index.html" class="nav-link">HOME</a>
+            </li>
+            <li class="nav-item">
+              <a href="news.html" class="nav-link">News</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Our Product</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Claim</a>
+            </li>
+            <li class="nav-item">
+              <a href="agency.html" class="nav-link">Agency</a>
+            </li>
+            <li class="nav-item">
+              <a href="newsCompanyProfile.html" class="nav-link">About US</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Career With Us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="p-5 d-flex d-md-flex d-sm-flex justify-content-center text-center align-items-center">
+      <h1>Finance Report</h1>
+    </div>
+    <!-- Accordeon flush for Finance report 2024-->
+    <div class="container">
+          <!-- Accordion for Laporan Keuangan 2024 -->
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2024" aria-expanded="true" aria-controls="lapKeuangan2024">
+              Laporan Keuangan 2024#
+            </button>
+          </h2>
+          <div id="lapKeuangan2024" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+              <ul>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-01.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-01</a></li>
+                <li><a class="text-decoration-none custom-link" href="#"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-02</a></li>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-03.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-03</a></li>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-04.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-04</a></li>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-05.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-05</a></li>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-06.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-06</a></li>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-07.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-07</a></li>
+                <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2024-08.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2024-08</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordion for Laporan Keuangan 2023 -->
+      <div class="accordion accordion-flush" id="accordionFlush2023">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2023" aria-expanded="false" aria-controls="lapKeuangan2023">
+              Laporan Keuangan 2023#
+            </button>
+          </h2>
+          <div id="lapKeuangan2023" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2023">
+            <ul>
+              <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2023-Q1.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2023-Q1</a></li>
+              <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2023-Q2.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2023-Q2</a></li>
+              <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2023-04.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2023-04</a></li>
+              <!-- Add more reports as needed -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repeat similar structure for other years -->
+
+      <!-- Accordion for Laporan Keuangan 2022 -->
+      <div class="accordion accordion-flush" id="accordionFlush2022">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2022" aria-expanded="false" aria-controls="lapKeuangan2022">
+              Laporan Keuangan 2022#
+            </button>
+          </h2>
+          <div id="lapKeuangan2022" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2022">
+            <ul>
+              <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2022.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2022</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+            <!-- Accordion laporan 2021 -->
+          <div class="accordion accordion-flush " id="accordionFlush2021">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2021" aria-expanded="false" aria-controls="lapKeuangan2021">
+                  Laporan Keuangan 2021#
+                </button>
+              </h2>
+              <div id="lapKeuangan2021" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2021">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2021.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2021</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2021-Q1.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2021-Q1</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2021-Q4.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2021-Q4</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- Accordion laporan 2020 -->
+          <div class="accordion accordion-flush " id="accordionFlush2020">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2020" aria-expanded="false" aria-controls="lapKeuangan2020">
+                  Laporan Keuangan 2020#
+                </button>
+              </h2>
+              <div id="lapKeuangan2020" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2020">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2020.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2020</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2020-Q1.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2020-Q1</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2020-Q2.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2020-Q2</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2020-Q3.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2020-Q3</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2020-Q4.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2020-Q4</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- Accordion laporan 2019 -->
+          <div class="accordion accordion-flush " id="accordionFlush2019">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2019" aria-expanded="false" aria-controls="lapKeuangan2019">
+                  Laporan Keuangan 2019#
+                </button>
+              </h2>
+              <div id="lapKeuangan2019" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2019">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2019.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2019</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2019-Q1.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2019-Q1</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2019-Q2.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2019-Q2</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2019-Q3.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2019-Q3</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- Accordion laporan 2018 -->
+          <div class="accordion accordion-flush " id="accordionFlush2018">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2018" aria-expanded="false" aria-controls="lapKeuangan2018">
+                  Laporan Keuangan 2018#
+                </button>
+              </h2>
+              <div id="lapKeuangan2018" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2018">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2018.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2018</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2018-Q1.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2018-Q1</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2018-Q2.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2018-Q2</a></li>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2018-Q4.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2018-Q4</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- Accordion laporan 2017 -->
+          <div class="accordion accordion-flush " id="accordionFlush2017">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2017" aria-expanded="false" aria-controls="lapKeuangan2017">
+                  Laporan Keuangan 2017#
+                </button>
+              </h2>
+              <div id="lapKeuangan2017" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2017">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2017.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2017</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- Accordion laporan 2016 -->
+          <div class="accordion accordion-flush " id="accordionFlush2016">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2016" aria-expanded="false" aria-controls="lapKeuangan2016">
+                  Laporan Keuangan 2016#
+                </button>
+              </h2>
+              <div id="lapKeuangan2016" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2016">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2016.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2016</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2015 -->
+          <div class="accordion accordion-flush " id="accordionFlush2015">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2015" aria-expanded="false" aria-controls="lapKeuangan2015">
+                  Laporan Keuangan 2015#
+                </button>
+              </h2>
+              <div id="lapKeuangan2015" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2015">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2015.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2015</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2014 -->
+          <div class="accordion accordion-flush " id="accordionFlush2014">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2014" aria-expanded="false" aria-controls="lapKeuangan2014">
+                  Laporan Keuangan 2014#
+                </button>
+              </h2>
+              <div id="lapKeuangan2014" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2014">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2014.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2014</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2013 -->
+          <div class="accordion accordion-flush " id="accordionFlush2013">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2013" aria-expanded="false" aria-controls="lapKeuangan2013">
+                  Laporan Keuangan 2013#
+                </button>
+              </h2>
+              <div id="lapKeuangan2013" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2013">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2013.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2013</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2012 -->
+          <div class="accordion accordion-flush " id="accordionFlush2012">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2012" aria-expanded="false" aria-controls="lapKeuangan2012">
+                  Laporan Keuangan 2012#
+                </button>
+              </h2>
+              <div id="lapKeuangan2012" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2012">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2012.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2012</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2011 -->
+          <div class="accordion accordion-flush " id="accordionFlush2011">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2011" aria-expanded="false" aria-controls="lapKeuangan2011">
+                  Laporan Keuangan 2011#
+                </button>
+              </h2>
+              <div id="lapKeuangan2011" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2011">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2011.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2011</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2010 -->
+          <div class="accordion accordion-flush " id="accordionFlush2010">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2010" aria-expanded="false" aria-controls="lapKeuangan2010">
+                  Laporan Keuangan 2010#
+                </button>
+              </h2>
+              <div id="lapKeuangan2010" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2010">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2010.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2010</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- Accordion laporan 2009 -->
+          <div class="accordion accordion-flush " id="accordionFlush2009">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#lapKeuangan2009" aria-expanded="false" aria-controls="lapKeuangan2009">
+                  Laporan Keuangan 2009#
+                </button>
+              </h2>
+              <div id="lapKeuangan2009" class="accordion-collapse collapse" data-bs-parent="#accordionFlush2009">
+                <ul>
+                  <li><a class="text-decoration-none custom-link" href="pdf/Lap Keuangan 2009.pdf"><i class="bi bi-filetype-pdf"></i>Laporan Keuangan 2009</a></li>
+                </ul>
+              </div>
+            </div>
+    </div>
+    
+      
+    <!-- Frequenly asked questions -->
+    <section class="p-5">
+      <h1 class="p-3 text-center"><Strong>Frequently Asked Question's</Strong></h1>
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              Why having Insurance is important?
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+              <strong>Insurance provides financial protection against unexpected
+                events such as: Illness, Accident's, Theft, ect.</strong> Insurance also offers peace of mind, knowing you’re safeguarded against risks. It’s essential for managing uncertainty and planning for the future.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+              What is a General Insurance?
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <strong>General insurance</strong> refers to any insurance policy that covers
+                non-life assets, providing protection against financial losses
+                due to a wide range of unforeseen events. It contrasts with life
+                insurance, which deals with the insurance of life or health.
+                General insurance policies are typically designed to protect
+                property, vehicles, health, travel, and business.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+              What are the different types of general insurance in our company?
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <ul>
+                <li>Property Insurance: Protects businesses or individuals against
+                  losses or damages to buildings, equipment, or other property.</li>
+                  <li>
+                    Motor Insurance: Covers vehicles against accidents, theft, or
+                  damage. It includes two types: Third-party liability and
+                  Comprehensive insurance.
+                  </li>
+                  <li>
+                    Marine general insurance : provides coverage for ships, cargo,
+                  and other maritime-related activities. It protects against
+                  risks such as damage to vessels, cargo loss, theft, accidents
+                  during transit, and liability claims. This type of insurance
+                  is essential for businesses involved in shipping and
+                  transportation, ensuring financial protection for goods and
+                  assets while they are being transported over water.
+                  </li>
+                  <li>
+                    Personal accident general insurance provides financial
+                  protection in the event of accidental injury, disability, or
+                  death. It typically covers medical expenses, hospitalization
+                  costs, and compensation for permanent disabilities or loss of
+                  income due to an accident. Unlike health insurance, which
+                  covers illnesses, personal accident insurance specifically
+                  focuses on accidents, ensuring immediate support for you or
+                  your family during unexpected situations.
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact & Map -->
+     <section class="p-5">
+      <div class="container">
+        <div class="row g-4  justify-content-center">
+          <div class="col-md">
+            <h2 class="text-center">Contact Info</h2>
+            <ul class="list-group list-group-flush lead">
+              <li class="list-group-item">
+                <span class="fw-bold">Main Office :</span> Gedung Perkantoran The Tower 16th Floor Jl. Jend Gatot Subroto
+                Kav 12-13 RT.002/004 Kel. Karet Semanggi Kec.Setiabudi Jakarta
+                Selatan 12930 , Indonesia
+              </li>
+              <li class="list-group-item">
+                <span class="fw-bold">Telephone :</span> 021-8060 0910
+              </li>
+              <li class="list-group-item">
+                <span class="fw-bold">Fax :</span> 021-8060 0910
+              </li>
+              <li class="list-group-item">
+                <span class="fw-bold">E-mail :</span> cntaiping@id.cntaiping.com
+              </li>
+            </ul>
+          </div>
+          <!-- for map go to mapbox.com (PAID) -->
+           <!-- I use leaflet.js and openstreetmap -->
+          <div class="col-xxl-6 col-12 ">
+            <div id="map" style="width: 100%; height: 400px; border-radius: 10px;">
+            </div>
+          </div>
+          <div class="row g-5 justify-content-center">
+            <div class="col-md-4 col-12">
+              <img
+                class="img-fluid mb-3"
+                src="imagesNpm/berizin-ojk.jpg"
+                alt="OJK"
+              />
+            </div>
+            <div class="col-md-4 col-12">
+              <img
+                class="img-fluid mb-3"
+                src="imagesNpm/pahami_asuransi2.png"
+                alt="Pahami Asuransi"
+              />
+            </div>
+            <div class="col-md-4 col-12">
+              <img
+                class="img-fluid mb-3"
+                src="imagesNpm/aaui.png"
+                alt="AAUI"
+              />
+            </div>
+          </div>
+          
+        </div>
+      </div>
+     </section>
+    <!-- footer -->
+    
+    <footer class="p-5">
+      <div class="container text-center position-relative">
+        <div class="container">
+          <p class="lead mt-5">Copyright &copy; 2024 PT CHINA TAIPING INSURANCE INDONESIA</p>
+          <a href="#" class="position-absolute top-0 start-50 translate-middle-x p-5">
+            <i class="bi bi-arrow-up-circle h1 "></i>
+          </a>
+        </div>
+    </footer>
+
+    <script src="node_modules//bootstrap//dist//js/bootstrap.bundle.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+      var map = L.map('map').setView([-6.2146, 106.8136], 13); // Coordinates for Jakarta Main Office
+    
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    
+      // Add a marker for the office
+      L.marker([-6.2146, 106.8136]).addTo(map)
+        .bindPopup('Main Office: Gedung Perkantoran The Tower Lt.16, Jakarta.')
+        .openPopup();
+    </script>
+    <script>
+      // show second form when the next "Next" button is clicked
+      document.getElementById('nextBtn1').addEventListener('click',function(){
+        document.getElementById('firstForm').style.display ='none';
+        document.getElementById('secondForm').style.display ='block';
+      });
+      // Back to Second form when the previous "prev" button is clicked
+      document.getElementById('nextBtnPrev1').addEventListener('click',function(){
+        document.getElementById('secondForm').style.display = 'none';
+        document.getElementById('firstForm').style.display = 'block';
+      })
+      // Back to Second form when the previous "prev" button is clicked
+      document.getElementById('nextBtnPrev2').addEventListener('click',function(){
+        document.getElementById('finalForm').style.display = 'none';
+        document.getElementById('secondForm').style.display = 'block';
+      })
+      // Show final form when the next "Next" button is clicked
+      document.getElementById('nextBtn2').addEventListener('click', function() {
+        document.getElementById('secondForm').style.display = 'none';
+        document.getElementById('finalForm').style.display = 'block';
+      });
+    </script>
+    
+  </body>
+</html>

@@ -12,3 +12,10 @@ body::before {
   content: "";
   height: 100px;
 }
+.custom-link {
+  color: black;
+  transition: color 0.3s ease; /* Smooth transition for hover */
+}
+.custom-link:hover {
+  color: #007bff;
+}
