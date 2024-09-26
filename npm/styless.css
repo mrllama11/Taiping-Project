@@ -19,3 +19,6 @@ body::before {
 .custom-link:hover {
   color: #007bff;
 }
+.card-height {
+  min-height: 350px; /* Adjust the minimum height as needed */
+}
