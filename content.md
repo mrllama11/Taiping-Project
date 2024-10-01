@@ -96,8 +96,6 @@ Headline: Manage Your Risk , Enjoy Taiping Services
 
 Brand color:#4cff43
 
-## Omnifood Website Content
-
 ### Summary
 
 PT. China Taiping Insurance Indonesia, established in 1996, is a general insurance company headquartered in Jakarta with offices across major cities in Indonesia. It provides various insurance services, including property, marine, construction, motor vehicles, and general accidents. Supported by China Taiping Insurance Holdings, the company adheres to Indonesian insurance laws, maintains sound financial status, and has built a solid reputation for reliable service and management. China Taiping Insurance Indonesia is committed to strengthening its brand and continuing its growth in the local and global insurance markets.
@@ -112,8 +110,6 @@ Agency :
 About Us :
 Contact Us:
 Login:
-
-### How Omnifood works
 
 ### Section with logos of featured publications [OJK etc.]
 
@@ -133,15 +129,35 @@ Social profiles: instagram, facebook, twitter
 
 ### Additional links [links not available yet]
 
-Create account
-Sign in
-iOS app
-Android app
-About Website
-For Business
-Careers
-Recipe directory
-Help center
-Privacy & terms
+### SECTIONS FOr understanding code logic
 
-# SECTIONS
+## SCript for giving dots
+
+e.target.value: This is the current value of the input field, which contains what the user has typed in.
+
+.replace(/\D/g, ''): This part of the code removes any non-digit characters from the input.
+
+/\D/: This is a regular expression where \D matches any character that is not a digit. In regular expressions:
+\d matches a digit (0-9).
+\D (uppercase D) is the inverse, meaning "anything that is not a digit."
+/g: The g flag stands for "global," meaning it will replace all instances of non-digit characters, not just the first occurrence.
+'': This is what we replace non-digit characters with—in this case, we’re replacing them with nothing, effectively removing all non-digit characters like commas, dots, or spaces.
+
+value.replace(): This line applies another regular expression to format the cleaned number with dots for every three digits.
+
+/\B(?=(\d{3})+(?!\d))/g: This is a more complex regular expression, so let’s break it down:
+
+\B: This matches a non-word boundary. This is key because we don’t want to add a dot at the start of the number (e.g., 1000 should become 1.000, not .1000).
+
+(?=(\d{3})+(?!\d)): This is called a lookahead assertion, which checks for the pattern without consuming characters.
+
+\d{3}: This checks for a group of three digits.
++: This allows the pattern to repeat for every group of three digits.
+?!\d: This part ensures that after these groups of three digits, there is no digit. This prevents matching within longer numbers like 1000000 until the correct thousands position is reached.
+
+## dots Flow
+
+If the user types 1000000, the flow is:
+
+- Remove non-digit characters → 1000000.
+- Add dots at thousands positions → 1.000.000.
