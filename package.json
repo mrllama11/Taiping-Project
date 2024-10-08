@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "bootstrap-icons": "^1.11.3"
+    "body-parser": "^1.20.3",
+    "bootstrap-icons": "^1.11.3",
+    "express": "^4.21.0",
+    "mysql": "^2.18.1"
   }
 }

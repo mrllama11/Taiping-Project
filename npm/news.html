@@ -198,11 +198,12 @@
           <h3 class="mb-3 mb-md-0">Sign Up For our Newsletter</h3>
           <div class="input-group pt-4 news-input">
             <input
+              id="newsletterEmail"
               type="text"
               class="form-control"
               placeholder="Enter E-mail Here"
             />
-            <button class="btn btn-success btn-lg" type="button">Send</button>
+            <button class="btn btn-success btn-lg" id="newsletterSubmit" type="button">Send</button>
           </div>
         </div>
       </div>
@@ -387,6 +388,7 @@
         document.getElementById('finalForm').style.display = 'block';
       });
     </script>
-    
+    <!-- Link to the shared JavaScript file -->
+    <script src="newsletter.js"></script>  
   </body>
 </html>
