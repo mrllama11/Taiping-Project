@@ -21,6 +21,9 @@ document
     // Send POST request to the server
     fetch("http://localhost:3000/subscribe", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
       body: formData,
     })
       .then((response) => {
