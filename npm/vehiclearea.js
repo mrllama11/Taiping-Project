@@ -10,34 +10,34 @@ document
     console.log("Modal being shown");
 
     // Fetch vehicle years from the server ,we Fetch from databse so GET
-    fetch("http://localhost:3000/vehicles-years", {
+    fetch("http://localhost:3000/vehicles-area", {
       method: "GET",
     })
       .then((response) => {
         console.log("Response Received:", response);
         if (!response.ok) {
-          throw new Error("Failed to fetch vehicle years");
+          throw new Error("Failed to fetch vehicle areas");
         }
         return response.json();
       })
-      .then((data) => {
-        console.log("Data received:", data);
-        const dropdown = document.getElementById("vehicleDropdown");
+      .then((dataArea) => {
+        console.log("Data received:", dataArea);
+        const dropdown = document.getElementById("vehicleAreaDropdown");
         dropdown.innerHTML = "";
 
         // Create default option
         const defaultOption = document.createElement("option");
-        defaultOption.text = "Select Vehicle Year";
+        defaultOption.text = "Select Vehicle Area";
         defaultOption.disabled = true;
         defaultOption.selected = true;
         dropdown.add(defaultOption);
 
         // Add fetched vehicle years as options
         data.forEach((item) => {
-          console.log("Adding option for year:", item.years);
+          console.log("Adding option for area:", item.area);
           const option = document.createElement("option");
-          option.value = item.years;
-          option.text = item.years;
+          option.value = item.area;
+          option.text = item.area;
           dropdown.add(option);
         });
       })

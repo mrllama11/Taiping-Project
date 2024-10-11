@@ -1,7 +1,7 @@
 document
   .getElementById("newsletterSubmit")
   .addEventListener("click", function () {
-    const email = document.getElementById("newsletterEmail").value.trim(); // Trim whitespace
+    const email = document.getElementById("newsletterEmail").value.trim(); // Trim whitespace / remove whitespaces
 
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
@@ -19,6 +19,9 @@ document
     formData.append("email", email);
 
     // Send POST request to the server
+    // A fetch request is made to the server's /subscribe endpoint using the HTTP POST method.
+    //The content type is set to application/x-www-form-urlencoded (standard for form submissions).
+    //The body of the request contains the email (formData), which will be sent to the backend server.
     fetch("http://localhost:3000/subscribe", {
       method: "POST",
       headers: {
@@ -26,6 +29,10 @@ document
       },
       body: formData,
     })
+      // UNTIL FETCH WE SEND DATA TO BACK END (formData) app.js
+      //+++++++++++++++++++++++++++++++++++++++++
+
+      // we go back here to ge the response from backend
       .then((response) => {
         // Handle HTTP errors
         if (!response.ok) {

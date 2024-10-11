@@ -1,3 +1,5 @@
+// app.js IS THE BACK END JAVASCRIPT
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -10,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x
 app.use(bodyParser.json()); // For parsing application/json
 app.use(cors()); ///Cross-Origin Resource Sharing (CORS) restrictions.
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MySQL database connection
 const db = mysql.createConnection({
   host: "localhost",
@@ -25,8 +28,9 @@ db.connect((err) => {
     console.log("Connected to the MySQL database");
   }
 });
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-// Subscribe Endpoint send the email so POST
+// recieve the request data req.body is the data that we sent from the front end
 app.post("/subscribe", (req, res) => {
   console.log("Received request:", req.body);
   const { email } = req.body;
@@ -59,6 +63,18 @@ app.get("/vehicles-years", (req, res) => {
       return res.status(500).send("database error");
     }
     res.json(results); //send result json
+  });
+});
+
+app.get("/vehicles-area", (req, res) => {
+  const query = "SELECT area FROM taipingdata.wilayah";
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.log("Error fetching vehicle areas:", err);
+      return res.status(500).send("database error");
+    }
+    res.json(results);
   });
 });
 
