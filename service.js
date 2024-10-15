@@ -7,14 +7,13 @@
 document
   .getElementById("agentFormGeneral")
   .addEventListener("show.bs.modal", function () {
-    console.log("Modal being shown");
+    console.log("Modal being shown Vehicle Years");
 
     // Fetch vehicle years from the server ,we Fetch from databse so GET
     fetch("http://localhost:3000/vehicles-years", {
       method: "GET",
     })
       .then((response) => {
-        console.log("Response Received:", response);
         if (!response.ok) {
           throw new Error("Failed to fetch vehicle years");
         }
@@ -34,7 +33,7 @@ document
 
         // Add fetched vehicle years as options
         data.forEach((item) => {
-          console.log("Adding option for year:", item.years);
+          // console.log("Adding option for year:", item.years);
           const option = document.createElement("option");
           option.value = item.years;
           option.text = item.years;

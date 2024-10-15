@@ -7,14 +7,13 @@
 document
   .getElementById("agentFormGeneral")
   .addEventListener("show.bs.modal", function () {
-    console.log("Modal being shown");
+    console.log("Modal being shown vehicle area");
 
-    // Fetch vehicle years from the server ,we Fetch from databse so GET
+    // Fetch vehicle areas from the server, we fetch from the database using GET
     fetch("http://localhost:3000/vehicles-area", {
       method: "GET",
     })
       .then((response) => {
-        console.log("Response Received:", response);
         if (!response.ok) {
           throw new Error("Failed to fetch vehicle areas");
         }
@@ -32,9 +31,9 @@ document
         defaultOption.selected = true;
         dropdown.add(defaultOption);
 
-        // Add fetched vehicle years as options
-        data.forEach((item) => {
-          console.log("Adding option for area:", item.area);
+        // Add fetched vehicle areas as options
+        dataArea.forEach((item) => {
+          // console.log("Adding option for area:", item.area);
           const option = document.createElement("option");
           option.value = item.area;
           option.text = item.area;
@@ -42,6 +41,6 @@ document
         });
       })
       .catch((error) => {
-        console.error("Error fetching vehicle years:", error);
+        console.error("Error fetching vehicle areas:", error);
       });
   });

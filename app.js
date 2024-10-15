@@ -66,6 +66,7 @@ app.get("/vehicles-years", (req, res) => {
   });
 });
 
+// Fetching vehicles area For Modal Form
 app.get("/vehicles-area", (req, res) => {
   const query = "SELECT area FROM taipingdata.wilayah";
 
@@ -73,6 +74,19 @@ app.get("/vehicles-area", (req, res) => {
     if (err) {
       console.log("Error fetching vehicle areas:", err);
       return res.status(500).send("database error");
+    }
+    res.json(results);
+  });
+});
+
+// Fetching vehicles City ,Zone . Category , Threshold, Rate Based On CTII Data
+app.get("/vehicles-rate", (req, res) => {
+  const query =
+    "SELECT City,Zone,Category,Threshold,Rate FROM taipingdata.vehicle_rates";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.log("Error Fetching Vehicles Rate:", err);
+      return res.status(500).send("DataBase Error 404");
     }
     res.json(results);
   });
