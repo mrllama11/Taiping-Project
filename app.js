@@ -82,7 +82,7 @@ app.get("/vehicles-area", (req, res) => {
 // Fetching vehicles City ,Zone . Category , Threshold, Rate Based On CTII Data
 app.get("/vehicles-rate", (req, res) => {
   const query =
-    "SELECT City,Zone,Category,Threshold,Rate FROM taipingdata.vehicle_rates";
+    "SELECT City, Zone, Category, Min_Threshold, Max_Threshold, Rate FROM taipingdata.vehicle_rates";
   db.query(query, (err, results) => {
     if (err) {
       console.log("Error Fetching Vehicles Rate:", err);
