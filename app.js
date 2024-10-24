@@ -80,7 +80,7 @@ app.get("/vehicles-area", (req, res) => {
 });
 
 // Fetching vehicles City ,Zone . Category , Threshold, Rate Based On CTII Data
-app.get("/vehicles-rate", (req, res) => {
+app.get("/vehicles-rates", (req, res) => {
   const query =
     "SELECT City, Zone, Category, Min_Threshold, Max_Threshold, Rate FROM taipingdata.vehicle_rates";
   db.query(query, (err, results) => {
@@ -90,6 +90,31 @@ app.get("/vehicles-rate", (req, res) => {
     }
     res.json(results);
   });
+});
+
+app.get("/vehicles-rate-tlo", (req, res) => {
+  const { vehicle_year, region_id } = req.query;
+  // Logic to fetch vehicle rates based on year and region
+  const rates = getRatesForTLO(vehicle_year, region_id); // Implement this function
+
+  if (rates) {
+    res.json(rates);
+  } else {
+    res.status(404).send({ error: "Rates not found" });
+  }
+});
+
+app.get("/vehicles-rates-comprehensive", (req, res) => {
+  const query =
+    "SELECT * FROM premium_rate_Comprehensive WHERE vehicle_category_id = ? AND region_id = ?";
+  [category_id, region_id],
+    db.query(query, (err, results) => {
+      if (err) {
+        console.log("Error Fetching Vehicles Rate:", err);
+        return res.status(500).send("DataBase Error 404");
+      }
+      res.json(results);
+    });
 });
 
 // Start the server

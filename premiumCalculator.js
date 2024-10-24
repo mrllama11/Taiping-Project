@@ -1,60 +1,110 @@
-// Front end JS CANNOT USE require
-
-// Capture data when user submits
-// Capture data when user submits
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Dom activated Working 200 OK");
+  console.log("DOM activated. Working 200 OK");
 
+  let selectedInsuranceType = "TLO"; // Default selected TLO
+
+  const tloRadio = document.getElementById("flexRadioDefault2");
+  const comprehensiveRadio = document.getElementById("flexRadioDefault1");
+
+  tloRadio.addEventListener("change", function () {
+    if (this.checked) {
+      selectedInsuranceType = "TLO";
+      console.log("Selected Insurance type: TLO");
+    }
+  });
+
+  comprehensiveRadio.addEventListener("change", function () {
+    if (this.checked) {
+      selectedInsuranceType = "Comprehensive";
+      console.log("Selected Insurance type: Comprehensive");
+    }
+  });
+
+  // Button when clicked
   document.getElementById("nextBtn1").addEventListener("click", function () {
-    console.log("button clicked");
+    console.log("Count button clicked.");
 
-    // Fetch vehicle rates from the express server and check if the data is there on web console
-    fetch("http://localhost:3000/vehicles-rate")
-      .then((response) => {
-        console.log("Response received:", response);
-        return response.json(); // Parse JSON response
-      })
+    // Capture the category_id and region_id values
+    const category_id = document.getElementById(
+      "vehicleCategoryDropdown"
+    ).value; // Assuming you have a dropdown for category
+    const region_id = document.getElementById("vehicleAreaDropdown").value; // Assuming you have a dropdown for region
+
+    // Validate region_id to ensure a selection has been made
+    if (region_id === "" || region_id === "Select Vehicle Area") {
+      alert("Please select a valid vehicle area.");
+      return; // Stop further execution
+    }
+
+    // Check which insurance type is selected
+    console.log("Current selected insurance type:", selectedInsuranceType);
+
+    // Fetch vehicle rates and proceed with calculations
+    fetchVehicleRatesAndCalculate(
+      selectedInsuranceType,
+      category_id, // If you're still using this, else remove
+      region_id
+    );
+  });
+
+  // Fetch vehicle rates and perform calculations
+  function fetchVehicleRatesAndCalculate(
+    insuranceType,
+    vehicleYear,
+    region_id
+  ) {
+    const apiEndpoint =
+      insuranceType === "Comprehensive"
+        ? `/vehicles-rate-comprehensive?vehicle_year=${vehicleYear}&region_id=${region_id}`
+        : `/vehicles-rate-tlo?vehicle_year=${vehicleYear}&region_id=${region_id}`;
+
+    fetch(apiEndpoint)
+      .then((response) => response.json())
       .then((vehicleRates) => {
-        console.log("Parsed data:", vehicleRates); // Ensure data is parsed correctly
+        console.log("Parsed data:", vehicleRates);
 
-        // Gather the data and remove periods from the input (Price of vehicles)
-        const hargaKendaraanInput =
-          document.getElementById("hargaKendaraan").value;
-        const hargaKendaraanCleaned = hargaKendaraanInput.replace(/\./g, ""); // Remove periods
-        const hargaKendaraan = parseFloat(hargaKendaraanCleaned); // Ensure it's a number
+        const hargaKendaraanInput = document.getElementById("hargaKendaraan");
+        const hargaKendaraanValue = hargaKendaraanInput
+          ? hargaKendaraanInput.value
+          : null;
 
-        // Get the City from the selected value
-        const wilayahKendaraan = document.getElementById(
-          "vehicleAreaDropdown"
-        ).value;
+        if (!hargaKendaraanValue) {
+          console.error("Vehicle price input is missing.");
+          alert("Please enter the vehicle price.");
+          return;
+        }
 
-        // Filter rates based on the selected city
+        const hargaKendaraanCleaned = hargaKendaraanValue.replace(/\./g, "");
+        const hargaKendaraan = parseFloat(hargaKendaraanCleaned);
+
+        // Filter rates based on region and vehicle price
         const matchedRate = vehicleRates.find(
           (rate) =>
-            rate.City === wilayahKendaraan &&
-            hargaKendaraan >= rate.Min_Threshold &&
-            hargaKendaraan <= rate.Max_Threshold
+            rate.region_id === region_id &&
+            hargaKendaraan >= rate.vehicle_cover_min &&
+            hargaKendaraan <= rate.vehicle_cover_max
         );
 
         if (matchedRate && !isNaN(hargaKendaraan)) {
-          // Get the rate information from the matched data
           const rate = matchedRate.Rate;
 
-          // Ensure the vehicle price meets the threshold
           const premium = calculatePremium({
             vehiclePrice: hargaKendaraan,
             rate: rate,
+            insuranceType: insuranceType,
           });
-          // Format premium with periods as thousand separators
+
           const formattedPremium = premium.toLocaleString("id-ID");
+          console.log(
+            `Calculated premium (${insuranceType}) is: ${formattedPremium}`
+          );
 
-          console.log(`Calculated premium is: ${formattedPremium}`);
-
-          // Show the calculated premium in the input field
           const calculatedPremiumInput =
             document.getElementById("calculatedPremium");
           if (calculatedPremiumInput) {
             calculatedPremiumInput.value = formattedPremium;
+          } else {
+            console.error("Premium input field is missing.");
           }
         } else {
           console.error("No rate data found for the selected area.");
@@ -63,10 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => {
         console.error("Error fetching vehicle rates:", error);
       });
-  });
+  }
 
   function calculatePremium(data) {
-    // Calculate premium based on vehicle price and rate
-    return data.vehiclePrice * data.rate; // Simple calculation using the rate
+    return data.vehiclePrice * data.rate;
   }
 });
