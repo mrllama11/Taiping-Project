@@ -64,12 +64,15 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Parsed data:", vehicleRates);
 
         const hargaKendaraanInput = document.getElementById("hargaKendaraan");
-        const hargaKendaraanValue = hargaKendaraanInput
-          ? hargaKendaraanInput.value
-          : null;
+        if (!hargaKendaraanInput) {
+          console.error("HARGA KENDARAAN NOTFOUND 404");
+          return; //stop
+        } else {
+          console.log(`Found harga Kendaraan ${hargaKendaraanInput}`);
+        }
 
+        const hargaKendaraanValue = hargaKendaraanInput.value;
         if (!hargaKendaraanValue) {
-          console.error("Vehicle price input is missing.");
           alert("Please enter the vehicle price.");
           return;
         }
