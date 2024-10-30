@@ -133,29 +133,50 @@ const insuranceTypeMap = {
 // SO WE EXECUTE THE FUNCTION CALCULATOR WHEN WE PRESS THE BUTTON
 document.getElementById("nextBtn1").addEventListener("click", calculatePremium);
 
-function getBaseRate(insuranceType, region, vehiclePrice, vehicleYear) {
+async function getBaseRate(insuranceType, regionId, vehiclePrice, vehicleYear) {
   const age = new Date().getFullYear() - vehicleYear;
-  let baseRate = 0;
 
-  // Define formatter for thousands separator
-  const formatter = new Intl.NumberFormat("id-ID"); // 'id-ID' for Indonesian format
+  // Define the formatter for Indonesian currency format (if needed for logging or display)
+  const formatter = new Intl.NumberFormat("id-ID");
 
-  if (insuranceType === "flexRadioDefault1") {
-    // Comprehensive
-    baseRate = getComprehensiveRate(region, vehiclePrice, age);
-  } else {
-    // TLO
-    baseRate = getTLORate(region, vehiclePrice);
+  const vehicleCategoryId = await getVehicleCategoryId(vehiclePrice);
+  if (vehicleCategoryId === null) {
+    console.error("Vehicle category not found.");
+    return null;
   }
+
+  let baseRate;
+  if (insuranceType === "flexRadioDefault1") {
+    baseRate = await getComprehensiveRate(vehicleCategoryId, regionId, age);
+  } else {
+    baseRate = await getTLORate(vehicleCategoryId, regionId);
+  }
+
   console.log("Insurance Type:", insuranceTypeMap[insuranceType]);
-  console.log("Region:", region);
+  console.log("Region:", regionId);
   console.log("Vehicle Price:", formatter.format(vehiclePrice));
   console.log("Vehicle Year:", vehicleYear);
 
   return baseRate;
 }
 
-function calculatePremium() {
+// Function to parse currency input
+function parseCurrency(value) {
+  // Remove thousands separator and convert to float
+  return parseFloat(value.replace(/\./g, "").replace(",", "."));
+}
+
+// Mark the main function as async
+
+// Mark the main function as async
+
+// Utility function to format currency
+function formatCurrency(amount) {
+  return amount.toLocaleString("id-ID", { style: "currency", currency: "IDR" });
+}
+
+// Mark the main function as async
+async function calculatePremium() {
   const selectedInsuranceType = document.querySelector(
     'input[name="flexRadioDefault"]:checked'
   );
@@ -172,45 +193,54 @@ function calculatePremium() {
   }
   const vehicleYear = parseInt(vehicleYearElement.value) || 0;
 
-  const vehiclePriceElement = document.getElementById("hargaKendaraan");
-  if (!vehiclePriceElement) {
-    console.error("Vehicle price input not found");
+  const vehiclePrice = parseCurrency(
+    document.getElementById("hargaKendaraan").value
+  );
+  if (isNaN(vehiclePrice) || vehiclePrice <= 0) {
+    console.error("Invalid vehicle price input.");
     return;
   }
-  const vehiclePrice =
-    parseFloat(vehiclePriceElement.value.replace(/\./g, "")) || 0;
 
   const regionElement = document.getElementById("vehicleAreaDropdown");
   if (!regionElement) {
     console.error("Region dropdown not found");
     return;
   }
-  const region = regionElement.value;
 
-  const thirdPartyLiabilityElement = document.getElementById("hargaTiga");
-  console.log(
-    "Third Party Liability Element Value:",
-    thirdPartyLiabilityElement.value
-  );
+  // Use async/await to get regionId
+  const selectedArea = getSelectedArea();
+  const regionId = await getRegionId(selectedArea);
+  if (!regionId) {
+    console.error("Region ID not found.");
+    return;
+  }
 
-  const driverAccidentInsuranceElement = document.getElementById("hargaDiri");
-  console.log(
-    "Driver Accident Insurance Element Value:",
-    driverAccidentInsuranceElement.value
+  const thirdPartyLiability = parseCurrency(
+    document.getElementById("hargaTiga").value
   );
+  if (isNaN(thirdPartyLiability) || thirdPartyLiability < 0) {
+    console.error("Invalid Third Party Liability input.");
+    return;
+  }
 
-  const passengerAccidentInsuranceElement =
-    document.getElementById("hargaPenumpang");
-  console.log(
-    "Passenger Accident Insurance Element Value:",
-    passengerAccidentInsuranceElement.value
+  const driverAccidentInsurance = parseCurrency(
+    document.getElementById("hargaDiri").value
   );
+  if (isNaN(driverAccidentInsurance) || driverAccidentInsurance < 0) {
+    console.error("Invalid Driver Accident Insurance input.");
+    return;
+  }
+
+  const passengerAccidentInsurance = parseCurrency(
+    document.getElementById("hargaPenumpang").value
+  );
+  if (isNaN(passengerAccidentInsurance) || passengerAccidentInsurance < 0) {
+    console.error("Invalid Passenger Accident Insurance input.");
+    return;
+  }
 
   const numberOfPassengersElement = document.getElementById("jumlahPenumpang");
-  console.log(
-    "Number of Passengers Element Value:",
-    numberOfPassengersElement.value
-  );
+  const numberOfPassengers = parseInt(numberOfPassengersElement.value) || 0;
 
   const additionalCovers = {
     flood: document.getElementById("extraOption1")?.checked || false,
@@ -219,10 +249,10 @@ function calculatePremium() {
     terrorism: document.getElementById("extraOption4")?.checked || false,
   };
 
-  // Base rate calculation
-  const baseRate = getBaseRate(
+  // Base rate calculation with async/await
+  const baseRate = await getBaseRate(
     insuranceType,
-    region,
+    regionId,
     vehiclePrice,
     vehicleYear
   );
@@ -234,7 +264,7 @@ function calculatePremium() {
   // Additional premium calculation
   const additionalPremium = calculateAdditionalCovers(
     additionalCovers,
-    region,
+    regionId,
     vehiclePrice
   );
   if (isNaN(additionalPremium)) {
@@ -242,19 +272,145 @@ function calculatePremium() {
     return;
   }
 
-  let totalPremium = (baseRate + additionalPremium) * vehiclePrice;
-
-  totalPremium +=
-    thirdPartyLiability +
-    driverAccidentInsurance +
+  // Calculate total additional costs
+  const totalThirdPartyLiability = thirdPartyLiability;
+  const totalDriverAccidentInsurance = driverAccidentInsurance;
+  const totalPassengerAccidentInsurance =
     passengerAccidentInsurance * numberOfPassengers;
+
+  // Calculate total premium
+  let totalPremium = (baseRate + additionalPremium) * vehiclePrice;
+  totalPremium +=
+    totalThirdPartyLiability +
+    totalDriverAccidentInsurance +
+    totalPassengerAccidentInsurance;
 
   if (isNaN(totalPremium)) {
     console.error("Total premium calculation resulted in NaN.");
     return;
   }
 
-  console.log(`Total Premium: IDR ${totalPremium.toFixed(2)}`);
+  // Display the premiums in a structured format
+  console.log(`Base Premium: ${formatCurrency(baseRate)}`);
+  console.log(
+    `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
+  );
+  console.log(
+    `Driver Accident Insurance: ${formatCurrency(totalDriverAccidentInsurance)}`
+  );
+  console.log(
+    `Passenger Accident Insurance: ${formatCurrency(
+      totalPassengerAccidentInsurance
+    )}`
+  );
+
+  if (additionalPremium > 0) {
+    console.log(
+      `Additional Premium (Flood, Earthquake, etc.): ${formatCurrency(
+        additionalPremium
+      )}`
+    );
+  }
+
+  console.log(`Total Premium: ${formatCurrency(totalPremium)}`);
+}
+
+// Function to fetch the vehicle categhory ID based on user selection
+async function getVehicleCategoryId(vehiclePrice) {
+  try {
+    // Fetch vehicle categories from your database
+    const response = await fetch("http://localhost:3000/vehicle-categories");
+    if (!response.ok) {
+      throw new Error("Failed to fetch vehicle categories");
+    }
+
+    const categories = await response.json();
+    console.log("Fetched categories:", categories); // For debugging
+
+    // Iterate through categories to find the appropriate one based on the vehicle price
+    for (const category of categories) {
+      if (
+        vehiclePrice >= category.vehicle_cover_min &&
+        vehiclePrice <= category.vehicle_cover_max
+      ) {
+        console.log("Vehicle Category ID:", category.id); // Log the found category ID
+        return category.id; // Assuming your category table has an 'id' field
+      }
+    }
+
+    console.error("No category found for the given vehicle price.");
+    return null; // Or handle as needed
+  } catch (error) {
+    console.error("Error fetching vehicle categories:", error);
+    return null;
+  }
+}
+
+// Function to fetch the region ID based on user selection
+
+// Function to get selected area from the dropdown
+function getSelectedArea() {
+  const regionElement = document.getElementById("vehicleAreaDropdown");
+
+  // Check if the dropdown element exists
+  if (!regionElement) {
+    console.error("Region dropdown not found");
+    return null;
+  }
+
+  // Check if a valid option is selected
+  const selectedArea = regionElement.value;
+  if (!selectedArea) {
+    console.warn("No area selected in the dropdown");
+    return null;
+  }
+
+  console.log("Selected area:", selectedArea);
+  return selectedArea;
+}
+
+// Function to fetch the region ID based on selected area
+// Function to fetch the region ID based on selected area
+async function getRegionId(selectedArea) {
+  if (!selectedArea) {
+    console.warn("Selected area is empty or undefined.");
+    return null;
+  }
+
+  try {
+    const response = await fetch("http://localhost:3000/wilayah");
+
+    // Check if response is OK, if not, throw a custom error
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch regions: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const regions = await response.json();
+
+    // Normalize selectedArea for better matching
+    const normalizedArea = selectedArea.trim().toLowerCase();
+
+    // Find the region that matches the selected area
+    const region = regions.find(
+      (region) =>
+        region.area && region.area.trim().toLowerCase() === normalizedArea
+    );
+
+    if (region) {
+      console.log("Matched region ID:", region.region_id);
+      return region.region_id; // Return the found region_id
+    } else {
+      console.warn(
+        `No matching region found for the selected area: ${selectedArea}`
+      );
+      return null; // Return null if no matching region is found
+    }
+  } catch (error) {
+    console.error("Error fetching regions:", error.message);
+    return null;
+  }
 }
 
 async function getComprehensiveRate(vehicleCategoryId, regionId, age) {
@@ -274,11 +430,19 @@ async function getComprehensiveRate(vehicleCategoryId, regionId, age) {
   } else {
     ageColumn = "year_10"; // For age 10 and above
   }
+  console.log(
+    `Fetching comprehensive rate for VehicleCategoryId: ${vehicleCategoryId}, RegionId: ${regionId}, AgeColumn: ${ageColumn}`
+  );
 
   try {
     const response = await fetch(
-      `http://localhost:3000/getRate?vehicleCategoryId=${vehicleCategoryId}&regionId=${regionId}&ageColumn=${ageColumn}`
+      `http://localhost:3000/vehicles-rates-comprehensive?vehicleCategoryId=${vehicleCategoryId}&regionId=${regionId}&ageColumn=${ageColumn}`
     );
+
+    if (!response.ok) {
+      console.error("server respond an error:", await response.text());
+      return null;
+    }
 
     const data = await response.json();
 
@@ -311,21 +475,19 @@ async function getTLORate(vehicleCategoryId, regionId) {
   }
 }
 
-function calculateAdditionalCovers(additionalCovers, region, vehiclePrice) {
+function calculateAdditionalCovers(additionalCovers, regionId, vehiclePrice) {
   const additionalRates = {
-    flood: { region1: 0.0075, region2: 0.01, region3: 0.0075 },
-    earthquake: { region1: 0.012, region2: 0.01, region3: 0.0075 },
-    civilCommotion: { region1: 0.005, region2: 0.0035, region3: 0.0035 },
-    terrorism: { region1: 0.005, region2: 0.0035, region3: 0.0035 },
+    flood: { 1: 0.0075, 2: 0.01, 3: 0.0075 },
+    earthquake: { 1: 0.012, 2: 0.01, 3: 0.0075 },
+    civilCommotion: { 1: 0.005, 2: 0.0035, 3: 0.0035 },
+    terrorism: { 1: 0.005, 2: 0.0035, 3: 0.0035 },
   };
 
   let extraPremium = 0;
 
-  // Apply each selected additional coverage rate
   for (let coverage in additionalCovers) {
     if (additionalCovers[coverage]) {
-      extraPremium +=
-        additionalRates[coverage][`region${region}`] * vehiclePrice;
+      extraPremium += additionalRates[coverage][regionId] * vehiclePrice;
     }
   }
 

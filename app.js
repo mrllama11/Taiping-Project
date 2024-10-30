@@ -79,13 +79,25 @@ app.get("/vehicles-area", (req, res) => {
   });
 });
 
-// Fetching vehicles City ,Zone . Category , Threshold, Rate Based On CTII Data
-app.get("/vehicles-rates", (req, res) => {
-  const query =
-    "SELECT City, Zone, Category, Min_Threshold, Max_Threshold, Rate FROM taipingdata.vehicle_rates";
+// Fetching vehicles area For Modal Form
+app.get("/wilayah", (req, res) => {
+  const query = "SELECT area, region_id FROM taipingdata.wilayah";
+
   db.query(query, (err, results) => {
     if (err) {
-      console.log("Error Fetching Vehicles Rate:", err);
+      console.log("Error fetching vehicle areas:", err);
+      return res.status(500).send("database error");
+    }
+    res.json(results);
+  });
+});
+
+app.get("/vehicle-categories", (req, res) => {
+  const query =
+    "SELECT id, category_name, vehicle_type, vehicle_cover_min, vehicle_cover_max FROM vehicle_category";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.log("Error Fetching Vehicles categories:", err);
       return res.status(500).send("DataBase Error 404");
     }
     res.json(results);
@@ -105,16 +117,22 @@ app.get("/vehicles-rate-tlo", (req, res) => {
 });
 
 app.get("/vehicles-rates-comprehensive", (req, res) => {
-  const query =
-    "SELECT * FROM premium_rate_Comprehensive WHERE vehicle_category_id = ? AND region_id = ?";
-  [category_id, region_id],
-    db.query(query, (err, results) => {
-      if (err) {
-        console.log("Error Fetching Vehicles Rate:", err);
-        return res.status(500).send("DataBase Error 404");
-      }
-      res.json(results);
-    });
+  const { vehicleCategoryId, regionId, ageColumn } = req.query;
+
+  if (!vehicleCategoryId || !regionId || !ageColumn) {
+    return res.status(400).json({ error: "Missing required parameters" });
+  }
+
+  // Using backticks to embed ageColumn as a dynamic column name
+  const query = `SELECT \`${ageColumn}\` FROM premium_rate_comprehensive WHERE vehicle_category_id = ? AND region_id = ?`;
+
+  db.query(query, [vehicleCategoryId, regionId], (err, results) => {
+    if (err) {
+      console.log("Error Fetching Vehicles Rate:", err);
+      return res.status(500).send("DataBase Error 404");
+    }
+    res.json(results);
+  });
 });
 
 // Start the server
