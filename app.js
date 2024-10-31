@@ -105,15 +105,33 @@ app.get("/vehicle-categories", (req, res) => {
 });
 
 app.get("/vehicles-rate-tlo", (req, res) => {
-  const { vehicle_year, region_id } = req.query;
-  // Logic to fetch vehicle rates based on year and region
-  const rates = getRatesForTLO(vehicle_year, region_id); // Implement this function
+  const { vehicleCategoryId, regionId } = req.query;
 
-  if (rates) {
-    res.json(rates);
-  } else {
-    res.status(404).send({ error: "Rates not found" });
+  // Check for required parameters
+  if (!vehicleCategoryId || !regionId) {
+    return res.status(400).json({ error: "Missing required parameters" });
   }
+
+  const query = `SELECT rate FROM premium_rate_TLO WHERE vehicle_category_id = ? AND region_id = ?`;
+
+  db.query(query, [vehicleCategoryId, regionId], (err, results) => {
+    if (err) {
+      console.error("Error fetching data from the database:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    // Check if results contain data
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({
+          error: "No TLO rate found for the specified category and region",
+        });
+    }
+
+    // Assuming `rate` is in the first result
+    res.json(results[0]); // Return the first entry's rate
+  });
 });
 
 app.get("/vehicles-rates-comprehensive", (req, res) => {

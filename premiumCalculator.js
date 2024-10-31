@@ -1,128 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//   console.log("DOM activated. Working 200 OK");
-
-//   let selectedInsuranceType = "TLO"; // Default selected TLO
-
-//   const tloRadio = document.getElementById("flexRadioDefault2");
-//   const comprehensiveRadio = document.getElementById("flexRadioDefault1");
-
-//   tloRadio.addEventListener("change", function () {
-//     if (this.checked) {
-//       selectedInsuranceType = "TLO";
-//       console.log("Selected Insurance type: TLO");
-//     }
-//   });
-
-//   comprehensiveRadio.addEventListener("change", function () {
-//     if (this.checked) {
-//       selectedInsuranceType = "Comprehensive";
-//       console.log("Selected Insurance type: Comprehensive");
-//     }
-//   });
-
-//   // Button when clicked
-//   document.getElementById("nextBtn1").addEventListener("click", function () {
-//     console.log("Count button clicked.");
-
-//     // Capture the category_id and region_id values
-//     const category_id = document.getElementById(
-//       "vehicleCategoryDropdown"
-//     ).value; // Assuming you have a dropdown for category
-//     const region_id = document.getElementById("vehicleAreaDropdown").value; // Assuming you have a dropdown for region
-
-//     // Validate region_id to ensure a selection has been made
-//     if (region_id === "" || region_id === "Select Vehicle Area") {
-//       alert("Please select a valid vehicle area.");
-//       return; // Stop further execution
-//     }
-
-//     // Check which insurance type is selected
-//     console.log("Current selected insurance type:", selectedInsuranceType);
-
-//     // Fetch vehicle rates and proceed with calculations
-//     fetchVehicleRatesAndCalculate(
-//       selectedInsuranceType,
-//       category_id, // If you're still using this, else remove
-//       region_id
-//     );
-//   });
-
-//   // Fetch vehicle rates and perform calculations
-//   function fetchVehicleRatesAndCalculate(
-//     insuranceType,
-//     vehicleYear,
-//     region_id
-//   ) {
-//     const apiEndpoint =
-//       insuranceType === "Comprehensive"
-//         ? `/vehicles-rate-comprehensive?vehicle_year=${vehicleYear}&region_id=${region_id}`
-//         : `/vehicles-rate-tlo?vehicle_year=${vehicleYear}&region_id=${region_id}`;
-
-//     fetch(apiEndpoint)
-//       .then((response) => response.json())
-//       .then((vehicleRates) => {
-//         console.log("Parsed data:", vehicleRates);
-
-//         const hargaKendaraanInput = document.getElementById("hargaKendaraan");
-//         if (!hargaKendaraanInput) {
-//           console.error("HARGA KENDARAAN NOTFOUND 404");
-//           return; //stop
-//         } else {
-//           console.log(`Found harga Kendaraan ${hargaKendaraanInput}`);
-//         }
-
-//         const hargaKendaraanValue = hargaKendaraanInput.value;
-//         if (!hargaKendaraanValue) {
-//           alert("Please enter the vehicle price.");
-//           return;
-//         }
-
-//         const hargaKendaraanCleaned = hargaKendaraanValue.replace(/\./g, "");
-//         const hargaKendaraan = parseFloat(hargaKendaraanCleaned);
-
-//         // Filter rates based on region and vehicle price
-//         const matchedRate = vehicleRates.find(
-//           (rate) =>
-//             rate.region_id === region_id &&
-//             hargaKendaraan >= rate.vehicle_cover_min &&
-//             hargaKendaraan <= rate.vehicle_cover_max
-//         );
-
-//         if (matchedRate && !isNaN(hargaKendaraan)) {
-//           const rate = matchedRate.Rate;
-
-//           const premium = calculatePremium({
-//             vehiclePrice: hargaKendaraan,
-//             rate: rate,
-//             insuranceType: insuranceType,
-//           });
-
-//           const formattedPremium = premium.toLocaleString("id-ID");
-//           console.log(
-//             `Calculated premium (${insuranceType}) is: ${formattedPremium}`
-//           );
-
-//           const calculatedPremiumInput =
-//             document.getElementById("calculatedPremium");
-//           if (calculatedPremiumInput) {
-//             calculatedPremiumInput.value = formattedPremium;
-//           } else {
-//             console.error("Premium input field is missing.");
-//           }
-//         } else {
-//           console.error("No rate data found for the selected area.");
-//         }
-//       })
-//       .catch((error) => {
-//         console.error("Error fetching vehicle rates:", error);
-//       });
-//   }
-
-//   function calculatePremium(data) {
-//     return data.vehiclePrice * data.rate;
-//   }
-// });
-
 // =-=-=-=--=--=-=-=--=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 
 const insuranceTypeMap = {
@@ -133,6 +8,7 @@ const insuranceTypeMap = {
 // SO WE EXECUTE THE FUNCTION CALCULATOR WHEN WE PRESS THE BUTTON
 document.getElementById("nextBtn1").addEventListener("click", calculatePremium);
 
+// Function to get the precise base rate from the database (check the rate from databse)
 async function getBaseRate(insuranceType, regionId, vehiclePrice, vehicleYear) {
   const age = new Date().getFullYear() - vehicleYear;
 
@@ -145,6 +21,7 @@ async function getBaseRate(insuranceType, regionId, vehiclePrice, vehicleYear) {
     return null;
   }
 
+  // check if the user selects what type of insurance type
   let baseRate;
   if (insuranceType === "flexRadioDefault1") {
     baseRate = await getComprehensiveRate(vehicleCategoryId, regionId, age);
@@ -157,6 +34,7 @@ async function getBaseRate(insuranceType, regionId, vehiclePrice, vehicleYear) {
   console.log("Vehicle Price:", formatter.format(vehiclePrice));
   console.log("Vehicle Year:", vehicleYear);
 
+  // stores into baseRate(what type of insurance , reghionID, vehicle price, vehicle year) for then checking into the databse
   return baseRate;
 }
 
@@ -168,14 +46,11 @@ function parseCurrency(value) {
 
 // Mark the main function as async
 
-// Mark the main function as async
-
 // Utility function to format currency
 function formatCurrency(amount) {
   return amount.toLocaleString("id-ID", { style: "currency", currency: "IDR" });
 }
 
-// Mark the main function as async
 async function calculatePremium() {
   const selectedInsuranceType = document.querySelector(
     'input[name="flexRadioDefault"]:checked'
@@ -196,8 +71,8 @@ async function calculatePremium() {
   const vehiclePrice = parseCurrency(
     document.getElementById("hargaKendaraan").value
   );
-  if (isNaN(vehiclePrice) || vehiclePrice <= 0) {
-    console.error("Invalid vehicle price input.");
+  if (!vehiclePrice || isNaN(vehiclePrice) || vehiclePrice <= 0) {
+    console.error("Please input a valid vehicle price!");
     return;
   }
 
@@ -207,7 +82,6 @@ async function calculatePremium() {
     return;
   }
 
-  // Use async/await to get regionId
   const selectedArea = getSelectedArea();
   const regionId = await getRegionId(selectedArea);
   if (!regionId) {
@@ -215,41 +89,22 @@ async function calculatePremium() {
     return;
   }
 
-  const thirdPartyLiability = parseCurrency(
-    document.getElementById("hargaTiga").value
-  );
-  if (isNaN(thirdPartyLiability) || thirdPartyLiability < 0) {
-    console.error("Invalid Third Party Liability input.");
-    return;
-  }
-
-  const driverAccidentInsurance = parseCurrency(
-    document.getElementById("hargaDiri").value
-  );
-  if (isNaN(driverAccidentInsurance) || driverAccidentInsurance < 0) {
-    console.error("Invalid Driver Accident Insurance input.");
-    return;
-  }
-
-  const passengerAccidentInsurance = parseCurrency(
-    document.getElementById("hargaPenumpang").value
-  );
-  if (isNaN(passengerAccidentInsurance) || passengerAccidentInsurance < 0) {
-    console.error("Invalid Passenger Accident Insurance input.");
-    return;
-  }
-
+  const thirdPartyLiability =
+    parseCurrency(document.getElementById("hargaTiga").value) || 0;
+  const driverAccidentInsurance =
+    parseCurrency(document.getElementById("hargaDiri").value) || 0;
+  const passengerAccidentInsurance =
+    parseCurrency(document.getElementById("hargaPenumpang").value) || 0;
   const numberOfPassengersElement = document.getElementById("jumlahPenumpang");
   const numberOfPassengers = parseInt(numberOfPassengersElement.value) || 0;
 
   const additionalCovers = {
-    flood: document.getElementById("extraOption1")?.checked || false,
-    earthquake: document.getElementById("extraOption2")?.checked || false,
-    civilCommotion: document.getElementById("extraOption3")?.checked || false,
-    terrorism: document.getElementById("extraOption4")?.checked || false,
+    flood: document.getElementById("banjirTopan")?.checked || false,
+    earthquake: document.getElementById("gempaTsunami")?.checked || false,
+    civilCommotion: document.getElementById("huruHara")?.checked || false,
+    terrorism: document.getElementById("terorismeSabotase")?.checked || false,
   };
 
-  // Base rate calculation with async/await
   const baseRate = await getBaseRate(
     insuranceType,
     regionId,
@@ -261,15 +116,22 @@ async function calculatePremium() {
     return;
   }
 
-  // Additional premium calculation
-  const additionalPremium = calculateAdditionalCovers(
-    additionalCovers,
-    regionId,
-    vehiclePrice
-  );
-  if (isNaN(additionalPremium)) {
-    console.error("Additional premium calculation failed.");
-    return;
+  // Calculate extra premium based on the insurance type
+  let extraPremium = 0;
+  if (insuranceType === "flexRadioDefault1") {
+    // For Comprehensive
+    extraPremium = calculateAdditionalCoversComprehensive(
+      additionalCovers,
+      regionId,
+      vehiclePrice
+    );
+  } else {
+    // For TLO
+    extraPremium = calculateAdditionalCoversTLO(
+      additionalCovers,
+      regionId,
+      vehiclePrice
+    );
   }
 
   // Calculate total additional costs
@@ -279,19 +141,22 @@ async function calculatePremium() {
     passengerAccidentInsurance * numberOfPassengers;
 
   // Calculate total premium
-  let totalPremium = (baseRate + additionalPremium) * vehiclePrice;
+  let premiumOnly = baseRate * vehiclePrice;
+  let totalPremium = premiumOnly + extraPremium;
   totalPremium +=
     totalThirdPartyLiability +
     totalDriverAccidentInsurance +
     totalPassengerAccidentInsurance;
 
-  if (isNaN(totalPremium)) {
-    console.error("Total premium calculation resulted in NaN.");
-    return;
-  }
-
   // Display the premiums in a structured format
-  console.log(`Base Premium: ${formatCurrency(baseRate)}`);
+  console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
+  console.log(`Base Premium: ${baseRate.toFixed(4)}`);
+  console.log(
+    `Base Premium (Rate: ${(baseRate * 100).toFixed(2)}%): ${formatCurrency(
+      premiumOnly
+    )}`
+  );
+
   console.log(
     `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
   );
@@ -304,14 +169,33 @@ async function calculatePremium() {
     )}`
   );
 
-  if (additionalPremium > 0) {
-    console.log(
-      `Additional Premium (Flood, Earthquake, etc.): ${formatCurrency(
-        additionalPremium
-      )}`
-    );
+  // Display additional covers and their calculated premiums
+  console.log("Selected Additional Covers:");
+  for (let coverage in additionalCovers) {
+    if (additionalCovers[coverage]) {
+      let coveragePremium;
+      if (insuranceType === "flexRadioDefault1") {
+        coveragePremium = calculateAdditionalCoversComprehensive(
+          { [coverage]: true },
+          regionId,
+          vehiclePrice
+        );
+      } else {
+        coveragePremium = calculateAdditionalCoversTLO(
+          { [coverage]: true },
+          regionId,
+          vehiclePrice
+        );
+      }
+      console.log(
+        `${
+          coverage.charAt(0).toUpperCase() + coverage.slice(1)
+        }: ${formatCurrency(coveragePremium)}`
+      );
+    }
   }
 
+  console.log(`Extra Premium: ${formatCurrency(extraPremium)}`);
   console.log(`Total Premium: ${formatCurrency(totalPremium)}`);
 }
 
@@ -460,36 +344,89 @@ async function getComprehensiveRate(vehicleCategoryId, regionId, age) {
 
 async function getTLORate(vehicleCategoryId, regionId) {
   try {
-    const query = `SELECT rate FROM premium_rate_TLO WHERE vehicle_category_id = ? AND region_id = ?`;
-    const result = await database.query(query[(vehicleCategoryId, regionId)]);
+    // Make an HTTP request to your backend endpoint
+    const response = await fetch(
+      `http://localhost:3000/vehicles-rate-tlo?vehicleCategoryId=${vehicleCategoryId}&regionId=${regionId}`
+    );
 
-    if (result.length > 0) {
-      return result[0].rate;
-    } else {
-      console.error("No TLO Rate found for the category");
+    // Check if the response is successful
+    if (!response.ok) {
+      console.error("Error fetching TLO rate:", response.statusText);
       return null;
     }
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // If data contains rate, return it; otherwise, return null
+    return data.rate || null;
   } catch (error) {
-    console.error("Error Fetching rate from database", error);
+    console.error("Error fetching TLO rate from the backend:", error);
     return null;
   }
 }
 
-function calculateAdditionalCovers(additionalCovers, regionId, vehiclePrice) {
+// Function to parse and clean input values
+function parseInputValue(inputId) {
+  const value = document
+    .getElementById(inputId)
+    .value.replace(/[^0-9.-]+/g, "");
+  return parseFloat(value) || 0; // Returns 0 if the value is NaN
+}
+
+function calculateAdditionalCoversComprehensive(
+  additionalCovers,
+  regionId,
+  vehiclePrice
+) {
   const additionalRates = {
-    flood: { 1: 0.0075, 2: 0.01, 3: 0.0075 },
-    earthquake: { 1: 0.012, 2: 0.01, 3: 0.0075 },
-    civilCommotion: { 1: 0.005, 2: 0.0035, 3: 0.0035 },
-    terrorism: { 1: 0.005, 2: 0.0035, 3: 0.0035 },
+    flood: { 1: 0.00075, 2: 0.001, 3: 0.00075 },
+    earthquake: { 1: 0.0012, 2: 0.001, 3: 0.00075 },
+    civilCommotion: 0.0005, // Rate is fixed
+    terrorism: 0.0005, // Rate is fixed
   };
 
   let extraPremium = 0;
 
   for (let coverage in additionalCovers) {
     if (additionalCovers[coverage]) {
-      extraPremium += additionalRates[coverage][regionId] * vehiclePrice;
+      // Determine if the rate is an object or a fixed number
+      const rate = additionalRates[coverage];
+      extraPremium +=
+        (typeof rate === "object" ? rate[regionId] || 0 : rate) * vehiclePrice;
     }
   }
+  console.log(extraPremium);
+  return extraPremium;
+}
 
+function calculateAdditionalCoversTLO(
+  additionalCovers,
+  regionId,
+  vehiclePrice
+) {
+  const additionalRates = {
+    flood: { 1: 0.0005, 2: 0.00075, 3: 0.0005 },
+    earthquake: { 1: 0.00085, 2: 0.00075, 3: 0.0005 },
+    civilCommotion: 0.00035, // Fixed rate
+    terrorism: 0.00035, // Fixed rate
+  };
+
+  let extraPremium = 0;
+
+  for (let coverage in additionalCovers) {
+    if (additionalCovers[coverage]) {
+      const rate = additionalRates[coverage];
+      // Check if the rate is an object or a fixed number
+      if (typeof rate === "object") {
+        // Use the region ID to get the appropriate rate
+        extraPremium += (rate[regionId] || 0) * vehiclePrice; // Default to 0 if region ID not found
+      } else {
+        // Fixed rate
+        extraPremium += rate * vehiclePrice;
+      }
+    }
+  }
+  console.log(extraPremium);
   return extraPremium;
 }
