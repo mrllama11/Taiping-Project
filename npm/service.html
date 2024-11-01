@@ -127,10 +127,12 @@
                 </p>
                 <!-- set button to target the modal and link the form -->
                 <button type="button" 
+                  id="buttonLearnMore"
                   class="btn btn-primary" 
                   data-bs-toggle="modal"
                   data-bs-target="#agentFormGeneral">
-                  Learn More
+                  <span id="spinnerLearnMore" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                  <span id="buttonTextLearnMore" >Learn More</span>
                 </button>
               </div>
             </div>
@@ -188,7 +190,7 @@
                       <strong>Total Loss Only (TLO) :</strong> Perlindungan risiko kendaraan Anda terhadap kehilangan akibat pencurian dan atau kerusakan dimana biaya perbaikannya sama atau lebih dari 75% harga kendaraan.
                     </p>
                 </div>
-                <div class="mb-3">
+                <div class="mb-5">
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                     <label class="form-check-label" for="flexRadioDefault1">
@@ -201,50 +203,45 @@
                       Total Loss Only (TLO)
                     </label>
                   </div>
-                </div>
-                <div class="mb-3">
-                  <label for="selectfield">
-                    <span class="text-dark">
-                      Tahun Kendaraan
-                    </span>
-                    <span class="text-danger">
-                      *
-                    </span>
+                <!-- Vehicle Year Dropdown -->
+                <div class="mb-3 mt-3">
+                  <label for="vehicleDropdown">
+                    <span class="text-dark">Tahun Kendaraan</span>
+                    <span class="text-danger">*</span>
                   </label>
-                  <select class="form-select" id="vehicleDropdown" aria-label="Default select example">
+                  <select class="form-select" id="vehicleDropdown" aria-label="Vehicle Year">
                     <option value="" disabled selected>Select Vehicle Year</option>
+                    <!-- Populate this dynamically with options -->
                   </select>
                 </div>
+
+                <!-- Vehicle Price Input -->
                 <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    Harga Kendaraan 
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
+                  <label for="hargaKendaraan">
+                    <span class="text-dark">Harga Kendaraan</span>
+                    <span class="text-danger">*</span>
                     <span class="text-dark">
                       <a href="https://samsat-pkb.jakarta.go.id/INFO_NJKB">Pengecekan Harga Kendaraan</a>
                     </span>
                   </label>
                 </div>
                 <div class="input-group mb-3">
-                  <span class="input-group-text" id="inputGroup-sizing-default">IDR</span>
-                  <input type="text" id="hargaKendaraan" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                  <span class="input-group-text">IDR</span>
+                  <input type="text" id="hargaKendaraan" class="form-control" aria-label="Vehicle Price">
                 </div>
+
+                <!-- Vehicle Area Dropdown -->
                 <div class="mb-3">
-                  <label for="selectfield">
-                    <span class="text-dark">
-                      Wilayah
-                    </span>
-                    <span class="text-danger">
-                      *
-                    </span>
+                  <label for="vehicleAreaDropdown">
+                    <span class="text-dark">Wilayah</span>
+                    <span class="text-danger">*</span>
                   </label>
-                  <select class="form-select" id="vehicleAreaDropdown" aria-label="Default select example">
+                  <select class="form-select" id="vehicleAreaDropdown" aria-label="Vehicle Area">
                     <option value="" disabled selected>Select Vehicle Area</option>
+                    <!-- Populate this dynamically with options -->
                   </select>
                 </div>
+
                 <div class="mb-3">
                   <label for="form-control">
                     <span class="text-dark">
@@ -333,9 +330,11 @@
                 
                 
                 <!-- Count button -->
+                <div id="errorMessage" class="text-danger mb-3" style="display: none;">Please complete all required fields*</div>
                 <div class="mb-3 p-3 text-end">
                   <button class="btn btn-primary btn-md" type="button" id="nextBtn1">
-                      Count
+                    <span id="spinner" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                    <span id="buttonText" >count</span>
                   </button>
                 </div>  
               </form>
@@ -343,6 +342,9 @@
           </div>
         </div>
       </section>
+    
+   
+     
 
     <!-- Frequenly asked questions -->
     <section class="p-5">
@@ -565,6 +567,8 @@
     <script src="/service.js"></script>
     <script src="vehiclearea.js"></script>
     <script src="../premiumCalculator.js"></script>
+    <script src="spinner.js"></script>
+    <script src="spinnerLearnMore.js"></script>
     
     
   </body>

@@ -16,7 +16,7 @@
 --     ('B','2','Jakarta'),
 --     ('D','2','Bandung'),
 --     ('E','2','Cirebon , Majalengka, Indramayu, Kuningan'),
---     ('G','3','Pekalongan, Brebes, Pemalang , Batang, Tegal'),
+--     ('G','3','Pekalongan, Brebes, Pemalang , Batang, Tegal'), 
 --     ('H','3','Semarang, Salatiga, Kendal, Demak'),
 --     ('K','3','Rembang, Cepu, Pati , Kudus, Jepara, Grobongann, Rembang, Blora'),
 --     ('L','3','Surabaya'),

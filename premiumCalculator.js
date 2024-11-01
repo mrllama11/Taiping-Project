@@ -31,7 +31,7 @@ async function getBaseRate(insuranceType, regionId, vehiclePrice, vehicleYear) {
 
   console.log("Insurance Type:", insuranceTypeMap[insuranceType]);
   console.log("Region:", regionId);
-  console.log("Vehicle Price:", formatter.format(vehiclePrice));
+  console.log(`Vehicle Price:  ${formatCurrency(vehiclePrice)}`);
   console.log("Vehicle Year:", vehicleYear);
 
   // stores into baseRate(what type of insurance , reghionID, vehicle price, vehicle year) for then checking into the databse
@@ -396,7 +396,7 @@ function calculateAdditionalCoversComprehensive(
         (typeof rate === "object" ? rate[regionId] || 0 : rate) * vehiclePrice;
     }
   }
-  console.log(extraPremium);
+  // console.log(extraPremium);
   return extraPremium;
 }
 
@@ -427,6 +427,6 @@ function calculateAdditionalCoversTLO(
       }
     }
   }
-  console.log(extraPremium);
+  // console.log(extraPremium);
   return extraPremium;
 }
