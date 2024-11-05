@@ -43,8 +43,9 @@ document
         return response.text(); // Return the response text on success
       })
       .then((data) => {
-        alert(data); // Display success message or any response from the server
+        // alert(data); // Display success message or any response from the server
         document.getElementById("newsletterEmail").value = ""; // Clear input field
+        // alert(data);
       })
       .catch((error) => {
         console.error("Error:", error); // Log error to console
