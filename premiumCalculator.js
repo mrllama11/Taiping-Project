@@ -72,6 +72,8 @@ function formatCurrency(amount) {
   return amount.toLocaleString("id-ID", { style: "currency", currency: "IDR" });
 }
 
+// Initialize additionalCoverPremiums before any calculations
+let additionalCoverPremiums = {};
 async function calculatePremium() {
   try {
     // Close the form modal (input modal) and show the result modal
@@ -194,14 +196,6 @@ async function calculatePremium() {
       totalPremium += additionalCoverPremiums[coverage];
     }
 
-    // Format the additional cover premiums
-    let formattedAdditionalCoverPremiums = {};
-    for (let coverage in additionalCoverPremiums) {
-      formattedAdditionalCoverPremiums[coverage] = formatCurrency(
-        additionalCoverPremiums[coverage]
-      );
-    }
-
     // Display the premiums in a structured format
     console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
     console.log(`Base Premium: ${baseRate.toFixed(4)}`);
@@ -225,9 +219,7 @@ async function calculatePremium() {
       )}`
     );
 
-    // Display additional covers and their calculated premiums
-    let additionalCoverPremiums = {};
-    console.log("Selected Additional Covers:");
+    // Then proceed with calculating premiums for selected additional covers
     for (let coverage in additionalCovers) {
       if (additionalCovers[coverage]) {
         let coveragePremium;
@@ -244,13 +236,21 @@ async function calculatePremium() {
             vehiclePrice
           );
         }
-        additionalCoverPremiums[coverage] = coveragePremium;
-        console.log(
-          `${
-            coverage.charAt(0).toUpperCase() + coverage.slice(1)
-          }: ${formatCurrency(coveragePremium)}`
-        );
+        additionalCoverPremiums[coverage] = coveragePremium; // Assign calculated premium
       }
+    }
+
+    console.log(
+      "additionalCoverPremiums (after calculation):",
+      additionalCoverPremiums
+    );
+
+    // Format the additional cover premiums for display
+    let formattedAdditionalCoverPremiums = {};
+    for (let coverage in additionalCoverPremiums) {
+      formattedAdditionalCoverPremiums[coverage] = formatCurrency(
+        additionalCoverPremiums[coverage]
+      );
     }
 
     console.log(`Extra Premium: ${formatCurrency(extraPremium)}`);

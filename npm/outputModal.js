@@ -7,6 +7,7 @@ document.addEventListener("premiumCalculated", (event) => {
   document.getElementById("outVehiclePrice").textContent = results.vehiclePrice;
   document.getElementById("outVehicleYear").textContent = results.vehicleYear;
   document.getElementById("outBasePremium").textContent = results.basePremium;
+  document.getElementById("outVehicleCategory").textContent = results.category;
   document.getElementById("outTPL").textContent = results.thirdPartyLiability;
   document.getElementById("outDriverAccident").textContent =
     results.driverAccidentInsurance;
