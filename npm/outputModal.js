@@ -29,9 +29,9 @@ document.addEventListener("premiumCalculated", (event) => {
   modal.show();
 });
 
-document.getElementById("downloadPdf").addEventListener("click", () => {
-  const resultContent = document
-    .getElementById("resultModal")
-    .querySelector(".modal-content");
-  html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
-});
+// document.getElementById("downloadPdf").addEventListener("click", () => {
+//   const resultContent = document
+//     .getElementById("resultModal")
+//     .querySelector(".modal-content");
+//   html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
+// });

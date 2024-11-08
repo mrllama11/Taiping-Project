@@ -1,0 +1,19 @@
+.modal-header {
+  display: flex;
+  /* so that they stacked */
+  flex-direction: column;
+  align-items: center;
+  /* position relative key for the X button to positiion top of the modal */
+  position: relative;
+}
+.outputLogo {
+  display: block;
+  margin: 0 auto;
+  width: 10rem;
+}
+.btn-close {
+  /* add absolute foe THE X */
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}

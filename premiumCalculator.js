@@ -10,23 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("nextBtn1")
     .addEventListener("click", calculatePremium);
-  document.getElementById("downloadPdf").addEventListener("click", () => {
-    const resultContent = document
-      .getElementById("resultModal")
-      .querySelector(".modal-content");
-    html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
-  });
+  // document.getElementById("downloadPdf").addEventListener("click", () => {
+  //   const resultContent = document
+  //     .getElementById("resultModal")
+  //     .querySelector(".modal-content");
+  //   html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
+  // });
 });
 document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("calculateButton")
     .addEventListener("click", calculatePremium);
-  document.getElementById("downloadPdf").addEventListener("click", () => {
-    const resultContent = document
-      .getElementById("resultModal")
-      .querySelector(".modal-content");
-    html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
-  });
+  // document.getElementById("downloadPdf").addEventListener("click", () => {
+  //   const resultContent = document
+  //     .getElementById("resultModal")
+  //     .querySelector(".modal-content");
+  //   html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
+  // });
 });
 
 // Function to get the precise base rate from the database (check the rate from databse)
@@ -333,12 +333,32 @@ async function calculatePremium() {
     document.getElementById("outputTotalPremium").innerText =
       calculationResults.totalPremium;
 
-    // Allow the user to download the result as PDF
     document.getElementById("downloadPdf").addEventListener("click", () => {
-      const resultContent = document
+      const downloadButton = document.getElementById("downloadPdf");
+
+      // Prevent multiple downloads by disabling the button
+      downloadButton.disabled = true;
+
+      // Clone the modal content to work with
+      const modalContent = document
         .getElementById("resultModal")
-        .querySelector(".modal-content");
-      html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
+        .querySelector(".modal-content")
+        .cloneNode(true);
+
+      // Remove the "Download PDF" button from the cloned content
+      const clonedButton = modalContent.querySelector("#downloadPdf");
+      if (clonedButton) clonedButton.remove();
+
+      // Use html2pdf to generate and save the PDF from the cloned content
+      html2pdf()
+        .from(modalContent)
+        .save(
+          "China_Taiping_Insurance_Indonesia_Premium_Calculation_Result_Demo.pdf"
+        )
+        .then(() => {
+          // Re-enable the button after download
+          downloadButton.disabled = false;
+        });
     });
 
     // Dispatch event with results (Simulate Loading)
