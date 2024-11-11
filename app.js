@@ -122,11 +122,9 @@ app.get("/vehicles-rate-tlo", (req, res) => {
 
     // Check if results contain data
     if (results.length === 0) {
-      return res
-        .status(404)
-        .json({
-          error: "No TLO rate found for the specified category and region",
-        });
+      return res.status(404).json({
+        error: "No TLO rate found for the specified category and region",
+      });
     }
 
     // Assuming `rate` is in the first result

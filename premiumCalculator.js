@@ -158,6 +158,7 @@ async function calculatePremium() {
       return;
     }
 
+    let ratesUsed = {};
     // Calculate extra premium based on the insurance type
     let extraPremium = 0;
     if (insuranceType === "flexRadioDefault1") {
@@ -284,6 +285,7 @@ async function calculatePremium() {
       terrorismPremium: formattedAdditionalCoverPremiums.terrorism || "Rp 0,00",
       extraPremium: formatCurrency(extraPremium),
       totalPremium: formatCurrency(totalPremium),
+      ratesUsed: ratesUsed,
     };
 
     // Dispatch a custom event with the calculation results
@@ -561,18 +563,23 @@ function calculateAdditionalCoversComprehensive(
     terrorism: 0.0005, // Rate is fixed
   };
 
+  // for storing the premium Value
   let extraPremium = 0;
+  // for storing the rates that we usee
+  let ratesUsed = {};
 
   for (let coverage in additionalCovers) {
     if (additionalCovers[coverage]) {
       // Determine if the rate is an object or a fixed number
       const rate = additionalRates[coverage];
+      const rateValue = typeof rate === "object" ? rate[regionId] || 0 : rate;
       extraPremium +=
         (typeof rate === "object" ? rate[regionId] || 0 : rate) * vehiclePrice;
+      ratesUsed[coverage] = rateValue;
     }
   }
   // console.log(extraPremium);
-  return extraPremium;
+  return { extraPremium, ratesUsed };
 }
 
 function calculateAdditionalCoversTLO(
@@ -588,20 +595,17 @@ function calculateAdditionalCoversTLO(
   };
 
   let extraPremium = 0;
+  let ratesUsed = {};
 
   for (let coverage in additionalCovers) {
     if (additionalCovers[coverage]) {
       const rate = additionalRates[coverage];
-      // Check if the rate is an object or a fixed number
-      if (typeof rate === "object") {
-        // Use the region ID to get the appropriate rate
-        extraPremium += (rate[regionId] || 0) * vehiclePrice; // Default to 0 if region ID not found
-      } else {
-        // Fixed rate
-        extraPremium += rate * vehiclePrice;
-      }
+      const rateValue = typeof rate === "object" ? rate[regionId] || 0 : rate;
+      extraPremium += rateValue * vehiclePrice;
+      ratesUsed[coverage] = rateValue; // Store the rate used for each coverage
     }
   }
+
+  return { extraPremium, ratesUsed };
   // console.log(extraPremium);
-  return extraPremium;
 }
