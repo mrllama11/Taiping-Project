@@ -22,3 +22,11 @@ body::before {
 .card-height {
   min-height: 350px; /* Adjust the minimum height as needed */
 }
+
+.modal-dialog {
+  max-width: 90vw; /* Ensures modal takes only 90% of the viewport width */
+}
+
+.modal-body {
+  overflow-x: auto; /* Allows horizontal scrolling if the content overflows */
+}

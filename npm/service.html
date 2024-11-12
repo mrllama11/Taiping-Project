@@ -315,7 +315,7 @@
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >    
                     <!-- can add Checked for default check beside the flexCheckChecked -->
                     <label class="form-check-label" for="flexCheckChecked">
-                      Jaminan Tambahan
+                      Jaminan Tambahan (Optional)
                     </label>
                   </div>
 
@@ -380,149 +380,122 @@
             <div class="modal-body 
             table-container">
 
-            <!-- General Information Table -->
-              <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md " style="padding: 10rem; text-align: center;align-items: center;">
-                <h5> <strong>General Information:</strong></h5>
-                <thead>
-                  <tr>
-                    <th scope="col"><strong>Type</strong></th>
-                    <th scope="col"><strong>Results</strong></th>
-                  </tr>
-                </thead>
-                <tbody class=" table-responsive-md table-group-divider "style="padding: 10rem; text-align: center;align-items: center;">
-                  <tr>
-                    <th scope="row">
-                      <p>Insurance Type:
-                    </th>
-                    <td>
-                      <span id="outInsuranceType"></span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p>Vehicle Region:
-                    </th>
-                    <td>
-                      <span id="outVehicleRegion"></span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p>Vehicle Price Cover:
-                    </th>
-                    <td>
-                      <span id="outVehiclePrice"></span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p>Vehicle Year:</p>
-                    </th>
-                    <td scope="row"><span id="outVehicleYear"></span></td>
-                  </tr>  
-                </tbody>
-              </table>  
-              
-              <!-- Insured Information table -->
-              <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md" style="padding: 10rem; text-align: center;align-items: center;">
-                <h5><strong>Insured Information:</strong></h5>
-                <thead>
-                  <tr>
-                    <th scope="col"><strong>Insured</strong></th>
-                    <th scope="col"><strong>Insured Rate (%)</strong></th>
-                    <th scope="col"><strong>Value</strong></th>
-                  </tr>
-                </thead>
-                <tbody class="table-responsive-md table-group-divider">
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Base Premium (Rate: <span id="outputBaseRate"></span>):</strong></p>
-                    </th>
-                    <td>
-                      <span id="outBasePremium"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Third Party Liability:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outTPL"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Driver Accident Insurance:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outDriverAccident"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Passenger Accident Insurance:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outPassengerAccident"></span>
-                    </td>
-                  </tr>  
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Number of Passengers:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outNumPassenger"></span>
-                    </td>
-                  </tr>  
-                </tbody>
-              </table> 
+             <!-- General Information Table -->
+            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md" style="text-align: center;">
+              <h5><strong>General Information:</strong></h5>
+              <thead>
+                <tr>
+                  <th scope="col"><strong>Type</strong></th>
+                  <th scope="col"><strong>Results</strong></th>
+                </tr>
+              </thead>
+              <tbody class="table-responsive-md table-group-divider">
+                <tr>
+                  <th scope="row">
+                    <p>Insurance Type:</p>
+                  </th>
+                  <td>
+                    <span id="outInsuranceType"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <p>Vehicle Region:</p>
+                  </th>
+                  <td>
+                    <span id="outVehicleRegion"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <p>Vehicle Price Cover:</p>
+                  </th>
+                  <td>
+                    <span id="outVehiclePrice"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <p>Vehicle Year:</p>
+                  </th>
+                  <td><span id="outVehicleYear"></span></td>
+                </tr>  
+              </tbody>
+            </table>
 
+            <!-- Insured Information table -->
+            <h5><strong>Insured Information:</strong></h5>
+            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md w-100" style="text-align: center;">
+              <thead>
+                <tr>
+                  <th scope="col"><strong>Insured</strong></th>
+                  <th scope="col"><strong>Insured Rate (%)</strong></th>
+                  <th scope="col"><strong>Value</strong></th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr>
+                  <th scope="row"><strong>Base Premium Rate:</span></strong></th>
+                  <td ><span id="outputBaseRate"></span></td>
+                  <td ><span id="outBasePremium"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Third Party Liability:</strong></th>
+                  <td ><span>100% (From User Input)</span></td>
+                  <td ><span id="outTPL"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Driver Accident Insurance:</strong></th>
+                  <td ><span>100% (From User Input)</span></td>
+                  <td ><span id="outDriverAccident"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Passenger Accident Insurance:</strong></th>
+                  <td ><span>100% (From User Input)</span></td>
+                  <td ><span id="outPassengerAccident"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Number of Passengers:</strong></th>
+                  <!-- span between 2 cells -->
+                  <td colspan="2" ><span id="outNumPassenger"></span></td>
+                </tr>
+              </tbody>
+            </table>
 
-              <!-- Insured Additional Information Information table -->
-            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md" style="padding: 10rem; text-align: center;align-items: center;">
-              <h5><strong>Selected Additional Covers Insured Information:</strong></h5>
-                <thead>
-                  <tr>
-                    <th scope="col"><strong>Insured</strong></th>
-                    <th scope="col"><strong>Insured Rate (%)</strong></th>
-                    <th scope="col"><strong>Value</strong></th>
-                  </tr>
-                </thead>
-                <tbody class="table-responsive-md table-group-divider">
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Flood:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outputFlood"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Earthquake:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outputEarthquake"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Civil Commotion</strong></p>
-                    </th>
-                    <td>
-                      <span id="outputCivilCommotion"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Terrorism</strong></p>
-                    </th>
-                    <td>
-                      <span id="outputTerrorism"></span>
-                    </td>
-                  </tr>  
-                </tbody>
-              </table>
+            <!-- Insured Additional Information table -->
+            <h5><strong>Insured Additional Information:</strong></h5>
+            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md w-100" style="text-align: center;">
+              <thead>
+                <tr>
+                  <th scope="col"><strong>Insured</strong></th>
+                  <th scope="col"><strong>Insured Rate (%)</strong></th>
+                  <th scope="col"><strong>Value</strong></th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr>
+                  <th scope="row"><strong>Flood:</span></strong></th>
+                  <td ><span id="outputFloodRate"></span></td>
+                  <td ><span id="outputFlood"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Earthquake:</strong></th>
+                  <td ><span id="outputEarthquakeRate"></span></td>
+                  <td ><span id="outputEarthquake"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Civil Commotion:</strong></th>
+                  <td ><span id="outputCivilCommotionRate"></span></td>
+                  <td ><span id="outputCivilCommotion"></span></td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Terrorism:</strong></th>
+                  <td ><span id="outputTerrorismRate"></span></td>
+                  <td><span id="outputTerrorism"></span></td>
+                </tr>
+              </tbody>
+            </table>
+
 
               <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md" style="padding: 10rem; text-align: center;align-items: center;">
               <h5><strong>Total Premium</strong></h5>

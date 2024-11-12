@@ -73,7 +73,15 @@ function formatCurrency(amount) {
 }
 
 // Initialize additionalCoverPremiums before any calculations
-let additionalCoverPremiums = {};
+// Define updateElementText at the top
+function updateElementText(id, value) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.innerText = value;
+  } else {
+    console.warn(`Element with ID ${id} not found.`);
+  }
+}
 async function calculatePremium() {
   try {
     // Close the form modal (input modal) and show the result modal
@@ -91,7 +99,10 @@ async function calculatePremium() {
     resultModal.show(); // Show the result modal
 
     document.getElementById("loadingOverlay").style.display = "flex"; // Show loading spinner
+
     // Beginning of the calculations
+    const additionalCoverPremiums = {}; // Declare at the beginning
+    const additionalCoverRates = {}; // Declare at the beginning
 
     const selectedInsuranceType = document.querySelector(
       'input[name="flexRadioDefault"]:checked'
@@ -158,7 +169,6 @@ async function calculatePremium() {
       return;
     }
 
-    let ratesUsed = {};
     // Calculate extra premium based on the insurance type
     let extraPremium = 0;
     if (insuranceType === "flexRadioDefault1") {
@@ -220,30 +230,39 @@ async function calculatePremium() {
       )}`
     );
 
-    // Then proceed with calculating premiums for selected additional covers
     for (let coverage in additionalCovers) {
       if (additionalCovers[coverage]) {
         let coveragePremium;
+        let result; // Declare result outside of the if/else block
+
+        // Ensure you're calling the appropriate calculation function based on insurance type
         if (insuranceType === "flexRadioDefault1") {
-          coveragePremium = calculateAdditionalCoversComprehensive(
+          result = calculateAdditionalCoversComprehensive(
             { [coverage]: true },
             regionId,
             vehiclePrice
           );
+          coveragePremium = result.extraPremium; // Ensure you're extracting the numerical value
         } else {
-          coveragePremium = calculateAdditionalCoversTLO(
+          result = calculateAdditionalCoversTLO(
             { [coverage]: true },
             regionId,
             vehiclePrice
           );
+          coveragePremium = result.extraPremium; // Ensure you're extracting the numerical value
         }
-        additionalCoverPremiums[coverage] = coveragePremium; // Assign calculated premium
+
+        // Assign the calculated premium to additionalCoverPremiums and rates
+        additionalCoverPremiums[coverage] = coveragePremium;
+        additionalCoverRates[coverage] = result.rateDetails[coverage]; // Make sure `result` contains the rateDetails
       }
     }
 
     console.log(
       "additionalCoverPremiums (after calculation):",
-      additionalCoverPremiums
+      additionalCoverPremiums,
+      "additionalCoverPremiumsRates (after calculation):",
+      additionalCoverRates
     );
 
     // Format the additional cover premiums for display
@@ -272,20 +291,25 @@ async function calculatePremium() {
       passengerAccidentInsurance: formatCurrency(
         totalPassengerAccidentInsurance
       ),
-      numPassenger: parseInt(document.getElementById("jumlahPenumpang").value),
+      numPassenger: parseInt(
+        document.getElementById("jumlahPenumpang").value || 1
+      ),
       flood: additionalCovers.flood ? "Yes" : "No",
       floodPremium: formattedAdditionalCoverPremiums.flood || "Rp 0,00",
+      floodRate: additionalCoverRates.flood || "Rp 0,00", // Add the flood rate here
       earthquake: additionalCovers.earthquake ? "Yes" : "No",
       earthquakePremium:
         formattedAdditionalCoverPremiums.earthquake || "Rp 0,00",
+      earthquakeRate: additionalCoverRates.earthquake || "Rp 0,00", // Add the earthquake rate here
       civilCommotion: additionalCovers.civilCommotion ? "Yes" : "No",
       civilCommotionPremium:
         formattedAdditionalCoverPremiums.civilCommotion || "Rp 0,00",
+      civilCommotionRate: additionalCoverRates.civilCommotion || "Rp 0,00", // Add the civil commotion rate here
       terrorism: additionalCovers.terrorism ? "Yes" : "No",
       terrorismPremium: formattedAdditionalCoverPremiums.terrorism || "Rp 0,00",
+      terrorismRate: additionalCoverRates.terrorism || "Rp 0,00", // Add the terrorism rate here
       extraPremium: formatCurrency(extraPremium),
       totalPremium: formatCurrency(totalPremium),
-      ratesUsed: ratesUsed,
     };
 
     // Dispatch a custom event with the calculation results
@@ -299,41 +323,57 @@ async function calculatePremium() {
     );
 
     // Insert the results into the modal
-    document.getElementById("outInsuranceType").innerText =
-      calculationResults.insuranceType;
-    document.getElementById("outVehicleRegion").innerText =
-      calculationResults.region;
-    document.getElementById("outVehiclePrice").innerText = formatCurrency(
-      calculationResults.vehiclePrice
+    // Use the function to update each element
+    updateElementText("outInsuranceType", calculationResults.insuranceType);
+    updateElementText("outVehicleRegion", calculationResults.region);
+    updateElementText(
+      "outVehiclePrice",
+      formatCurrency(calculationResults.vehiclePrice)
     );
-    document.getElementById("outVehicleYear").innerText =
-      calculationResults.vehicleYear;
-    document.getElementById(
-      "outputBaseRate"
-    ).innerText = `${calculationResults.basePremiumRate}%`; // Display rate percentage
-    document.getElementById("outBasePremium").innerText =
-      calculationResults.basePremium; // Display base premium value
-    document.getElementById("outTPL").innerText =
-      calculationResults.thirdPartyLiability;
-    document.getElementById("outDriverAccident").innerText =
-      calculationResults.driverAccidentInsurance;
-    document.getElementById("outPassengerAccident").innerText =
-      calculationResults.passengerAccidentInsurance;
-    document.getElementById("outNumPassenger").innerText =
-      calculationResults.numPassenger;
+    updateElementText("outVehicleYear", calculationResults.vehicleYear);
+    updateElementText(
+      "outputBaseRate",
+      `${calculationResults.basePremiumRate}%`
+    );
+    updateElementText("outBasePremium", calculationResults.basePremium);
+    updateElementText("outTPL", calculationResults.thirdPartyLiability);
+    updateElementText(
+      "outDriverAccident",
+      calculationResults.driverAccidentInsurance
+    );
+    updateElementText(
+      "outPassengerAccident",
+      calculationResults.passengerAccidentInsurance
+    );
+    updateElementText("outNumPassenger", calculationResults.numPassenger);
 
-    document.getElementById("outputFlood").innerText =
-      calculationResults.floodPremium;
-    document.getElementById("outputEarthquake").innerText =
-      calculationResults.earthquakePremium;
-    document.getElementById("outputCivilCommotion").innerText =
-      calculationResults.civilCommotionPremium;
-    document.getElementById("outputTerrorism").innerText =
-      calculationResults.terrorismPremium;
-    document.getElementById("outputExtraPremium").innerText =
-      calculationResults.extraPremium;
-    document.getElementById("outputTotalPremium").innerText =
-      calculationResults.totalPremium;
+    // Update additional covers and their rates
+    updateElementText("outputFlood", calculationResults.floodPremium);
+    updateElementText("outputFloodRate", calculationResults.floodRate); // Display flood rate
+    updateElementText("outputEarthquake", calculationResults.earthquakePremium);
+    updateElementText(
+      "outputEarthquakeRate",
+      calculationResults.earthquakeRate
+    ); // Display earthquake rate
+    updateElementText(
+      "outputCivilCommotion",
+      calculationResults.civilCommotionPremium
+    );
+    updateElementText(
+      "outputCivilCommotionRate",
+      calculationResults.civilCommotionRate
+    ); // Display civil commotion rate
+    updateElementText("outputTerrorism", calculationResults.terrorismPremium);
+    updateElementText("outputTerrorismRate", calculationResults.terrorismRate); // Display terrorism rate
+
+    updateElementText(
+      "outputExtraPremium",
+      formatCurrency(calculationResults.extraPremium)
+    );
+    updateElementText(
+      "outputTotalPremium",
+      formatCurrency(calculationResults.totalPremium)
+    );
 
     document.getElementById("downloadPdf").addEventListener("click", () => {
       const downloadButton = document.getElementById("downloadPdf");
@@ -563,23 +603,20 @@ function calculateAdditionalCoversComprehensive(
     terrorism: 0.0005, // Rate is fixed
   };
 
-  // for storing the premium Value
   let extraPremium = 0;
-  // for storing the rates that we usee
-  let ratesUsed = {};
+  let rateDetails = {}; // store the rate details that we hardcode above
 
   for (let coverage in additionalCovers) {
     if (additionalCovers[coverage]) {
-      // Determine if the rate is an object or a fixed number
       const rate = additionalRates[coverage];
-      const rateValue = typeof rate === "object" ? rate[regionId] || 0 : rate;
-      extraPremium +=
-        (typeof rate === "object" ? rate[regionId] || 0 : rate) * vehiclePrice;
-      ratesUsed[coverage] = rateValue;
+      const applicableRate =
+        typeof rate === "object" ? rate[regionId] || 0 : rate;
+      rateDetails[coverage] = applicableRate; // Store the rate for display
+      extraPremium += applicableRate * vehiclePrice;
     }
   }
-  // console.log(extraPremium);
-  return { extraPremium, ratesUsed };
+
+  return { extraPremium, rateDetails };
 }
 
 function calculateAdditionalCoversTLO(
@@ -595,17 +632,17 @@ function calculateAdditionalCoversTLO(
   };
 
   let extraPremium = 0;
-  let ratesUsed = {};
+  const rateDetails = {}; // Object to store rates for each selected coverage
 
   for (let coverage in additionalCovers) {
     if (additionalCovers[coverage]) {
       const rate = additionalRates[coverage];
-      const rateValue = typeof rate === "object" ? rate[regionId] || 0 : rate;
-      extraPremium += rateValue * vehiclePrice;
-      ratesUsed[coverage] = rateValue; // Store the rate used for each coverage
+      const applicableRate =
+        typeof rate === "object" ? rate[regionId] || 0 : rate;
+      rateDetails[coverage] = applicableRate; // Store the rate for display
+      extraPremium += applicableRate * vehiclePrice;
     }
   }
 
-  return { extraPremium, ratesUsed };
-  // console.log(extraPremium);
+  return { extraPremium, rateDetails };
 }
