@@ -69,7 +69,14 @@ function parseCurrency(value) {
 
 // Utility function to format currency
 function formatCurrency(amount) {
-  return amount.toLocaleString("id-ID", { style: "currency", currency: "IDR" });
+  if (isNaN(amount)) {
+    return "Rp 0,00";
+  }
+  // Formatting the amount to currency format
+  return `Rp ${amount
+    .toLocaleString("id-ID", { style: "currency", currency: "IDR" })
+    .replace("IDR", "")
+    .trim()}`;
 }
 
 // Initialize additionalCoverPremiums before any calculations
@@ -82,9 +89,13 @@ function updateElementText(id, value) {
     console.warn(`Element with ID ${id} not found.`);
   }
 }
+
 async function calculatePremium() {
   try {
     // Close the form modal (input modal) and show the result modal
+    // Initializing extraPremium as a valid number
+    let extraPremium = 0;
+    let additionalCoverResult = {}; // Initialize at the beginning
     const formModal = bootstrap.Modal.getInstance(
       document.getElementById("formModal")
     );
@@ -101,7 +112,7 @@ async function calculatePremium() {
     document.getElementById("loadingOverlay").style.display = "flex"; // Show loading spinner
 
     // Beginning of the calculations
-    const additionalCoverPremiums = {}; // Declare at the beginning
+    // Declare at the beginning
     const additionalCoverRates = {}; // Declare at the beginning
 
     const selectedInsuranceType = document.querySelector(
@@ -170,7 +181,7 @@ async function calculatePremium() {
     }
 
     // Calculate extra premium based on the insurance type
-    let extraPremium = 0;
+
     if (insuranceType === "flexRadioDefault1") {
       // For Comprehensive
       extraPremium = calculateAdditionalCoversComprehensive(
@@ -187,48 +198,136 @@ async function calculatePremium() {
       );
     }
 
+    // Set extraPremium to the sum of all additional cover premiums
+
+    // Access additional cover premiums or default to an empty object
+    // Access additional cover premiums or default to an empty object
+    // Ensure additionalCoverPremiums is an object or an empty object if undefined
+    const additionalCoverPremiums = additionalCoverResult.extraPremium || {};
+
+    // Loop through each coverage and ensure proper handling of premium values
+    for (let coverage in additionalCoverPremiums) {
+      let coverageData = additionalCoverPremiums[coverage];
+      let coveragePremium = 0; // Default to 0 if no valid premium found
+
+      // Check if the coverage data is an object with a 'premium' field
+      if (
+        typeof coverageData === "object" &&
+        coverageData !== null &&
+        "premium" in coverageData
+      ) {
+        // If 'premium' is a string, remove currency symbols and convert to number
+        coveragePremium =
+          parseFloat(
+            coverageData.premium
+              .toString()
+              .replace(/[Rp,.]/g, "")
+              .replace(",", ".")
+          ) || 0;
+      } else if (typeof coverageData === "number") {
+        // If it's already a number, use it directly
+        coveragePremium = coverageData;
+      } else {
+        // Log if coverage data is neither an object nor a valid number
+        console.error(
+          `Error: Coverage data for ${coverage} is neither a valid object nor a number:`,
+          coverageData
+        );
+      }
+
+      // Ensure coveragePremium is a valid number before adding it to extraPremium
+      if (!isNaN(coveragePremium)) {
+        extraPremium += coveragePremium;
+        console.log(`Coverage: ${coverage}, Premium: ${coveragePremium}`);
+      } else {
+        console.error(
+          `Invalid premium value for coverage ${coverage}:`,
+          coveragePremium
+        );
+      }
+    }
+
+    // Log the total extra premium in raw and formatted form
+    console.log(
+      `Total Extra Premium before adding to total premium (raw number): ${extraPremium}`
+    );
+    console.log(
+      `Total Extra Premium before adding to total premium (formatted): Rp ${formatCurrency(
+        extraPremium
+      )}`
+    );
     // Calculate total additional costs
-    const totalThirdPartyLiability = thirdPartyLiability;
-    const totalDriverAccidentInsurance = driverAccidentInsurance;
+    const totalThirdPartyLiability = Number(thirdPartyLiability) || 0;
+    const totalDriverAccidentInsurance = Number(driverAccidentInsurance) || 0;
     const totalPassengerAccidentInsurance =
       passengerAccidentInsurance * numberOfPassengers;
 
     // Calculate total premium
     let premiumOnly = baseRate * vehiclePrice;
-    let totalPremium = premiumOnly + extraPremium;
-    totalPremium +=
-      totalThirdPartyLiability +
-      totalDriverAccidentInsurance +
-      totalPassengerAccidentInsurance;
 
-    // for the extra covers
-    for (let coverage in additionalCoverPremiums) {
-      extraPremium += additionalCoverPremiums[coverage];
-      totalPremium += additionalCoverPremiums[coverage];
-    }
+    // Total Premium FINALL
+    let totalPremium =
+      premiumOnly +
+      extraPremium +
+      (Number(totalThirdPartyLiability) || 0) +
+      (Number(totalDriverAccidentInsurance) || 0) +
+      (Number(totalPassengerAccidentInsurance) || 0);
 
-    // Display the premiums in a structured format
-    console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
+    // Revalidate extraPremium and totalPremium for final display
+    extraPremium = isNaN(extraPremium) ? 0 : extraPremium;
+    totalPremium = isNaN(totalPremium) ? 0 : totalPremium;
+
     console.log(`Base Premium: ${baseRate.toFixed(4)}`);
     console.log(
       `Base Premium (Rate: ${(baseRate * 100).toFixed(2)}%): ${formatCurrency(
         premiumOnly
       )}`
     );
+    console.log(`Extra Premium: ${formatCurrency(extraPremium)}`);
+    console.log(`Total Premium: ${formatCurrency(totalPremium)}`);
 
-    console.log(
-      `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
-    );
-    console.log(
-      `Driver Accident Insurance: ${formatCurrency(
-        totalDriverAccidentInsurance
-      )}`
-    );
-    console.log(
-      `Passenger Accident Insurance: ${formatCurrency(
-        totalPassengerAccidentInsurance
-      )}`
-    );
+    // // Display the premiums in a structured format
+    // console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
+    // console.log(`Base Premium: ${baseRate.toFixed(4)}`);
+    // console.log(
+    //   `Base Premium (Rate: ${(baseRate * 100).toFixed(2)}%): ${formatCurrency(
+    //     premiumOnly
+    //   )}`
+    // );
+
+    // console.log(
+    //   `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
+    // );
+    // console.log(
+    //   `Driver Accident Insurance: ${formatCurrency(
+    //     totalDriverAccidentInsurance
+    //   )}`
+    // );
+    // console.log(
+    //   `Passenger Accident Insurance: ${formatCurrency(
+    //     totalPassengerAccidentInsurance
+    //   )}`
+    // );
+
+    // extraPremium = Number(extraPremium) || 0;
+    // totalPremium = Number(totalPremium) || 0;
+
+    // // Display the premiums in a structured format
+    // console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
+
+    // console.log(
+    //   `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
+    // );
+    // console.log(
+    //   `Driver Accident Insurance: ${formatCurrency(
+    //     totalDriverAccidentInsurance
+    //   )}`
+    // );
+    // console.log(
+    //   `Passenger Accident Insurance: ${formatCurrency(
+    //     totalPassengerAccidentInsurance
+    //   )}`
+    // );
 
     for (let coverage in additionalCovers) {
       if (additionalCovers[coverage]) {
@@ -258,12 +357,12 @@ async function calculatePremium() {
       }
     }
 
-    console.log(
-      "additionalCoverPremiums (after calculation):",
-      additionalCoverPremiums,
-      "additionalCoverPremiumsRates (after calculation):",
-      additionalCoverRates
-    );
+    // console.log(
+    //   "additionalCoverPremiums (after calculation):",
+    //   additionalCoverPremiums,
+    //   "additionalCoverPremiumsRates (after calculation):",
+    //   additionalCoverRates
+    // );
 
     // Format the additional cover premiums for display
     let formattedAdditionalCoverPremiums = {};
@@ -273,12 +372,15 @@ async function calculatePremium() {
       );
     }
 
-    console.log(`Extra Premium: ${formatCurrency(extraPremium)}`);
-    console.log(`Total Premium: ${formatCurrency(totalPremium)}`);
-
     const basePremiumRate = baseRate * 100; // Calculate the rate as a percentage
 
-    // Calculation complete, prepare the results
+    // Later in your code when setting the values to `calculationResults`
+    const formattedExtraPremium = !isNaN(extraPremium)
+      ? formatCurrency(extraPremium)
+      : "Rp 0,00";
+    console.log("Formatted Extra Premium:", formattedExtraPremium);
+    const formattedTotalPremium = formatCurrency(totalPremium); // Ensure this is defined and formatted
+
     const calculationResults = {
       insuranceType: insuranceTypeMap[insuranceType],
       region: regionId,
@@ -296,27 +398,22 @@ async function calculatePremium() {
       ),
       flood: additionalCovers.flood ? "Yes" : "No",
       floodPremium: formattedAdditionalCoverPremiums.flood || "Rp 0,00",
-      floodRate: additionalCoverRates.flood || "Rp 0,00", // Add the flood rate here
+      floodRate: additionalCoverRates.flood || "Rp 0,00",
       earthquake: additionalCovers.earthquake ? "Yes" : "No",
       earthquakePremium:
         formattedAdditionalCoverPremiums.earthquake || "Rp 0,00",
-      earthquakeRate: additionalCoverRates.earthquake || "Rp 0,00", // Add the earthquake rate here
+      earthquakeRate: additionalCoverRates.earthquake || "Rp 0,00",
       civilCommotion: additionalCovers.civilCommotion ? "Yes" : "No",
       civilCommotionPremium:
         formattedAdditionalCoverPremiums.civilCommotion || "Rp 0,00",
-      civilCommotionRate: additionalCoverRates.civilCommotion || "Rp 0,00", // Add the civil commotion rate here
+      civilCommotionRate: additionalCoverRates.civilCommotion || "Rp 0,00",
       terrorism: additionalCovers.terrorism ? "Yes" : "No",
       terrorismPremium: formattedAdditionalCoverPremiums.terrorism || "Rp 0,00",
-      terrorismRate: additionalCoverRates.terrorism || "Rp 0,00", // Add the terrorism rate here
-      extraPremium: formatCurrency(extraPremium),
-      totalPremium: formatCurrency(totalPremium),
+      terrorismRate: additionalCoverRates.terrorism || "Rp 0,00",
+      extraPremium: formattedExtraPremium,
+      totalPremium: formattedTotalPremium,
     };
-
-    // Dispatch a custom event with the calculation results
-    const event = new CustomEvent("premiumCalculated", {
-      detail: calculationResults,
-    });
-    document.dispatchEvent(event);
+    // Dispatch the event with the results
     console.log(
       "Event dispatched with calculationResults:",
       calculationResults
@@ -349,11 +446,14 @@ async function calculatePremium() {
 
     // Update additional covers and their rates
     updateElementText("outputFlood", calculationResults.floodPremium);
-    updateElementText("outputFloodRate", calculationResults.floodRate); // Display flood rate
+    updateElementText(
+      "outputFloodRate",
+      calculationResults.floodRate.toFixed(5) * 100 + "%"
+    ); // Display flood rate
     updateElementText("outputEarthquake", calculationResults.earthquakePremium);
     updateElementText(
       "outputEarthquakeRate",
-      calculationResults.earthquakeRate
+      calculationResults.earthquakeRate.toFixed(5) * 100 + "%"
     ); // Display earthquake rate
     updateElementText(
       "outputCivilCommotion",
@@ -361,18 +461,21 @@ async function calculatePremium() {
     );
     updateElementText(
       "outputCivilCommotionRate",
-      calculationResults.civilCommotionRate
+      calculationResults.civilCommotionRate.toFixed(5) * 100 + "%"
     ); // Display civil commotion rate
     updateElementText("outputTerrorism", calculationResults.terrorismPremium);
-    updateElementText("outputTerrorismRate", calculationResults.terrorismRate); // Display terrorism rate
+    updateElementText(
+      "outputTerrorismRate",
+      calculationResults.terrorismRate.toFixed(5) * 100 + "%"
+    ); // Display terrorism rate
 
     updateElementText(
       "outputExtraPremium",
-      formatCurrency(calculationResults.extraPremium)
+      formatCurrency(Number(calculationResults.extraPremium))
     );
     updateElementText(
       "outputTotalPremium",
-      formatCurrency(calculationResults.totalPremium)
+      formatCurrency(Number(calculationResults.totalPremium))
     );
 
     document.getElementById("downloadPdf").addEventListener("click", () => {
@@ -612,10 +715,16 @@ function calculateAdditionalCoversComprehensive(
       const applicableRate =
         typeof rate === "object" ? rate[regionId] || 0 : rate;
       rateDetails[coverage] = applicableRate; // Store the rate for display
-      extraPremium += applicableRate * vehiclePrice;
+      const premium = applicableRate * vehiclePrice;
+      extraPremium += premium;
+      console.log(
+        `Coverage: ${coverage}, Rate: ${applicableRate}, Calculated Premium: ${
+          applicableRate * vehiclePrice
+        }`
+      );
     }
   }
-
+  console.log("Total Extra Premium (raw number):", extraPremium); // Log raw extraPremium value
   return { extraPremium, rateDetails };
 }
 
@@ -640,9 +749,15 @@ function calculateAdditionalCoversTLO(
       const applicableRate =
         typeof rate === "object" ? rate[regionId] || 0 : rate;
       rateDetails[coverage] = applicableRate; // Store the rate for display
-      extraPremium += applicableRate * vehiclePrice;
+      const premium = applicableRate * vehiclePrice;
+      extraPremium += premium;
+      console.log(
+        `Coverage: ${coverage}, Rate: ${applicableRate}, Calculated Premium: ${
+          applicableRate * vehiclePrice
+        }`
+      );
     }
   }
-
+  console.log("Total Extra Premium (raw number):", extraPremium); // Log raw extraPremium value
   return { extraPremium, rateDetails };
 }
