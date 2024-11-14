@@ -90,435 +90,6 @@ function updateElementText(id, value) {
   }
 }
 
-async function calculatePremium() {
-  try {
-    // Close the form modal (input modal) and show the result modal
-    // Initializing extraPremium as a valid number
-    let extraPremium = 0;
-    let additionalCoverResult = {}; // Initialize at the beginning
-    const formModal = bootstrap.Modal.getInstance(
-      document.getElementById("formModal")
-    );
-    if (formModal) {
-      formModal.hide(); // Close the form modal (input)
-    }
-
-    // Show the result modal
-    const resultModal = new bootstrap.Modal(
-      document.getElementById("resultModal")
-    );
-    resultModal.show(); // Show the result modal
-
-    document.getElementById("loadingOverlay").style.display = "flex"; // Show loading spinner
-
-    // Beginning of the calculations
-    // Declare at the beginning
-    const additionalCoverRates = {}; // Declare at the beginning
-
-    const selectedInsuranceType = document.querySelector(
-      'input[name="flexRadioDefault"]:checked'
-    );
-    if (!selectedInsuranceType) {
-      console.error("Insurance type not selected.");
-      return;
-    }
-    const insuranceType = selectedInsuranceType.id;
-
-    const vehicleYearElement = document.getElementById("vehicleDropdown");
-    if (!vehicleYearElement) {
-      console.error("Vehicle dropdown not found");
-      return;
-    }
-    const vehicleYear = parseInt(vehicleYearElement.value) || 0;
-
-    const vehiclePrice = parseCurrency(
-      document.getElementById("hargaKendaraan").value
-    );
-    if (!vehiclePrice || isNaN(vehiclePrice) || vehiclePrice <= 0) {
-      console.error("Please input a valid vehicle price!");
-      return;
-    }
-
-    const regionElement = document.getElementById("vehicleAreaDropdown");
-    if (!regionElement) {
-      console.error("Region dropdown not found");
-      return;
-    }
-
-    const selectedArea = getSelectedArea();
-    const regionId = await getRegionId(selectedArea);
-    if (!regionId) {
-      console.error("Region ID not found.");
-      return;
-    }
-
-    const thirdPartyLiability =
-      parseCurrency(document.getElementById("hargaTiga").value) || 0;
-    const driverAccidentInsurance =
-      parseCurrency(document.getElementById("hargaDiri").value) || 0;
-    const passengerAccidentInsurance =
-      parseCurrency(document.getElementById("hargaPenumpang").value) || 0;
-    const numberOfPassengersElement =
-      document.getElementById("jumlahPenumpang");
-    const numberOfPassengers = parseInt(numberOfPassengersElement.value) || 0;
-
-    const additionalCovers = {
-      flood: document.getElementById("banjirTopan")?.checked || false,
-      earthquake: document.getElementById("gempaTsunami")?.checked || false,
-      civilCommotion: document.getElementById("huruHara")?.checked || false,
-      terrorism: document.getElementById("terorismeSabotase")?.checked || false,
-    };
-
-    const baseRate = await getBaseRate(
-      insuranceType,
-      regionId,
-      vehiclePrice,
-      vehicleYear
-    );
-    if (isNaN(baseRate)) {
-      console.error("Base rate calculation failed.");
-      return;
-    }
-
-    // Calculate extra premium based on the insurance type
-
-    if (insuranceType === "flexRadioDefault1") {
-      // For Comprehensive
-      extraPremium = calculateAdditionalCoversComprehensive(
-        additionalCovers,
-        regionId,
-        vehiclePrice
-      );
-    } else {
-      // For TLO
-      extraPremium = calculateAdditionalCoversTLO(
-        additionalCovers,
-        regionId,
-        vehiclePrice
-      );
-    }
-
-    // Set extraPremium to the sum of all additional cover premiums
-
-    // Access additional cover premiums or default to an empty object
-    // Access additional cover premiums or default to an empty object
-    // Ensure additionalCoverPremiums is an object or an empty object if undefined
-    const additionalCoverPremiums = additionalCoverResult.extraPremium || {};
-
-    // Loop through each coverage and ensure proper handling of premium values
-    for (let coverage in additionalCoverPremiums) {
-      let coverageData = additionalCoverPremiums[coverage];
-      let coveragePremium = 0; // Default to 0 if no valid premium found
-
-      // Check if the coverage data is an object with a 'premium' field
-      if (
-        typeof coverageData === "object" &&
-        coverageData !== null &&
-        "premium" in coverageData
-      ) {
-        // If 'premium' is a string, remove currency symbols and convert to number
-        coveragePremium =
-          parseFloat(
-            coverageData.premium
-              .toString()
-              .replace(/[Rp,.]/g, "")
-              .replace(",", ".")
-          ) || 0;
-      } else if (typeof coverageData === "number") {
-        // If it's already a number, use it directly
-        coveragePremium = coverageData;
-      } else {
-        // Log if coverage data is neither an object nor a valid number
-        console.error(
-          `Error: Coverage data for ${coverage} is neither a valid object nor a number:`,
-          coverageData
-        );
-      }
-
-      // Ensure coveragePremium is a valid number before adding it to extraPremium
-      if (!isNaN(coveragePremium)) {
-        extraPremium += coveragePremium;
-        console.log(`Coverage: ${coverage}, Premium: ${coveragePremium}`);
-      } else {
-        console.error(
-          `Invalid premium value for coverage ${coverage}:`,
-          coveragePremium
-        );
-      }
-    }
-
-    // Log the total extra premium in raw and formatted form
-    console.log(
-      `Total Extra Premium before adding to total premium (raw number): ${extraPremium}`
-    );
-    console.log(
-      `Total Extra Premium before adding to total premium (formatted): Rp ${formatCurrency(
-        extraPremium
-      )}`
-    );
-    // Calculate total additional costs
-    const totalThirdPartyLiability = Number(thirdPartyLiability) || 0;
-    const totalDriverAccidentInsurance = Number(driverAccidentInsurance) || 0;
-    const totalPassengerAccidentInsurance =
-      passengerAccidentInsurance * numberOfPassengers;
-
-    // Calculate total premium
-    let premiumOnly = baseRate * vehiclePrice;
-
-    // Total Premium FINALL
-    let totalPremium =
-      premiumOnly +
-      extraPremium +
-      (Number(totalThirdPartyLiability) || 0) +
-      (Number(totalDriverAccidentInsurance) || 0) +
-      (Number(totalPassengerAccidentInsurance) || 0);
-
-    // Revalidate extraPremium and totalPremium for final display
-    extraPremium = isNaN(extraPremium) ? 0 : extraPremium;
-    totalPremium = isNaN(totalPremium) ? 0 : totalPremium;
-
-    console.log(`Base Premium: ${baseRate.toFixed(4)}`);
-    console.log(
-      `Base Premium (Rate: ${(baseRate * 100).toFixed(2)}%): ${formatCurrency(
-        premiumOnly
-      )}`
-    );
-    console.log(`Extra Premium: ${formatCurrency(extraPremium)}`);
-    console.log(`Total Premium: ${formatCurrency(totalPremium)}`);
-
-    // // Display the premiums in a structured format
-    // console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
-    // console.log(`Base Premium: ${baseRate.toFixed(4)}`);
-    // console.log(
-    //   `Base Premium (Rate: ${(baseRate * 100).toFixed(2)}%): ${formatCurrency(
-    //     premiumOnly
-    //   )}`
-    // );
-
-    // console.log(
-    //   `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
-    // );
-    // console.log(
-    //   `Driver Accident Insurance: ${formatCurrency(
-    //     totalDriverAccidentInsurance
-    //   )}`
-    // );
-    // console.log(
-    //   `Passenger Accident Insurance: ${formatCurrency(
-    //     totalPassengerAccidentInsurance
-    //   )}`
-    // );
-
-    // extraPremium = Number(extraPremium) || 0;
-    // totalPremium = Number(totalPremium) || 0;
-
-    // // Display the premiums in a structured format
-    // console.log("+-=-=-=--=-=-=-=-=-=-=-=--=-=-=+");
-
-    // console.log(
-    //   `Third Party Liability: ${formatCurrency(totalThirdPartyLiability)}`
-    // );
-    // console.log(
-    //   `Driver Accident Insurance: ${formatCurrency(
-    //     totalDriverAccidentInsurance
-    //   )}`
-    // );
-    // console.log(
-    //   `Passenger Accident Insurance: ${formatCurrency(
-    //     totalPassengerAccidentInsurance
-    //   )}`
-    // );
-
-    for (let coverage in additionalCovers) {
-      if (additionalCovers[coverage]) {
-        let coveragePremium;
-        let result; // Declare result outside of the if/else block
-
-        // Ensure you're calling the appropriate calculation function based on insurance type
-        if (insuranceType === "flexRadioDefault1") {
-          result = calculateAdditionalCoversComprehensive(
-            { [coverage]: true },
-            regionId,
-            vehiclePrice
-          );
-          coveragePremium = result.extraPremium; // Ensure you're extracting the numerical value
-        } else {
-          result = calculateAdditionalCoversTLO(
-            { [coverage]: true },
-            regionId,
-            vehiclePrice
-          );
-          coveragePremium = result.extraPremium; // Ensure you're extracting the numerical value
-        }
-
-        // Assign the calculated premium to additionalCoverPremiums and rates
-        additionalCoverPremiums[coverage] = coveragePremium;
-        additionalCoverRates[coverage] = result.rateDetails[coverage]; // Make sure `result` contains the rateDetails
-      }
-    }
-
-    // console.log(
-    //   "additionalCoverPremiums (after calculation):",
-    //   additionalCoverPremiums,
-    //   "additionalCoverPremiumsRates (after calculation):",
-    //   additionalCoverRates
-    // );
-
-    // Format the additional cover premiums for display
-    let formattedAdditionalCoverPremiums = {};
-    for (let coverage in additionalCoverPremiums) {
-      formattedAdditionalCoverPremiums[coverage] = formatCurrency(
-        additionalCoverPremiums[coverage]
-      );
-    }
-
-    const basePremiumRate = baseRate * 100; // Calculate the rate as a percentage
-
-    // Later in your code when setting the values to `calculationResults`
-    const formattedExtraPremium = !isNaN(extraPremium)
-      ? formatCurrency(extraPremium)
-      : "Rp 0,00";
-    console.log("Formatted Extra Premium:", formattedExtraPremium);
-    const formattedTotalPremium = formatCurrency(totalPremium); // Ensure this is defined and formatted
-
-    const calculationResults = {
-      insuranceType: insuranceTypeMap[insuranceType],
-      region: regionId,
-      vehiclePrice: vehiclePrice,
-      vehicleYear: vehicleYear,
-      basePremiumRate: basePremiumRate.toFixed(2),
-      basePremium: formatCurrency(premiumOnly),
-      thirdPartyLiability: formatCurrency(totalThirdPartyLiability),
-      driverAccidentInsurance: formatCurrency(totalDriverAccidentInsurance),
-      passengerAccidentInsurance: formatCurrency(
-        totalPassengerAccidentInsurance
-      ),
-      numPassenger: parseInt(
-        document.getElementById("jumlahPenumpang").value || 1
-      ),
-      flood: additionalCovers.flood ? "Yes" : "No",
-      floodPremium: formattedAdditionalCoverPremiums.flood || "Rp 0,00",
-      floodRate: additionalCoverRates.flood || "Rp 0,00",
-      earthquake: additionalCovers.earthquake ? "Yes" : "No",
-      earthquakePremium:
-        formattedAdditionalCoverPremiums.earthquake || "Rp 0,00",
-      earthquakeRate: additionalCoverRates.earthquake || "Rp 0,00",
-      civilCommotion: additionalCovers.civilCommotion ? "Yes" : "No",
-      civilCommotionPremium:
-        formattedAdditionalCoverPremiums.civilCommotion || "Rp 0,00",
-      civilCommotionRate: additionalCoverRates.civilCommotion || "Rp 0,00",
-      terrorism: additionalCovers.terrorism ? "Yes" : "No",
-      terrorismPremium: formattedAdditionalCoverPremiums.terrorism || "Rp 0,00",
-      terrorismRate: additionalCoverRates.terrorism || "Rp 0,00",
-      extraPremium: formattedExtraPremium,
-      totalPremium: formattedTotalPremium,
-    };
-    // Dispatch the event with the results
-    console.log(
-      "Event dispatched with calculationResults:",
-      calculationResults
-    );
-
-    // Insert the results into the modal
-    // Use the function to update each element
-    updateElementText("outInsuranceType", calculationResults.insuranceType);
-    updateElementText("outVehicleRegion", calculationResults.region);
-    updateElementText(
-      "outVehiclePrice",
-      formatCurrency(calculationResults.vehiclePrice)
-    );
-    updateElementText("outVehicleYear", calculationResults.vehicleYear);
-    updateElementText(
-      "outputBaseRate",
-      `${calculationResults.basePremiumRate}%`
-    );
-    updateElementText("outBasePremium", calculationResults.basePremium);
-    updateElementText("outTPL", calculationResults.thirdPartyLiability);
-    updateElementText(
-      "outDriverAccident",
-      calculationResults.driverAccidentInsurance
-    );
-    updateElementText(
-      "outPassengerAccident",
-      calculationResults.passengerAccidentInsurance
-    );
-    updateElementText("outNumPassenger", calculationResults.numPassenger);
-
-    // Update additional covers and their rates
-    updateElementText("outputFlood", calculationResults.floodPremium);
-    updateElementText(
-      "outputFloodRate",
-      calculationResults.floodRate.toFixed(5) * 100 + "%"
-    ); // Display flood rate
-    updateElementText("outputEarthquake", calculationResults.earthquakePremium);
-    updateElementText(
-      "outputEarthquakeRate",
-      calculationResults.earthquakeRate.toFixed(5) * 100 + "%"
-    ); // Display earthquake rate
-    updateElementText(
-      "outputCivilCommotion",
-      calculationResults.civilCommotionPremium
-    );
-    updateElementText(
-      "outputCivilCommotionRate",
-      calculationResults.civilCommotionRate.toFixed(5) * 100 + "%"
-    ); // Display civil commotion rate
-    updateElementText("outputTerrorism", calculationResults.terrorismPremium);
-    updateElementText(
-      "outputTerrorismRate",
-      calculationResults.terrorismRate.toFixed(5) * 100 + "%"
-    ); // Display terrorism rate
-
-    updateElementText(
-      "outputExtraPremium",
-      formatCurrency(Number(calculationResults.extraPremium))
-    );
-    updateElementText(
-      "outputTotalPremium",
-      formatCurrency(Number(calculationResults.totalPremium))
-    );
-
-    document.getElementById("downloadPdf").addEventListener("click", () => {
-      const downloadButton = document.getElementById("downloadPdf");
-
-      // Prevent multiple downloads by disabling the button
-      downloadButton.disabled = true;
-
-      // Clone the modal content to work with
-      const modalContent = document
-        .getElementById("resultModal")
-        .querySelector(".modal-content")
-        .cloneNode(true);
-
-      // Remove the "Download PDF" button from the cloned content
-      const clonedButton = modalContent.querySelector("#downloadPdf");
-      if (clonedButton) clonedButton.remove();
-
-      // Use html2pdf to generate and save the PDF from the cloned content
-      html2pdf()
-        .from(modalContent)
-        .save(
-          "China_Taiping_Insurance_Indonesia_Premium_Calculation_Result_Demo.pdf"
-        )
-        .then(() => {
-          // Re-enable the button after download
-          downloadButton.disabled = false;
-        });
-    });
-
-    // Dispatch event with results (Simulate Loading)
-    setTimeout(() => {
-      const event = new CustomEvent("premiumCalculated", {
-        detail: calculationResults,
-      });
-      document.dispatchEvent(event);
-      document.getElementById("loadingOverlay").style.display = "none";
-    }, 3000); // Loading animation duration
-  } catch (error) {
-    console.error("error in calculatePremium", error);
-  }
-}
-
 // Function to fetch the vehicle categhory ID based on user selection
 async function getVehicleCategoryId(vehiclePrice) {
   try {
@@ -760,4 +331,294 @@ function calculateAdditionalCoversTLO(
   }
   console.log("Total Extra Premium (raw number):", extraPremium); // Log raw extraPremium value
   return { extraPremium, rateDetails };
+}
+
+async function calculatePremium() {
+  try {
+    // Initialize variables at the beginning
+    let extraPremium = 0;
+    let additionalCoverResult = {};
+    let additionalCoverPremiums = {}; // Initialize at the beginning
+    let additionalCoverRates = {}; // Initialize at the beginning
+
+    const formModal = bootstrap.Modal.getInstance(
+      document.getElementById("formModal")
+    );
+    if (formModal) {
+      formModal.hide(); // Close the form modal (input)
+    }
+
+    // Show the result modal
+    const resultModal = new bootstrap.Modal(
+      document.getElementById("resultModal")
+    );
+    resultModal.show();
+
+    document.getElementById("loadingOverlay").style.display = "flex"; // Show loading spinner
+
+    // Validate selected insurance type
+    const selectedInsuranceType = document.querySelector(
+      'input[name="flexRadioDefault"]:checked'
+    );
+    if (!selectedInsuranceType) {
+      console.error("Insurance type not selected.");
+      return;
+    }
+    const insuranceType = selectedInsuranceType.id;
+
+    // Validate vehicle year selection
+    const vehicleYearElement = document.getElementById("vehicleDropdown");
+    if (!vehicleYearElement) {
+      console.error("Vehicle dropdown not found");
+      return;
+    }
+    const vehicleYear = parseInt(vehicleYearElement.value) || 0;
+
+    // Parse and validate vehicle price
+    const vehiclePrice = parseCurrency(
+      document.getElementById("hargaKendaraan").value
+    );
+    if (!vehiclePrice || isNaN(vehiclePrice) || vehiclePrice <= 0) {
+      console.error("Please input a valid vehicle price!");
+      return;
+    }
+
+    // Validate and get region ID
+    const selectedArea = getSelectedArea();
+    const regionId = await getRegionId(selectedArea);
+    if (!regionId) {
+      console.error("Region ID not found.");
+      return;
+    }
+
+    // Parse other inputs
+    const thirdPartyLiability =
+      parseCurrency(document.getElementById("hargaTiga").value) || 0;
+    const driverAccidentInsurance =
+      parseCurrency(document.getElementById("hargaDiri").value) || 0;
+    const passengerAccidentInsurance =
+      parseCurrency(document.getElementById("hargaPenumpang").value) || 0;
+    const numberOfPassengers =
+      parseInt(document.getElementById("jumlahPenumpang").value) || 0;
+
+    // Check for additional cover selections
+    const additionalCovers = {
+      flood: document.getElementById("banjirTopan")?.checked || false,
+      earthquake: document.getElementById("gempaTsunami")?.checked || false,
+      civilCommotion: document.getElementById("huruHara")?.checked || false,
+      terrorism: document.getElementById("terorismeSabotase")?.checked || false,
+    };
+
+    // Calculate base rate
+    const baseRate = await getBaseRate(
+      insuranceType,
+      regionId,
+      vehiclePrice,
+      vehicleYear
+    );
+    if (isNaN(baseRate)) {
+      console.error("Base rate calculation failed.");
+      return;
+    }
+
+    // Calculate extra premium based on the insurance type (Comprehensive or TLO)
+    console.log("TESTING:", extraPremium);
+    extraPremium =
+      insuranceType === "flexRadioDefault1"
+        ? calculateAdditionalCoversComprehensive(
+            additionalCovers,
+            regionId,
+            vehiclePrice
+          )
+        : calculateAdditionalCoversTLO(
+            additionalCovers,
+            regionId,
+            vehiclePrice
+          );
+
+    // Calculate individual additional cover premiums and rates
+    for (let coverage in additionalCovers) {
+      if (additionalCovers[coverage]) {
+        let result =
+          insuranceType === "flexRadioDefault1"
+            ? calculateAdditionalCoversComprehensive(
+                { [coverage]: true },
+                regionId,
+                vehiclePrice
+              )
+            : calculateAdditionalCoversTLO(
+                { [coverage]: true },
+                regionId,
+                vehiclePrice
+              );
+
+        additionalCoverPremiums[coverage] = result.extraPremium;
+        additionalCoverRates[coverage] = result.rateDetails[coverage];
+      }
+    }
+
+    // Calculate total additional costs
+    const totalThirdPartyLiability = thirdPartyLiability;
+    const totalDriverAccidentInsurance = driverAccidentInsurance;
+    const totalPassengerAccidentInsurance =
+      passengerAccidentInsurance * numberOfPassengers;
+
+    // Calculate base premium only
+    let premiumOnly = baseRate * vehiclePrice;
+
+    // Calculate total premium
+    let totalPremium =
+      premiumOnly +
+      extraPremium +
+      totalThirdPartyLiability +
+      totalDriverAccidentInsurance +
+      totalPassengerAccidentInsurance;
+
+    // Revalidate extraPremium and totalPremium for final display
+    extraPremium = isNaN(extraPremium) ? 0 : extraPremium;
+    totalPremium = isNaN(totalPremium) ? 0 : totalPremium;
+
+    console.log(`Base Premium: ${baseRate.toFixed(4)}`);
+    console.log(
+      `Base Premium (Rate: ${(baseRate * 100).toFixed(2)}%): ${formatCurrency(
+        premiumOnly
+      )}`
+    );
+    console.log(`Extra Premium: ${formatCurrency(extraPremium)}`);
+    console.log(`Total Premium: ${formatCurrency(totalPremium)}`);
+
+    // Format additional cover premiums for display
+    let formattedAdditionalCoverPremiums = {};
+    for (let coverage in additionalCoverPremiums) {
+      formattedAdditionalCoverPremiums[coverage] = formatCurrency(
+        additionalCoverPremiums[coverage]
+      );
+    }
+
+    // Set up results object
+    const basePremiumRate = baseRate * 100;
+    const calculationResults = {
+      insuranceType: insuranceTypeMap[insuranceType],
+      region: regionId,
+      vehiclePrice: vehiclePrice,
+      vehicleYear: vehicleYear,
+      basePremiumRate: basePremiumRate.toFixed(2),
+      basePremium: formatCurrency(premiumOnly),
+      thirdPartyLiability: formatCurrency(totalThirdPartyLiability),
+      driverAccidentInsurance: formatCurrency(totalDriverAccidentInsurance),
+      passengerAccidentInsurance: formatCurrency(
+        totalPassengerAccidentInsurance
+      ),
+      numPassenger: parseInt(
+        document.getElementById("jumlahPenumpang").value || 1
+      ),
+      flood: additionalCovers.flood ? "Yes" : "No",
+      floodPremium: formattedAdditionalCoverPremiums.flood || "Rp 0,00",
+      floodRate: additionalCoverRates.flood || 0,
+      earthquake: additionalCovers.earthquake ? "Yes" : "No",
+      earthquakePremium:
+        formattedAdditionalCoverPremiums.earthquake || "Rp 0,00",
+      earthquakeRate: additionalCoverRates.earthquake || 0,
+      civilCommotion: additionalCovers.civilCommotion ? "Yes" : "No",
+      civilCommotionPremium:
+        formattedAdditionalCoverPremiums.civilCommotion || "Rp 0,00",
+      civilCommotionRate: additionalCoverRates.civilCommotion || 0,
+      terrorism: additionalCovers.terrorism ? "Yes" : "No",
+      terrorismPremium: formattedAdditionalCoverPremiums.terrorism || "Rp 0,00",
+      terrorismRate: additionalCoverRates.terrorism || 0,
+      extraPremium: extraPremium,
+      totalPremium: totalPremium,
+    };
+
+    // Insert the results into the modal
+    updateElementText("outInsuranceType", calculationResults.insuranceType);
+    updateElementText("outVehicleRegion", calculationResults.region);
+    updateElementText(
+      "outVehiclePrice",
+      formatCurrency(calculationResults.vehiclePrice)
+    );
+    updateElementText("outVehicleYear", calculationResults.vehicleYear);
+    updateElementText(
+      "outputBaseRate",
+      `${calculationResults.basePremiumRate}%`
+    );
+    updateElementText("outBasePremium", calculationResults.basePremium);
+    updateElementText("outTPL", calculationResults.thirdPartyLiability);
+    updateElementText(
+      "outDriverAccident",
+      calculationResults.driverAccidentInsurance
+    );
+    updateElementText(
+      "outPassengerAccident",
+      calculationResults.passengerAccidentInsurance
+    );
+    updateElementText("outNumPassenger", calculationResults.numPassenger);
+
+    // Update additional covers and their rates
+    updateElementText("outputFlood", calculationResults.floodPremium);
+    updateElementText(
+      "outputFloodRate",
+      `${(calculationResults.floodRate * 100).toFixed(3)}%`
+    );
+    updateElementText("outputEarthquake", calculationResults.earthquakePremium);
+    updateElementText(
+      "outputEarthquakeRate",
+      `${(calculationResults.earthquakeRate * 100).toFixed(3)}%`
+    );
+    updateElementText(
+      "outputCivilCommotion",
+      calculationResults.civilCommotionPremium
+    );
+    updateElementText(
+      "outputCivilCommotionRate",
+      `${(calculationResults.civilCommotionRate * 100).toFixed(3)}%`
+    );
+    updateElementText("outputTerrorism", calculationResults.terrorismPremium);
+    updateElementText(
+      "outputTerrorismRate",
+      `${(calculationResults.terrorismRate * 100).toFixed(3)}%`
+    );
+
+    updateElementText("outputExtraPremium", extraPremium);
+    updateElementText("outputTotalPremium", calculationResults.totalPremium);
+
+    document.getElementById("downloadPdf").addEventListener("click", () => {
+      const downloadButton = document.getElementById("downloadPdf");
+
+      // Prevent multiple downloads by disabling the button
+      downloadButton.disabled = true;
+
+      // Clone the modal content to work with
+      const modalContent = document
+        .getElementById("resultModal")
+        .querySelector(".modal-content")
+        .cloneNode(true);
+
+      // Remove the "Download PDF" button from the cloned content
+      const clonedButton = modalContent.querySelector("#downloadPdf");
+      if (clonedButton) clonedButton.remove();
+
+      // Use html2pdf to generate and save the PDF from the cloned content
+      html2pdf()
+        .from(modalContent)
+        .save(
+          "China_Taiping_Insurance_Indonesia_Premium_Calculation_Result_Demo.pdf"
+        )
+        .then(() => {
+          // Re-enable the button after download
+          downloadButton.disabled = false;
+        });
+    });
+
+    // Dispatch event with results (Simulate Loading)
+    setTimeout(() => {
+      const event = new CustomEvent("premiumCalculated", {
+        detail: calculationResults,
+      });
+      document.dispatchEvent(event);
+      document.getElementById("loadingOverlay").style.display = "none";
+    }, 3000); // Loading animation duration
+  } catch (error) {
+    console.error("error in calculatePremium", error);
+  }
 }

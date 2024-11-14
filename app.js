@@ -151,6 +151,45 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
   });
 });
 
+// app.get("/additional-cover-rates", (req, res) => {
+//   const { coverageType, regionId, insuranceType } = req.query;
+
+//   // Validate required parameters
+//   if (!coverageType || !insuranceType) {
+//     return res.status(400).json({ error: "Missing required parameters" });
+//   }
+
+//   // Determine the rate column based on insurance type
+//   const rateColumn =
+//     insuranceType === "comprehensive" ? "rate_comprehensive" : "rate_tlo";
+
+//   // Construct the SQL query
+//   const query = regionId
+//     ? `SELECT ${rateColumn} FROM extension_cover WHERE coverage_type = ? AND region_id = ?`
+//     : `SELECT ${rateColumn} FROM extension_cover WHERE coverage_type = ? AND region_id IS NULL`;
+
+//   // Prepare query parameters based on the presence of regionId
+//   const queryParams = regionId ? [coverageType, regionId] : [coverageType];
+
+//   // Execute the query
+//   db.query(query, queryParams, (err, results) => {
+//     if (err) {
+//       console.error("Error Fetching Additional Cover Rates:", err);
+//       return res.status(500).json({ error: "Internal Database Error" });
+//     }
+
+//     // If no results found, return a 404 not found response
+//     if (results.length === 0) {
+//       return res
+//         .status(404)
+//         .json({ error: "Rate not found for the specified parameters" });
+//     }
+
+//     // Send the fetched rate as JSON
+//     res.json(results[0]);
+//   });
+// });
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
