@@ -10,23 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("nextBtn1")
     .addEventListener("click", calculatePremium);
-  // document.getElementById("downloadPdf").addEventListener("click", () => {
-  //   const resultContent = document
-  //     .getElementById("resultModal")
-  //     .querySelector(".modal-content");
-  //   html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
-  // });
-});
-document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("calculateButton")
-    .addEventListener("click", calculatePremium);
-  // document.getElementById("downloadPdf").addEventListener("click", () => {
-  //   const resultContent = document
-  //     .getElementById("resultModal")
-  //     .querySelector(".modal-content");
-  //   html2pdf().from(resultContent).save("Premium_Calculation_Result.pdf");
-  // });
 });
 
 // Function to get the precise base rate from the database (check the rate from databse)
@@ -67,16 +50,28 @@ function parseCurrency(value) {
 
 // Mark the main function as async
 
-// Utility function to format currency
+// // Utility function to format currency
+// function formatCurrency(amount) {
+//   if (isNaN(amount)) {
+//     return "Rp 0,00"; // Return a default value if the amount is invalid
+//   }
+//   // Formatting the amount to currency format and removing unnecessary parts
+//   return amount
+//     .toLocaleString("id-ID", {
+//       minimumFractionDigits: 2,
+//       maximumFractionDigits: 2,
+//     })
+//     .replace("Rp"); // Ensures that the Rp symbol is properly spaced
+// }
 function formatCurrency(amount) {
   if (isNaN(amount)) {
     return "Rp 0,00";
   }
-  // Formatting the amount to currency format
-  return `Rp ${amount
+  // Formatting the amount to currency format without manually replacing "IDR"
+  return amount
     .toLocaleString("id-ID", { style: "currency", currency: "IDR" })
     .replace("IDR", "")
-    .trim()}`;
+    .trim();
 }
 
 // Initialize additionalCoverPremiums before any calculations
@@ -337,7 +332,6 @@ async function calculatePremium() {
   try {
     // Initialize variables at the beginning
     let extraPremium = 0;
-    let additionalCoverResult = {};
     let additionalCoverPremiums = {}; // Initialize at the beginning
     let additionalCoverRates = {}; // Initialize at the beginning
 
@@ -463,18 +457,39 @@ async function calculatePremium() {
     const totalPassengerAccidentInsurance =
       passengerAccidentInsurance * numberOfPassengers;
 
+    // Calculate Extra Premium Based on Insurance Type (Comprehensive or TLO)
+    const additionalCoverResult =
+      insuranceType === "flexRadioDefault1"
+        ? calculateAdditionalCoversComprehensive(
+            additionalCovers,
+            regionId,
+            vehiclePrice
+          )
+        : calculateAdditionalCoversTLO(
+            additionalCovers,
+            regionId,
+            vehiclePrice
+          );
+
+    extraPremium = additionalCoverResult.extraPremium; // Get the calculated extra premium
+
+    // Log accumulated extra premium
+    console.log("Accumulated Extra Premium:", extraPremium);
     // Calculate base premium only
     let premiumOnly = baseRate * vehiclePrice;
 
-    // Calculate total premium
+    // Calculate Total Premium
     let totalPremium =
       premiumOnly +
-      extraPremium +
+      extraPremium + // Include extra premium in the total
       totalThirdPartyLiability +
       totalDriverAccidentInsurance +
       totalPassengerAccidentInsurance;
 
-    // Revalidate extraPremium and totalPremium for final display
+    // Logging for Debugging
+    console.log("Base Premium Only:", premiumOnly);
+    console.log("Total Premium (with all additions):", totalPremium);
+
     extraPremium = isNaN(extraPremium) ? 0 : extraPremium;
     totalPremium = isNaN(totalPremium) ? 0 : totalPremium;
 
@@ -526,8 +541,8 @@ async function calculatePremium() {
       terrorism: additionalCovers.terrorism ? "Yes" : "No",
       terrorismPremium: formattedAdditionalCoverPremiums.terrorism || "Rp 0,00",
       terrorismRate: additionalCoverRates.terrorism || 0,
-      extraPremium: extraPremium,
-      totalPremium: totalPremium,
+      extraPremium: formatCurrency(extraPremium),
+      totalPremium: formatCurrency(totalPremium),
     };
 
     // Insert the results into the modal
@@ -579,7 +594,7 @@ async function calculatePremium() {
       `${(calculationResults.terrorismRate * 100).toFixed(3)}%`
     );
 
-    updateElementText("outputExtraPremium", extraPremium);
+    updateElementText("outputExtraPremium", calculationResults.extraPremium);
     updateElementText("outputTotalPremium", calculationResults.totalPremium);
 
     document.getElementById("downloadPdf").addEventListener("click", () => {
@@ -601,9 +616,14 @@ async function calculatePremium() {
       // Use html2pdf to generate and save the PDF from the cloned content
       html2pdf()
         .from(modalContent)
-        .save(
-          "China_Taiping_Insurance_Indonesia_Premium_Calculation_Result_Demo.pdf"
-        )
+        .set({
+          dpi: 1440, // Higher dpi for better resolution
+          scale: 2, // Optional: Increase scale
+          margin: 10,
+          filename:
+            "China_Taiping_Insurance_Indonesia_Premium_Calculation_Result_Demo.pdf",
+        })
+        .save()
         .then(() => {
           // Re-enable the button after download
           downloadButton.disabled = false;

@@ -381,7 +381,7 @@
             table-container">
 
              <!-- General Information Table -->
-            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md" style="text-align: center;">
+            <table class="table table-light table-hover table-bordered border-dark table-responsive-md" style="text-align: center;">
               <h5><strong>General Information:</strong></h5>
               <thead>
                 <tr>
@@ -425,7 +425,7 @@
 
             <!-- Insured Information table -->
             <h5><strong>Insured Information:</strong></h5>
-            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md w-100" style="text-align: center;">
+            <table class="table table-light table-hover table-bordered border-dark table-responsive-md w-100" style="text-align: center;">
               <thead>
                 <tr>
                   <th scope="col"><strong>Insured</strong></th>
@@ -464,7 +464,7 @@
 
             <!-- Insured Additional Information table -->
             <h5><strong>Insured Additional Information:</strong></h5>
-            <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md w-100" style="text-align: center;">
+            <table class="table table-light table-hover table-bordered border-dark table-responsive-md w-100" style="text-align: center;">
               <thead>
                 <tr>
                   <th scope="col"><strong>Insured</strong></th>
@@ -495,38 +495,47 @@
                 </tr>
               </tbody>
             </table>
-
-
-              <table class="table table-light table-striped table-hover table-bordered border-dark table-responsive-md" style="padding: 10rem; text-align: center;align-items: center;">
-              <h5><strong>Total Premium</strong></h5>
-                <thead>
-                  <tr>
-                    <th scope="col"><strong>Additional Covers Premium</strong></th>
-                    <th scope="col"><strong>TotalPremium</strong></th>
-                  </tr>
-                </thead>
-                <tbody class="table-responsive-md table-group-divider">
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Extra Premium:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outputExtraPremium"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <p><strong>Total Premium:</strong></p>
-                    </th>
-                    <td>
-                      <span id="outputTotalPremium"></span>
-                    </td>
-                  </tr> 
-                </tbody>
-              </table>
+            <div class="mt-5">
+              <table class="table table-light table-hover table-bordered border-dark table-responsive-md p-5" style="padding: 10rem; text-align: center;align-items: center;">
+                <h5><strong>Total Premium</strong></h5>
+                  <thead>
+                    <tr>
+                      <th scope="col"><strong>Additional Covers Premium</strong></th>
+                      <th scope="col"><strong>TotalPremium</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-responsive-md table-group-divider">
+                    <tr>
+                      <th scope="row">
+                        <p><strong>Extra Premium:</strong></p>
+                      </th>
+                      <td>
+                        <span id="outputExtraPremium"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <p><strong>Total Premium:</strong></p>
+                      </th>
+                      <td>
+                        <span id="outputTotalPremium"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <table class="table table-light  table-hover table-bordered border-dark table-responsive-md" style="padding: 10rem; text-align: center;align-items: center;">
+                  <thead>
+                    <tr>
+                      <th scope="col"><span class="border-black">*The Premium Calculation Simulation result is not a confirmation of insurance coverage, but only an indication of the premium to be paid. The premium calculation may change in accordance with the provisions of the underwriting process of PT China Taiping Insurance Indonesia.</span></th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
             </div>
-            <div>
-              <button id="downloadPdf" class="btn btn-primary" style="align-items: center;justify-content: center;">Download PDF</button>
+            <div class="p-5 d-md-flex d-sm-flex justify-content-center">
+              <button id="downloadPdf" class="btn btn-primary" style="align-items: center;justify-content: center;flex-direction: column;">Download PDF</button>
             </div>
           </div>
         </div>

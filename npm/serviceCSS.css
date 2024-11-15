@@ -17,3 +17,70 @@
   right: 1rem;
   top: 1rem;
 }
+
+/* Add padding and center alignment for the modal content */
+.modal-content {
+  padding: 20px;
+  margin: 0 auto; /* centers the modal content */
+  max-width: 85%; /* Prevents it from stretching too wide */
+  border-radius: 10px; /* Adds a slight curve for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+  font-family: "Roboto", sans-serif; /* Professional font */
+  font-size: 18px; /* Standard font size */
+  line-height: 1.6; /* Better readability */
+}
+
+/* Add spacing between sections */
+h5 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Lighten table borders and header styles */
+.table {
+  width: 85%; /* Makes the table width smaller than the modal */
+  margin: 0 auto 20px auto; /* Centers the table horizontally with bottom margin */
+  text-align: center; /* Centers text in each cell horizontally */
+  border: 2px solid #ccc; /* Subtle border color */
+  background-color: #f9f9f9; /* Light background for readability */
+}
+
+.table thead th {
+  background-color: #007bff; /* Use brand color or a professional blue */
+  color: white; /* White text for contrast */
+  font-weight: bold;
+  text-transform: uppercase; /* Professional look */
+}
+
+/* Borders inside table */
+th,
+td {
+  border: wpx solid #ddd;
+  vertical-align: middle; /* Centers text vertically in each cell */
+  padding: 12px; /* Adds padding inside cells for better readability */
+}
+
+/* Improve the button's appearance */
+#downloadPdf {
+  background-color: #007bff; /* Professional blue */
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px; /* Slight curve for modern look */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+#downloadPdf:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Adjust table on smaller screens */
+@media (max-width: 768px) {
+  table {
+    width: 100%; /* Take full width on smaller screens */
+  }
+  .modal-content {
+    padding: 10px; /* Reduce padding */
+  }
+}
