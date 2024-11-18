@@ -17,8 +17,15 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <link rel="stylesheet" href="spinnerload.css">
   </head>
   <body>
+    <!-- Spinner -->
+    <div id="loadingSpinner" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light d-flex justify-content-center align-items-center" style="z-index: 1050;">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <!-- NAVIGATION BAR -->
     <nav
       class="navbar navbar-expand-lg bg-light navbar-light border-bottom border-black fixed-top"
@@ -504,6 +511,6 @@
     </script>
     <script src="newsletter.js"></script>
     <script src="newsLetterSpinnerSend.js"></script>
-    
+    <script src="spinnerLoad.js"></script>  
   </body>
 </html>
