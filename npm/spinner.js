@@ -27,8 +27,6 @@ button.addEventListener("click", () => {
       // Stop the spinner after processing
       spinner.style.display = "none";
       buttonText.style.display = "inline";
-      // Proceed with further actions here
-      alert("Calculation successful!"); // Replace with actual processing logic
     }, 3000); // Delay to simulate processing time
   }
 });
