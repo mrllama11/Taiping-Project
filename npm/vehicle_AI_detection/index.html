@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle License Plate Detection</title>
+    <!-- tensorflow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+    <!-- teseract.js -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2"></script>
+    <!-- 
+    Purpose: Loads the COCO-SSD (Common Objects in Context - Single Shot MultiBox Detector) model for object detection.
+    Functionality:
+    Detects and classifies objects in images, such as cars, people, animals, etc.
+    Based on the COCO dataset, which contains 80 common object classes.
+    Why Needed: Provides a pre-trained object detection model optimized for browser usage. It helps identify objects in images, which can include vehicles or license plates (if they fall under the detectable categories).
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/yolo-tiny"></script>
+    <!-- YOLO-Tiny library -->
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      #output {
+        margin-top: 20px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <!-- Canvas:  use it to process the image for TensorFlow.js. -->
+  <body>
+    <h1>Upload Vehicle Image</h1>
+    <input type="file" id="uploadImage" accept="image/*" />
+    <div id="output"></div>
+    <canvas id="canvas" style="display: none"></canvas>
+    <script src="app.js"></script>
+  </body>
+</html>
