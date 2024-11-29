@@ -12,12 +12,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link rel="stylesheet" href="styless.css" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
     <link rel="stylesheet" href="spinnerload.css">
+    <link rel="stylesheet" href="npm/styleAgencyCSS.css">
   </head>
   <body>
     <!-- Spinner -->
@@ -129,11 +129,12 @@
                 <p class="card-text">
                   Contact General Insurance Agent 
                 </p>
-                <!-- set button to target the modal and link the form -->
-                <button class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#agentFormGeneral">
-                  Learn More
+                <!-- Learn More button -->
+                <button type="button" 
+                id="buttonLearnMore"
+                class="btn btn-primary">
+                <span id="spinnerLearnMore" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                <span id="buttonTextLearnMore">Learn More</span>
                 </button>
               </div>
             </div>
@@ -153,10 +154,12 @@
                 <p class="card-text">
                   Contact Life Insurance Agent
                 </p>
-                <button class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#agentFormLife">
-                  Learn More
+                <!-- Learn More button -->
+                <button type="button" 
+                id="buttonLearnMore"
+                class="btn btn-primary">
+                <span id="spinnerLearnMore" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
+                <span id="buttonTextLearnMore">Learn More</span>
                 </button>
               </div>
             </div>
@@ -170,6 +173,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
+              <img class="outputLogo" src="/images/cntpLogo.png" alt="Logo Output">
               <!-- Title Form Inside Modal -->
               <h5 class="modal-title" id="agentFormModalLabel">
                 General Agent Contact Form
@@ -275,7 +279,7 @@
                     No.AAUI
                     </span>
                     <br>
-                    <span class="text-warning">
+                    <span class="text-danger">
                     *Tidak Wajib Diisi
                     </span>
                   </label>
@@ -991,6 +995,8 @@
 
     <script src="newsletter.js"></script>
     <script src="newsLetterSpinnerSend.js"></script>
-    <script src="spinnerLoad.js"></script>  
+    <script src="spinnerLoad.js"></script>
+    <script src="spinner.js"></script>
+    <script src="spinnerLearnMore.js"></script>  
   </body>
 </html>

@@ -1,0 +1,75 @@
+@media (min-width: 768px) {
+  .news-input {
+    width: 50%;
+  }
+  #map {
+    height: 200px; /* Adjust height for smaller screens */
+  }
+}
+/* ghost element before body to push the page down and give space */
+body::before {
+  display: block;
+  content: "";
+  height: 100px;
+}
+.custom-link {
+  color: black;
+  transition: color 0.3s ease; /* Smooth transition for hover */
+}
+.custom-link:hover {
+  color: #007bff;
+}
+.card-height {
+  min-height: 350px; /* Adjust the minimum height as needed */
+}
+
+.modal-dialog {
+  max-width: 90vw; /* Ensures modal takes only 90% of the viewport width */
+}
+
+.modal-body {
+  overflow-x: auto; /* Allows horizontal scrolling if the content overflows */
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Horizontally center all items */
+  justify-content: center; /* Vertically center if needed */
+  position: relative; /* For positioning the close button */
+  padding: 1.5rem; /* Add padding for better vertical alignment */
+  text-align: center; /* Ensures text centers as well */
+}
+
+.outputLogo {
+  display: block;
+  margin: 0 auto 10px; /* Adds spacing between the logo and the title */
+  width: 1rem; /* Adjust width as needed */
+}
+
+.modal-title {
+  margin: 0; /* Removes extra margin that might affect centering */
+}
+
+.btn-close {
+  position: absolute;
+  top: 10px; /* Adjust this value based on the modal layout */
+  right: 10px;
+}
+
+.modal-content {
+  padding: 20px;
+  margin: 0 auto; /* centers the modal content */
+  max-width: 100%; /* Prevents it from stretching too wide */
+  border-radius: 10px; /* Adds a slight curve for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+  font-family: "Roboto", sans-serif; /* Professional font */
+  font-size: 20px; /* Standard font size */
+  line-height: 1.5; /* Better readability */
+}
+
+/* Add spacing between sections */
+h5 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

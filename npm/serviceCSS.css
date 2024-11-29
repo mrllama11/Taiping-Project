@@ -22,12 +22,12 @@
 .modal-content {
   padding: 20px;
   margin: 0 auto; /* centers the modal content */
-  max-width: 85%; /* Prevents it from stretching too wide */
+  max-width: 100%; /* Prevents it from stretching too wide */
   border-radius: 10px; /* Adds a slight curve for a modern look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
   font-family: "Roboto", sans-serif; /* Professional font */
-  font-size: 18px; /* Standard font size */
-  line-height: 1.6; /* Better readability */
+  font-size: 20px; /* Standard font size */
+  line-height: 1.5; /* Better readability */
 }
 
 /* Add spacing between sections */
@@ -38,7 +38,7 @@ h5 {
 
 /* Lighten table borders and header styles */
 .table {
-  width: 85%; /* Makes the table width smaller than the modal */
+  width: 90%; /* Makes the table width smaller than the modal */
   margin: 0 auto 20px auto; /* Centers the table horizontally with bottom margin */
   text-align: center; /* Centers text in each cell horizontally */
   border: 2px solid #ccc; /* Subtle border color */
