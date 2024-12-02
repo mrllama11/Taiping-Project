@@ -24,7 +24,7 @@ body::before {
 }
 
 .modal-dialog {
-  max-width: 90vw; /* Ensures modal takes only 90% of the viewport width */
+  max-width: 50vw; /* Ensures modal takes only 90% of the viewport width */
 }
 
 .modal-body {
@@ -44,7 +44,7 @@ body::before {
 .outputLogo {
   display: block;
   margin: 0 auto 10px; /* Adds spacing between the logo and the title */
-  width: 1rem; /* Adjust width as needed */
+  width: 8rem; /* Adjust width as needed */
 }
 
 .modal-title {

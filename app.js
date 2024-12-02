@@ -3,6 +3,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const multer = require("multer");
 const mysql = require("mysql");
 const app = express();
 const port = 3000;
@@ -11,7 +12,19 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 app.use(bodyParser.json()); // For parsing application/json
 app.use(cors()); ///Cross-Origin Resource Sharing (CORS) restrictions.
+app.use(express.urlencoded({ extended: true }));
 
+// Define the storage for uploaded files using Multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Folder where files will be saved
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // Unique filenames
+  },
+});
+
+const upload = multer({ storage: storage });
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MySQL database connection
 const db = mysql.createConnection({
@@ -28,6 +41,7 @@ db.connect((err) => {
     console.log("Connected to the MySQL database");
   }
 });
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // recieve the request data req.body is the data that we sent from the front end
@@ -151,44 +165,73 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
   });
 });
 
-// app.get("/additional-cover-rates", (req, res) => {
-//   const { coverageType, regionId, insuranceType } = req.query;
+app.post("/submit-form", upload.array("file_paths", 12), (req, res) => {
+  // Destructure all required fields from req.body
+  const {
+    Title,
+    Customer_name,
+    Customer_Email,
+    Customer_Phone_Number,
+    Customer_Address,
+    Customer_KTP,
+    Customer_AAUI_Number,
+    Target_Certification,
+    Customer_Bank_Name,
+    Customer_Bank_Account_Number,
+    Customer_References,
+    user_role,
+  } = req.body;
 
-//   // Validate required parameters
-//   if (!coverageType || !insuranceType) {
-//     return res.status(400).json({ error: "Missing required parameters" });
-//   }
+  // Handle uploaded file paths
+  const filePaths = req.files.map((file) => file.path); // Extract file paths from uploaded files
 
-//   // Determine the rate column based on insurance type
-//   const rateColumn =
-//     insuranceType === "comprehensive" ? "rate_comprehensive" : "rate_tlo";
+  // SQL query to insert data into the table
+  const query = `
+    INSERT INTO Agent_Form_Info (
+      Title, 
+      Customer_name, 
+      Customer_Email, 
+      Customer_Phone_Number, 
+      Customer_Address, 
+      Customer_KTP, 
+      Customer_AAUI_Number, 
+      Target_Certification, 
+      Customer_Bank_Name, 
+      Customer_Bank_Account_Number, 
+      Customer_References, 
+      user_role, 
+      file_paths
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
 
-//   // Construct the SQL query
-//   const query = regionId
-//     ? `SELECT ${rateColumn} FROM extension_cover WHERE coverage_type = ? AND region_id = ?`
-//     : `SELECT ${rateColumn} FROM extension_cover WHERE coverage_type = ? AND region_id IS NULL`;
-
-//   // Prepare query parameters based on the presence of regionId
-//   const queryParams = regionId ? [coverageType, regionId] : [coverageType];
-
-//   // Execute the query
-//   db.query(query, queryParams, (err, results) => {
-//     if (err) {
-//       console.error("Error Fetching Additional Cover Rates:", err);
-//       return res.status(500).json({ error: "Internal Database Error" });
-//     }
-
-//     // If no results found, return a 404 not found response
-//     if (results.length === 0) {
-//       return res
-//         .status(404)
-//         .json({ error: "Rate not found for the specified parameters" });
-//     }
-
-//     // Send the fetched rate as JSON
-//     res.json(results[0]);
-//   });
-// });
+  // Execute the query with the values from the form and the file paths
+  db.query(
+    query,
+    [
+      Title,
+      Customer_name,
+      Customer_Email,
+      Customer_Phone_Number,
+      Customer_Address,
+      Customer_KTP,
+      Customer_AAUI_Number,
+      Target_Certification,
+      Customer_Bank_Name,
+      Customer_Bank_Account_Number,
+      Customer_References,
+      user_role,
+      JSON.stringify(filePaths), // Convert file paths array to JSON string
+    ],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error saving data");
+      } else {
+        res.status(200).send("Form submitted successfully");
+      }
+    }
+  );
+});
 
 // Start the server
 app.listen(port, () => {
