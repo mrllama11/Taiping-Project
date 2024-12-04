@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
+
+const path = require("path");
 const mysql = require("mysql");
 const app = express();
 const port = 3000;
@@ -15,16 +17,18 @@ app.use(cors()); ///Cross-Origin Resource Sharing (CORS) restrictions.
 app.use(express.urlencoded({ extended: true }));
 
 // Define the storage for uploaded files using Multer
+// Configure Multer storage
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Folder where files will be saved
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Save files to the 'uploads' folder
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname); // Unique filenames
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique file names
   },
 });
 
 const upload = multer({ storage: storage });
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MySQL database connection
 const db = mysql.createConnection({
@@ -165,21 +169,23 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
   });
 });
 
-app.post("/submit-form", upload.array("file_paths", 12), (req, res) => {
+app.post("/submit-form", upload.array("file_paths", 14), (req, res) => {
   // Destructure all required fields from req.body
   const {
-    Title,
-    Customer_name,
-    Customer_Email,
-    Customer_Phone_Number,
-    Customer_Address,
-    Customer_KTP,
-    Customer_AAUI_Number,
-    Target_Certification,
-    Customer_Bank_Name,
-    Customer_Bank_Account_Number,
-    Customer_References,
-    user_role,
+    title,
+    name,
+    email,
+    phone,
+    address,
+    ktp,
+    npwp,
+    aaui,
+    certification_target,
+    bank_name,
+    bank_account,
+    reference,
+    agent_role,
+    office_location,
   } = req.body;
 
   // Handle uploaded file paths

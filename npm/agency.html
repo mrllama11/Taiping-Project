@@ -181,151 +181,121 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
               </button>
             </div>
-            <div class="modal-body">
-              <!-- beginning of the form -->
-              <form id="firstForm" class="needs-validation" novalidate>
-                <div class="mb-3 text-center">
-                  <label for="Form-header"></label>
-                    <strong>General Information</strong>
+                <div class="modal-body">
+                  <!-- beginning of the form -->
+                  <form id="firstForm" class="needs-validation" novalidate>
+                    <div class="mb-3 text-center">
+                      <label for="Form-header"></label>
+                      <strong>General Information</strong>
+                    </div>
+                    <div class="mb-3">
+                      <span class="text-danger">* (Must Be Filled)</span>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="title_select">
+                        <span class="text-dark">Title</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <select class="form-select" id="title_select" name="title" aria-label="Default select example" required>
+                        <option selected>Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="PT">PT</option>
+                        <option value="CV">CV</option>
+                        <option value="Firma">Firma</option>
+                      </select>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="name_input">
+                        <span class="text-dark">Nama</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="text" id="name_input" name="name" class="form-control" placeholder="Input Here.." aria-label="Nama" value="Bambang" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="email_input">
+                        <span class="text-dark">E-mail</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="email" id="email_input" name="email" class="form-control" placeholder="Input Here.." aria-label="E-mail" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="phone_input">
+                        <span class="text-dark">No.Handphone</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="number" id="phone_input" name="phone" class="form-control" placeholder="Input Here.." aria-label="No.HandPhone" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="address_input">
+                        <span class="text-dark">Alamat</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="text" id="address_input" name="address" class="form-control" placeholder="Input Here.." aria-label="Alamat" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="KTP_input">
+                        <span class="text-dark">No.KTP</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="number" id="KTP_input" name="ktp" class="form-control" placeholder="Input Here.." aria-label="No.KTP" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="NPWP_input">
+                        <span class="text-dark">NO.NPWP</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="number" id="NPWP_input" name="npwp" class="form-control" placeholder="Input Here.." aria-label="No.NPWP" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="AAUI_input">
+                        <span class="text-dark">No.AAUI</span>
+                        <span class="text">(Optional)</span>
+                      </label>
+                      <input type="number" id="AAUI_input" name="aaui" class="form-control" placeholder="Input Here.." aria-label="No.AAUI" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="Sertification_input">
+                        <span class="text-dark">Target Sertifikasi</span>
+                        <span class="text-danger">(Special Note)</span>
+                      </label>
+                      <input type="text" id="Sertification_input" name="certification_target" class="form-control" placeholder="Input Here.." aria-label="Target Sertifikasi" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="Bank_input">
+                        <span class="text-dark">Nama Bank</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="text" id="Bank_input" name="bank_name" class="form-control" placeholder="Input Here.." aria-label="Nama BANK" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="BankAcc_input">
+                        <span class="text-dark">No Rekening Bank</span>
+                        <span class="text-danger">*</span>
+                      </label>
+                      <input type="number" id="BankAcc_input" name="bank_account" class="form-control" placeholder="Input Here.." aria-label="No Rekening Bank" required>
+                    </div>
+                
+                    <div class="mb-3">
+                      <label for="Reference_input">
+                        <span class="text-dark">Referensi</span>
+                        <span class="text">(Optional)</span>
+                      </label>
+                      <input type="text" id="Reference_input" name="reference" class="form-control" placeholder="Input Here.." aria-label="Referensi" required>
+                    </div>
+                  </form>
                 </div>
-                <div class="mb-3">
-                  <label for="selectfield">
-                    <span class="text-dark">
-                      Title
-                    </span>
-                    <span class="text-danger">
-                      *
-                    </span>
-                  </label>
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Mr</option>
-                    <option value="1">Mrs</option>
-                    <option value="2">PT</option>
-                    <option value="3">CV</option>
-                    <option value="4">Firma</option>
-                  </select>
-                </div>
-                <div class=" mb-3">
-                  <label for="form-control name" >
-                    <span class="text-dark">
-                    Nama
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="text" id="name" class="form-control" placeholder="Input Here.." aria-label="Nama" value="Bambang" required>
-                  <div class="error">
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    E-mail
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="email" class="form-control" placeholder="Input Here.." aria-label="E-mail">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    No.Handphone
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.HandPhone">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    Alamat
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Alamat">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    No.KTP
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.KTP">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    NO.NPWP
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.NPWP">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    No.AAUI
-                    </span>
-                    <br>
-                    <span class="text-danger">
-                    *Tidak Wajib Diisi
-                    </span>
-                  </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.AAUI">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    Target Sertifikasi
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Target Sertifikasi">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    Nama Bank
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Nama BANK">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    No Rekening Bank
-                    </span>
-                    <span class="text-danger">
-                    *
-                    </span>
-                  </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No Rekening Bank">
-                </div>
-                <div class="mb-3">
-                  <label for="form-control">
-                    <span class="text-dark">
-                    Referensi
-                    </span>
-                  </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Referensi">
-                </div>
+                
                 <!-- next button -->
                 <div class="mb-3 text-end">
                   <button class="btn btn-primary btn-md" type="button" id="nextBtn1">
@@ -342,6 +312,11 @@
                     <strong>Agent Information</strong>
                 </div>
                 <div class="mb-3">
+                  <span class="text-danger">
+                    * (Must be Filled)
+                  </span>
+                </div>
+                <div class="mb-3">
                   <label for="form-control">
                     <span class="text-dark">
                     Single Choice
@@ -351,13 +326,13 @@
                     </span>
                   </label>
                   <div class="form-check m-2">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <input class="form-check-input" type="radio" name="agentRole"   id="flexRadio_Check1" checked required>
                     <label class="form-check-label" for="flexRadioDefault2">
                       Financial consultant
                     </label>
                   </div>
                   <div class="form-check m-2">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <input class="form-check-input" type="radio" name="agentRole" id="flexRadio_Check2" checked>
                     <label class="form-check-label" for="flexRadioDefault2">
                       Agency Director
                     </label>
@@ -371,8 +346,9 @@
                         *
                       </span>
                     </label>
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>Head Office(Jakarta)</option>
+                    <select class="form-select" id="Office_Select"
+                    name="office_location" aria-label="Default select example" required>
+                      <option value="" selected>Head Office(Jakarta)</option>
                       <option value="1">Bandung</option>
                       <option value="2">Medan</option>
                       <option value="3">Yogyakarta</option>
@@ -405,7 +381,7 @@
                   <span class="text-dark">Upload Foto</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile01" name="file_paths">
+                  <input type="file" class="form-control" id="inputGroupFile01" name="photo_file" required>
                   <label class="input-group-text" for="inputGroupFile01">Upload</label>
                 </div>
 
@@ -413,7 +389,7 @@
                   <span class="text-dark">Upload KTP <span class="text-danger">*</span></span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02" name="file_paths">
+                  <input type="file" class="form-control" id="inputGroupFile02" name="KTP_file" required>
                   <label class="input-group-text" for="inputGroupFile02">Upload</label>
                 </div>
 
@@ -421,7 +397,7 @@
                   <span class="text-dark">Upload AAUI</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile03"name="file_paths">
+                  <input type="file" class="form-control" id="inputGroupFile03"name="AAUI_file" required>
                   <label class="input-group-text" for="inputGroupFile03">Upload</label>
                 </div>
 
@@ -429,7 +405,7 @@
                   <span class="text-dark">Upload NPWP</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile04"name="file_paths">
+                  <input type="file" class="form-control" id="inputGroupFile04"name="NPWP_file">
                   <label class="input-group-text" for="inputGroupFile04">Upload</label>
                 </div>
 
@@ -437,7 +413,7 @@
                   <span class="text-dark">Upload Buku Tabungan</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile05"name="file_paths">
+                  <input type="file" class="form-control" id="inputGroupFile05"name="Bukutabungan_file" required>
                   <label class="input-group-text" for="inputGroupFile05">Upload</label>
                 </div>
 
@@ -445,7 +421,7 @@
                   <span class="text-dark">Upload Sertifikasi Lainnya</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile06"name="file_paths">
+                  <input type="file" class="form-control" id="inputGroupFile06"name="OtherCerti_file" required>
                   <label class="input-group-text" for="inputGroupFile06">Upload</label>
                 </div>
                 <!-- Button Previous -->
@@ -961,7 +937,7 @@
         .bindPopup('Main Office: Gedung Perkantoran The Tower Lt.16, Jakarta.')
         .openPopup();
     </script>
-    <!-- <script>
+    <script>
       // show second form when the next "Next" button is clicked
       document.getElementById('nextBtn1').addEventListener('click',function(){
         document.getElementById('firstForm').style.display ='none';
@@ -982,7 +958,7 @@
         document.getElementById('secondForm').style.display = 'none';
         document.getElementById('finalForm').style.display = 'block';
       });
-    </script> -->
+    </script>
 
     <script src="newsletter.js"></script>
     <script src="newsLetterSpinnerSend.js"></script>
@@ -990,6 +966,6 @@
     <script src="spinner.js"></script>
     <script src="spinnerLearnMore.js"></script>
     <script src="../app.js"></script>  
-    <script src="formAgency.js"></script>
+    <script src="./formAgency.js"></script>
   </body>
 </html>
