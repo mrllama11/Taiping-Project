@@ -18,16 +18,18 @@ app.use(express.urlencoded({ extended: true }));
 
 // Define the storage for uploaded files using Multer
 // Configure Multer storage
+// Set up Multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Save files to the 'uploads' folder
+    cb(null, 'uploads/');  // Ensure this folder exists or create it
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file names
-  },
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
 });
 
-const upload = multer({ storage: storage });
+
+const upload = multer({ storage });
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MySQL database connection
@@ -169,8 +171,16 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
   });
 });
 
-app.post("/submit-form", upload.array("file_paths", 14), (req, res) => {
-  // Destructure all required fields from req.body
+// Route to handle form submission
+app.post('/submit-form', upload.fields([
+  { name: 'photo_file' },
+  { name: 'KTP_file' },
+  { name: 'AAUI_file' },
+  { name: 'NPWP_file' },
+  { name: 'Bukutabungan_file' },
+  { name: 'OtherCerti_file' }
+]), (req, res) => {
+  // Extract text fields from req.body
   const {
     title,
     name,
@@ -184,60 +194,65 @@ app.post("/submit-form", upload.array("file_paths", 14), (req, res) => {
     bank_name,
     bank_account,
     reference,
-    agent_role,
-    office_location,
+    agentRole,
+    office_location
   } = req.body;
 
-  // Handle uploaded file paths
-  const filePaths = req.files.map((file) => file.path); // Extract file paths from uploaded files
+  // Extract uploaded file paths
+  const filePaths = {};
+  ['photo_file', 'KTP_file', 'AAUI_file', 'NPWP_file', 'Bukutabungan_file', 'OtherCerti_file'].forEach(field => {
+    if (req.files[field]) {
+      filePaths[field] = req.files[field][0].path;  // Store each file's path
+    }
+  });
 
-  // SQL query to insert data into the table
+  // SQL query to insert data into the database
   const query = `
     INSERT INTO Agent_Form_Info (
       Title, 
       Customer_name, 
       Customer_Email, 
-      Customer_Phone_Number, 
+      Customer_Phone_Number,
       Customer_Address, 
       Customer_KTP, 
-      Customer_AAUI_Number, 
-      Target_Certification, 
-      Customer_Bank_Name, 
-      Customer_Bank_Account_Number, 
-      Customer_References, 
-      user_role, 
+      Customer_AAUI_Number,  Target_Certification, 
+      Customer_Bank_Name,
+      Customer_Bank_Account_Number, Customer_References, 
+      user_role,
       file_paths
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  // Execute the query with the values from the form and the file paths
-  db.query(
-    query,
-    [
-      Title,
-      Customer_name,
-      Customer_Email,
-      Customer_Phone_Number,
-      Customer_Address,
-      Customer_KTP,
-      Customer_AAUI_Number,
-      Target_Certification,
-      Customer_Bank_Name,
-      Customer_Bank_Account_Number,
-      Customer_References,
-      user_role,
-      JSON.stringify(filePaths), // Convert file paths array to JSON string
-    ],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error saving data");
-      } else {
-        res.status(200).send("Form submitted successfully");
-      }
+  // Convert file paths to a JSON string for storage
+  const filePathsJson = JSON.stringify(filePaths);
+
+  // Execute the query with form data and file paths
+  db.query(query, [
+    title,
+    name,
+    email,
+    phone,
+    address,
+    ktp,
+    npwp,
+    aaui,
+    certification_target,
+    bank_name,
+    bank_account,
+    reference,
+    agentRole,
+    office_location,
+    filePathsJson  // Store file paths as a JSON string
+  ], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error saving data');
+    } else {
+      res.status(200).send('Form submitted successfully');
     }
-  );
+  });
 });
+
 
 // Start the server
 app.listen(port, () => {

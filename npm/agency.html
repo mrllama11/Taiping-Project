@@ -302,7 +302,9 @@
                     Next
                   </button>
                 </div>
-                <p class="lead">Copyright &copy; 2024 PT CHINA TAIPING INSURANCE INDONESIA</p>
+                <div class="mb-3">
+                  <p class="lead">Copyright &copy; 2024 PT CHINA TAIPING INSURANCE INDONESIA</p>
+                </div>
               </form>
               <!-- second Form -->
               <!-- Second Form (Initially Hidden) -->
@@ -372,7 +374,7 @@
                 <p class="lead">Copyright &copy; 2024 PT CHINA TAIPING INSURANCE INDONESIA</p>   
               </form>
               <!-- Final Form (Initially Hidden) -->
-              <form id="finalForm" style="display: none;">
+              <form id="finalForm" style="display: none;" enctype="multipart/form-data" method="POST">
                 <div class="mb-3 text-center">
                   <strong>Upload Documents</strong>
                 </div>
@@ -440,6 +442,11 @@
         </div>
       </div>
     </section>
+
+
+
+
+    
       <!-- Form For Modal 2 -->
     <section class="p-1">
       <div class="modal fade" id="agentFormLife" tabindex="-1" aria-labelledby="agentFormLifeModalLabel" aria-hidden="true">
@@ -665,81 +672,69 @@
                   </div>
                 </div>
                 
-              </form>
-              <!-- Final Form (Initially Hidden) -->
-              <form id="finalForm" style="display: none;">
-                <div class="mb-3 text-center">
-                  <label for="Form-header"></label>
+                <form id="finalForm" style="display: none;" enctype="multipart/form-data">
+                  <div class="mb-3 text-center">
                     <strong>Upload Documents</strong>
-                </div>
-                <label for="selectfield">
-                  <span class="text-dark">
-                    Upload Foto
-                  </span>
-                </label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
-                <label for="selectfield">
-                  <span class="text-dark">
-                    Upload KTP
-                  </span>
-                  <span class="text-danger">
-                    *
-                  </span>
-                </label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
-                <label for="selectfield">
-                  <span class="text-dark">
-                    Upload AAUI
-                  </span>
-                </label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
-                <label for="selectfield">
-                  <span class="text-dark">
-                    Upload NPWP
-                  </span>
-                </label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
-                <label for="selectfield">
-                  <span class="text-dark">
-                    Upload Buku Tabungan
-                  </span>
-                </label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
-                <label for="selectfield"></label>
-                  <span class="text-dark">
-                    Upload Sertifikasi Lainnya
-                  </span>
-                </label>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
-                  <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                </div>
+                  </div>
                 
-                <!-- Button Previous -->
-                <div class=" mb-3 d-md-flex d-sm-flex justify-content-between">
-                  <div class="mb-3  ">
-                    <button class="btn btn-primary btn-md" type="button" id="nextBtnPrev2">Previous</button>
+                  <label for="photoFile">
+                    <span class="text-dark">Upload Foto</span>
+                  </label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="photoFile" name="photo_file" required>
+                    <label class="input-group-text" for="photoFile">Upload</label>
                   </div>
-                  <div class="mb-3 text-end">
-                    <button class="btn btn-success btn-lg" id="newsletterSubmit" type="button">Submit</button>
+                
+                  <label for="ktpFile">
+                    <span class="text-dark">Upload KTP <span class="text-danger">*</span></span>
+                  </label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="ktpFile" name="ktp_file" required>
+                    <label class="input-group-text" for="ktpFile">Upload</label>
                   </div>
-                </div>
-              </form>
+                
+                  <label for="aauiFile">
+                    <span class="text-dark">Upload AAUI</span>
+                  </label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="aauiFile" name="aaui_file" required>
+                    <label class="input-group-text" for="aauiFile">Upload</label>
+                  </div>
+                
+                  <label for="npwpFile">
+                    <span class="text-dark">Upload NPWP</span>
+                  </label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="npwpFile" name="npwp_file">
+                    <label class="input-group-text" for="npwpFile">Upload</label>
+                  </div>
+                
+                  <label for="bukuTabunganFile">
+                    <span class="text-dark">Upload Buku Tabungan</span>
+                  </label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="bukuTabunganFile" name="buku_tabungan_file" required>
+                    <label class="input-group-text" for="bukuTabunganFile">Upload</label>
+                  </div>
+                
+                  <label for="otherCertFile">
+                    <span class="text-dark">Upload Sertifikasi Lainnya</span>
+                  </label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="otherCertFile" name="other_certification_file" required>
+                    <label class="input-group-text" for="otherCertFile">Upload</label>
+                  </div>
+                
+                  <!-- Button Navigation -->
+                  <div class="mb-3 d-md-flex d-sm-flex justify-content-between">
+                    <div class="mb-3">
+                      <button class="btn btn-primary btn-md" type="button" id="nextBtnPrev2">Previous</button>
+                    </div>
+                    <div class="mb-3 text-end">
+                      <button class="btn btn-success btn-lg" id="submitBtn" type="submit">Submit</button>
+                    </div>
+                  </div>
+                </form>                
             </div>
           </div>
         </div>
