@@ -1,11 +1,12 @@
 // app.js IS THE BACK END JAVASCRIPT
 
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const multer = require("multer");
+const express = require("express"); // handleing https request
+const cors = require("cors");// middleware in a Node.js application. This middleware allows your server to handle requests from different origins (domains, ports, or protocols) in a secure way.
+const multer = require("multer");// Middleware to handle multipart/form-data for file uploads.
+const path = require('path');//Built-in Node.js module to handle file paths.
+const fs = require('fs');//Node.js file system module to manage files.
 
-const path = require("path");
+
 const mysql = require("mysql");
 const app = express();
 const port = 3000;
@@ -14,19 +15,6 @@ const port = 3000;
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 app.use(cors()); // Cross-Origin Resource Sharing (CORS) restrictions
-
-
-// Define the storage for uploaded files using Multer
-// Configure Multer storage
-// Set up Multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');  // Ensure this folder exists or create it
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
-});
 
 
 const upload = multer({ dest: 'uploads/' });
@@ -196,6 +184,10 @@ app.post('/submit-form',upload.none(), (req, res) => {
     return res.status(400).json({ message: 'Agent Role is required' });
   }
 
+  if (!office_location){
+    return res.status(400).json({message: 'Office location required'})
+  }
+
   console.log(req.body); // Check if agentRole is coming in the request
 
   // SQL query to insert data into the database
@@ -206,7 +198,8 @@ app.post('/submit-form',upload.none(), (req, res) => {
       Customer_Email, 
       Customer_Phone_Number,
       Customer_Address, 
-      Customer_KTP, 
+      Customer_KTP,
+      Customer_NPWP, 
       Customer_AAUI_Number,  
       Target_Certification, 
       Customer_Bank_Name,
@@ -214,7 +207,7 @@ app.post('/submit-form',upload.none(), (req, res) => {
       Customer_References, 
       Agent_Role,
       Office_Location
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const values = [
