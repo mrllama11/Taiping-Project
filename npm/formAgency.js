@@ -7,18 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to collect data from a form
   function collectFormData(currentForm) {
-    const inputs = currentForm.querySelectorAll("input, select");
+    const inputs = currentForm.querySelectorAll("input, select, textarea"); // Include select and textarea
     inputs.forEach((input) => {
       if (input.type === "file") {
-        // Handle file input separately
         for (let i = 0; i < input.files.length; i++) {
-          formData.append(input.name, input.files[i]); // Append each file
+          formData.append(input.name, input.files[i]);
+        }
+      } else if (input.type === "radio" || input.type === "checkbox") {
+        if (input.checked) {
+          formData.append(input.name, input.value);
         }
       } else {
-        formData.append(input.name, input.value); // Append text inputs
+        formData.append(input.name, input.value);
       }
     });
   }
+  
+  
 
   // show second form when the next "Next" button is clicked
   document.getElementById("nextBtn1").addEventListener("click", function () {
@@ -56,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         body: formData, // Send the FormData object
       });
-
+      console.log(...formData);
       if (response.ok) {
         alert("Form submitted successfully!");
       } else {

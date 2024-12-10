@@ -10,11 +10,11 @@ const mysql = require("mysql");
 const app = express();
 const port = 3000;
 
-// Body Parser middleware to parse incoming form data
-app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
-app.use(bodyParser.json()); // For parsing application/json
-app.use(cors()); ///Cross-Origin Resource Sharing (CORS) restrictions.
-app.use(express.urlencoded({ extended: true }));
+// Middleware to parse JSON and URL-encoded data
+app.use(express.json()); // For parsing application/json
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+app.use(cors()); // Cross-Origin Resource Sharing (CORS) restrictions
+
 
 // Define the storage for uploaded files using Multer
 // Configure Multer storage
@@ -29,7 +29,8 @@ const storage = multer.diskStorage({
 });
 
 
-const upload = multer({ storage });
+const upload = multer({ dest: 'uploads/' });
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MySQL database connection
@@ -172,14 +173,7 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
 });
 
 // Route to handle form submission
-app.post('/submit-form', upload.fields([
-  { name: 'photo_file' },
-  { name: 'KTP_file' },
-  { name: 'AAUI_file' },
-  { name: 'NPWP_file' },
-  { name: 'Bukutabungan_file' },
-  { name: 'OtherCerti_file' }
-]), (req, res) => {
+app.post('/submit-form',upload.none(), (req, res) => {
   // Extract text fields from req.body
   const {
     title,
@@ -198,36 +192,32 @@ app.post('/submit-form', upload.fields([
     office_location
   } = req.body;
 
-  // Extract uploaded file paths
-  const filePaths = {};
-  ['photo_file', 'KTP_file', 'AAUI_file', 'NPWP_file', 'Bukutabungan_file', 'OtherCerti_file'].forEach(field => {
-    if (req.files[field]) {
-      filePaths[field] = req.files[field][0].path;  // Store each file's path
-    }
-  });
+  if (!agentRole) {
+    return res.status(400).json({ message: 'Agent Role is required' });
+  }
+
+  console.log(req.body); // Check if agentRole is coming in the request
 
   // SQL query to insert data into the database
   const query = `
-    INSERT INTO Agent_Form_Info (
+    INSERT INTO agent_form_info (
       Title, 
       Customer_name, 
       Customer_Email, 
       Customer_Phone_Number,
       Customer_Address, 
       Customer_KTP, 
-      Customer_AAUI_Number,  Target_Certification, 
+      Customer_AAUI_Number,  
+      Target_Certification, 
       Customer_Bank_Name,
-      Customer_Bank_Account_Number, Customer_References, 
-      user_role,
-      file_paths
+      Customer_Bank_Account_Number, 
+      Customer_References, 
+      Agent_Role,
+      Office_Location
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  // Convert file paths to a JSON string for storage
-  const filePathsJson = JSON.stringify(filePaths);
-
-  // Execute the query with form data and file paths
-  db.query(query, [
+  const values = [
     title,
     name,
     email,
@@ -241,18 +231,17 @@ app.post('/submit-form', upload.fields([
     bank_account,
     reference,
     agentRole,
-    office_location,
-    filePathsJson  // Store file paths as a JSON string
-  ], (err, result) => {
+    office_location
+  ];
+
+  db.query(query, values, (err, result) => {
     if (err) {
-      console.error(err);
-      res.status(500).send('Error saving data');
-    } else {
-      res.status(200).send('Form submitted successfully');
+      console.error('Error inserting data:', err);
+      return res.status(500).json({ message: 'Error inserting data', error: err });
     }
+    res.json({ message: 'Form submitted successfully', result });
   });
 });
-
 
 // Start the server
 app.listen(port, () => {

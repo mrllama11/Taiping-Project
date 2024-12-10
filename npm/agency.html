@@ -183,7 +183,7 @@
             </div>
                 <div class="modal-body">
                   <!-- beginning of the form -->
-                  <form id="firstForm" class="needs-validation" novalidate>
+                  <form id="firstForm" action="/submit-form" method="POST">
                     <div class="mb-3 text-center">
                       <label for="Form-header"></label>
                       <strong>General Information</strong>
@@ -197,7 +197,10 @@
                         <span class="text-dark">Title</span>
                         <span class="text-danger">*</span>
                       </label>
-                      <select class="form-select" id="title_select" name="title" aria-label="Default select example" required>
+                      <select class="form-select" id="title_select" 
+                      name="title" 
+                      aria-label="Default select example" 
+                      required>
                         <option selected>Mr</option>
                         <option value="Mrs">Mrs</option>
                         <option value="PT">PT</option>
@@ -308,7 +311,7 @@
               </form>
               <!-- second Form -->
               <!-- Second Form (Initially Hidden) -->
-              <form id="secondForm" style="display: none;">
+              <form id="secondForm" action="/submit-form" method="POST" style="display: none;">
                 <div class="mb-3 text-center">
                   <label for="Form-header"></label>
                     <strong>Agent Information</strong>
@@ -328,16 +331,12 @@
                     </span>
                   </label>
                   <div class="form-check m-2">
-                    <input class="form-check-input" type="radio" name="agentRole"   id="flexRadio_Check1" checked required>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                      Financial consultant
-                    </label>
+                    <input class="form-check-input" type="radio" name="agentRole" id="flexRadio_Check1" value="Financial Consultant" checked required>
+                    <label class="form-check-label" for="flexRadio_Check1">Financial Consultant</label>
                   </div>
                   <div class="form-check m-2">
-                    <input class="form-check-input" type="radio" name="agentRole" id="flexRadio_Check2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                      Agency Director
-                    </label>
+                    <input class="form-check-input" type="radio" name="agentRole" id="flexRadio_Check2" value="Agency Director">
+                    <label class="form-check-label" for="flexRadio_Check2">Agency Director</label>
                   </div>
                   <div class="mb-3">
                     <label for="selectfield">
@@ -374,7 +373,7 @@
                 <p class="lead">Copyright &copy; 2024 PT CHINA TAIPING INSURANCE INDONESIA</p>   
               </form>
               <!-- Final Form (Initially Hidden) -->
-              <form id="finalForm" style="display: none;" enctype="multipart/form-data" method="POST">
+              <form id="finalForm" style="display: none;" enctype="multipart/form-data" method="POST" action="/submit-form">
                 <div class="mb-3 text-center">
                   <strong>Upload Documents</strong>
                 </div>
@@ -399,7 +398,8 @@
                   <span class="text-dark">Upload AAUI</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile03"name="AAUI_file" required>
+                  <input type="file" class="form-control" id="inputGroupFile03"
+                  name="AAUI_file" required>
                   <label class="input-group-text" for="inputGroupFile03">Upload</label>
                 </div>
 
@@ -407,7 +407,8 @@
                   <span class="text-dark">Upload NPWP</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile04"name="NPWP_file">
+                  <input type="file" class="form-control" id="inputGroupFile04"
+                  name="NPWP_file">
                   <label class="input-group-text" for="inputGroupFile04">Upload</label>
                 </div>
 
@@ -415,7 +416,8 @@
                   <span class="text-dark">Upload Buku Tabungan</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile05"name="Bukutabungan_file" required>
+                  <input type="file" class="form-control" id="inputGroupFile05"
+                  name="Bukutabungan_file" required>
                   <label class="input-group-text" for="inputGroupFile05">Upload</label>
                 </div>
 
@@ -423,7 +425,8 @@
                   <span class="text-dark">Upload Sertifikasi Lainnya</span>
                 </label>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile06"name="OtherCerti_file" required>
+                  <input type="file" class="form-control" id="inputGroupFile06"
+                  name="OtherCerti_file" required>
                   <label class="input-group-text" for="inputGroupFile06">Upload</label>
                 </div>
                 <!-- Button Previous -->
@@ -432,7 +435,7 @@
                     <button class="btn btn-primary btn-md" type="button" id="nextBtnPrev2">Previous</button>
                   </div>
                   <div class="mb-3 text-end">
-                    <button class="btn btn-primary btn-md" type="button" id="submitBtn">Submit Form</button>
+                    <button class="btn btn-primary btn-md" type="submit" id="submitBtn">Submit Form</button>
                   </div>
                 </div>
                 <p class="lead">Copyright &copy; 2024 PT CHINA TAIPING INSURANCE INDONESIA</p>
@@ -476,7 +479,9 @@
                       *
                     </span>
                   </label>
-                  <select class="form-select" aria-label="Default select example">
+                  <select 
+                  class="form-select" aria-label="Default select example"
+                  name="title">
                     <option selected>Mr</option>
                     <option value="1">Mrs</option>
                     <option value="2">PT</option>
@@ -493,7 +498,13 @@
                     *
                     </span>
                   </label>
-                  <input type="text" id="name" class="form-control" placeholder="Input Here.." aria-label="Nama" value="Bambang" required>
+                  <input 
+                  type="text" 
+                  id="name" 
+                  name="customer_name"
+                  class="form-control" placeholder="Input Here.." aria-label="Nama" 
+                  value="Bambang"
+                   required>
                   <div class="error">
                   </div>
                 </div>
@@ -506,7 +517,8 @@
                     *
                     </span>
                   </label>
-                  <input type="email" class="form-control" placeholder="Input Here.." aria-label="E-mail">
+                  <input type="email" class="form-control" placeholder="Input Here.." aria-label="E-mail"
+                  name="email">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -517,7 +529,8 @@
                     *
                     </span>
                   </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.HandPhone">
+                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.HandPhone"
+                  name="phone">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -528,7 +541,8 @@
                     *
                     </span>
                   </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Alamat">
+                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Alamat"
+                  name="address">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -539,7 +553,8 @@
                     *
                     </span>
                   </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.KTP">
+                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.KTP"
+                  name="ktp">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -550,7 +565,8 @@
                     *
                     </span>
                   </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.NPWP">
+                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.NPWP"
+                  name="npwp">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -562,7 +578,8 @@
                     *Tidak Wajib Diisi
                     </span>
                   </label>
-                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.AAUI">
+                  <input type="number" class="form-control" placeholder="Input Here.." aria-label="No.AAUI"
+                  name="aaui">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -573,7 +590,8 @@
                     *
                     </span>
                   </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Target Sertifikasi">
+                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Target Sertifikasi"
+                  name="certification_target">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -584,7 +602,8 @@
                     *
                     </span>
                   </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Nama BANK">
+                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Nama BANK"
+                  name="bank_name">
                 </div>
                 <div class="mb-3">
                   <label for="form-control">
@@ -603,7 +622,8 @@
                     Referensi
                     </span>
                   </label>
-                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Referensi">
+                  <input type="text" class="form-control" placeholder="Input Here.." aria-label="Referensi"
+                  name="reference">
                 </div>
                 <!-- next button -->
                 <div class="mb-3 text-end">
@@ -629,35 +649,41 @@
                     </span>
                   </label>
                   <div class="form-check m-2">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <input 
+                    class="form-check-input" type="radio" 
+                    name="user_role" id="flexRadioDefault2" value="Financial Consultant" checked>
                     <label class="form-check-label" for="flexRadioDefault2">
                       Financial consultant
                     </label>
                   </div>
                   <div class="form-check m-2">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <input 
+                    class="form-check-input" type="radio" 
+                    name="user_role" id="flexRadioDefault2" value="Agency Director"
+                    checked>
                     <label class="form-check-label" for="flexRadioDefault2">
                       Agency Director
                     </label>
                   </div>
                   <div class="mb-3">
                     <label for="selectfield">
-                      <span class="text-dark">
-                        Penempatan Kantor
-                      </span>
-                      <span class="text-danger">
-                        *
-                      </span>
+                      <span class="text-dark">Penempatan Kantor</span>
+                      <span class="text-danger">*</span>
                     </label>
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>Head Office(Jakarta)</option>
-                      <option value="1">Bandung</option>
-                      <option value="2">Medan</option>
-                      <option value="3">Yogyakarta</option>
-                      <option value="4">BSD</option>
-                      <option value="5">Kedoya</option>
-                      <option value="6">Semarang</option>
-                      <option value="7">Surabaya</option>
+                    <select 
+                      class="form-select" 
+                      aria-label="Default select example" 
+                      name="office_location"  
+                    >
+                      <option 
+                      value="Head Office (Jakarta)" selected>Head Office (Jakarta)</option> 
+                      <option value="Bandung">Bandung</option>
+                      <option value="Medan">Medan</option>
+                      <option value="Yogyakarta">Yogyakarta</option>
+                      <option value="BSD">BSD</option>
+                      <option value="Kedoya">Kedoya</option>
+                      <option value="Semarang">Semarang</option>
+                      <option value="Surabaya">Surabaya</option>
                     </select>
                   </div>
                 </div>
