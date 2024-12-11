@@ -1,10 +1,11 @@
 // app.js IS THE BACK END JAVASCRIPT
-
+require('dotenv').config();// can use .env
 const express = require("express"); // handleing https request
 const cors = require("cors");// middleware in a Node.js application. This middleware allows your server to handle requests from different origins (domains, ports, or protocols) in a secure way.
 const multer = require("multer");// Middleware to handle multipart/form-data for file uploads.
 const path = require('path');//Built-in Node.js module to handle file paths.
 const fs = require('fs');//Node.js file system module to manage files.
+const cloudinary = require('cloudinary').v2;// so can use cloudinary
 
 
 const mysql = require("mysql");
@@ -16,17 +17,24 @@ app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 app.use(cors()); // Cross-Origin Resource Sharing (CORS) restrictions
 
-
+const storage = multer.memoryStorage(); // Store files in memory before uploading to Cloudinary
 const upload = multer({ dest: 'uploads/' });
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // MySQL database connection
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root", // your MySQL username
-  password: "1234", // your MySQL password
-  database: "taipingdata", // your database name
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER, // your MySQL username
+  password: process.env.DB_PASS, // your MySQL password
+  database: process.env.DB_NAME, // your database name
+});
+
+//Cloudinary Connection
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 db.connect((err) => {
@@ -161,7 +169,14 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
 });
 
 // Route to handle form submission
-app.post('/submit-form',upload.none(), (req, res) => {
+app.post('/submit-form',upload.fields([
+  { name: 'photo', maxCount: 1 }, // Single photo file
+  { name: 'Kartu_Tanda_Penduduk', maxCount: 1 },   // Single KTP file
+  { name: 'NPWP', maxCount: 1 },  // Single NPWP file
+  { name: 'AAUI', maxCount: 1 },  // Single AAUI file
+  {name: 'Bukutabungan', maxCount: 1 }, // single buku tabungan
+  { name: 'OtherCerti', maxCount: 1 } // Single Certification file
+]), async (req, res) => {
   // Extract text fields from req.body
   const {
     title,
@@ -190,6 +205,51 @@ app.post('/submit-form',upload.none(), (req, res) => {
 
   console.log(req.body); // Check if agentRole is coming in the request
 
+  // Array to store URLs of uploaded files
+  const uploadedFileUrls = {};
+
+  // Upload files to Cloudinary
+  try {
+    const fileFields = ['photo', 'KTP', 'NPWP', 'AAUI', 'Bukutabungan' , 'OtherCerti'];
+
+    for (const field of fileFields) {
+      if (req.files[field]) {
+        const file = req.files[field][0]; // Get the uploaded file for the current field
+        const result = await cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+          if (error) {
+            console.error(`Failed to upload ${field}:`, error);
+            throw error;
+          }
+          return result;
+        }).end(file.buffer); // Send file buffer to Cloudinary
+        uploadedFileUrls[field] = result.secure_url; // Store the URL of the uploaded file
+      }
+    }
+  } catch (error) {
+    console.error('Error uploading files to Cloudinary:', error);
+    return res.status(500).json({ message: 'File upload failed', error });
+  }
+
+    // Check what's inside req.files
+  console.log('Files received:', req.files);
+
+  // Ensure the files exist
+  if (!req.files.photo) {
+    console.error('Photo file is missing.');
+  }
+  if (!req.files.NPWP) {
+    console.error('NPWP file is missing.');
+  }
+  if (!req.files.AAUI) {
+    console.error('AAUI file is missing.');
+  }
+  if (!req.files.OtherCerti) {
+    console.error('OtherCerti file is missing.');
+  }
+
+  console.log('Uploaded file URLs:', uploadedFileUrls); // Log file URLs for debugging
+
+
   // SQL query to insert data into the database
   const query = `
     INSERT INTO agent_form_info (
@@ -206,8 +266,14 @@ app.post('/submit-form',upload.none(), (req, res) => {
       Customer_Bank_Account_Number, 
       Customer_References, 
       Agent_Role,
-      Office_Location
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      Office_Location,
+      Photo_Url,
+      KTP_Url,
+      NPWP_Url,
+      AAUI_Url,
+      Bukutabungan_Url,
+      OtherCerti_Url
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const values = [
@@ -224,7 +290,13 @@ app.post('/submit-form',upload.none(), (req, res) => {
     bank_account,
     reference,
     agentRole,
-    office_location
+    office_location,
+    uploadedFileUrls.photo || null,
+    uploadedFileUrls.Kartu_Tanda_Penduduk || null,
+    uploadedFileUrls.NPWP || null,
+    uploadedFileUrls.AAUI || null,
+    uploadedFileUrls.Bukutabungan || null,
+    uploadedFileUrls.OtherCerti || null
   ];
 
   db.query(query, values, (err, result) => {
