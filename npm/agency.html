@@ -16,6 +16,7 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="spinnerload.css">
     <link rel="stylesheet" href="styleAgencyCSS.css">
   </head>
@@ -350,13 +351,13 @@
                     <select class="form-select" id="Office_Select"
                     name="office_location" aria-label="Default select example" required>
                       <option value="Head Office(Jakarta)" selected>Head Office(Jakarta)</option>
-                      <option value="1">Bandung</option>
-                      <option value="2">Medan</option>
-                      <option value="3">Yogyakarta</option>
-                      <option value="4">BSD</option>
-                      <option value="5">Kedoya</option>
-                      <option value="6">Semarang</option>
-                      <option value="7">Surabaya</option>
+                      <option value="Bandung">Bandung</option>
+                      <option value="Medan">Medan</option>
+                      <option value="Yogyakarta">Yogyakarta</option>
+                      <option value="BSD">BSD</option>
+                      <option value="Kedoya">Kedoya</option>
+                      <option value="Semarang">Semarang</option>
+                      <option value="Surabaya">Surabaya</option>
                     </select>
                   </div>
                 </div>
@@ -379,7 +380,7 @@
                 </div>
                 
                 <label for="inputGroupFile01">
-                  <span class="text-dark">Upload Foto</span>
+                  <span class="text-dark">Upload Foto<span class="text-danger">*</span></span>
                 </label>
                 <div class="input-group mb-3">
                   <input type="file" class="form-control" id="inputGroupFile01" name="photo" required>
@@ -395,25 +396,26 @@
                 </div>
 
                 <label for="inputGroupFile03">
-                  <span class="text-dark">Upload AAUI</span>
+                  <span class="text-dark">Upload AAUI<span class="text-danger">&nbsp(Optional)</span></span>
                 </label>
                 <div class="input-group mb-3">
                   <input type="file" class="form-control" id="inputGroupFile03"
-                  name="AAUI" required>
+                  name="AAUI">
                   <label class="input-group-text" for="inputGroupFile03">Upload</label>
                 </div>
+                
 
                 <label for="inputGroupFile04">
-                  <span class="text-dark">Upload NPWP</span>
+                  <span class="text-dark">Upload NPWP<span class="text-danger">*</span></span>
                 </label>
                 <div class="input-group mb-3">
                   <input type="file" class="form-control" id="inputGroupFile04"
-                  name="NPWP">
+                  name="NPWP" required>
                   <label class="input-group-text" for="inputGroupFile04">Upload</label>
                 </div>
 
                 <label for="inputGroupFile05">
-                  <span class="text-dark">Upload Buku Tabungan</span>
+                  <span class="text-dark">Upload Buku Tabungan<span class="text-danger">*</span></span>
                 </label>
                 <div class="input-group mb-3">
                   <input type="file" class="form-control" id="inputGroupFile05"
@@ -422,11 +424,11 @@
                 </div>
 
                 <label for="inputGroupFile06">
-                  <span class="text-dark">Upload Sertifikasi Lainnya</span>
+                  <span class="text-dark">Upload Sertifikasi Lainnya<span class="text-danger">&nbsp(Optional)</span></span>
                 </label>
                 <div class="input-group mb-3">
                   <input type="file" class="form-control" id="inputGroupFile06"
-                  name="OtherCerti" required>
+                  name="OtherCerti">
                   <label class="input-group-text" for="inputGroupFile06">Upload</label>
                 </div>
                 <!-- Button Previous -->
@@ -980,7 +982,7 @@
         document.getElementById('finalForm').style.display = 'block';
       });
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="newsletter.js"></script>
     <script src="newsLetterSpinnerSend.js"></script>
     <script src="spinnerLoad.js"></script>

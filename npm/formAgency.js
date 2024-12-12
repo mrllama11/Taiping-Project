@@ -1,77 +1,59 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const firstForm = document.getElementById("firstForm");
-  const secondForm = document.getElementById("secondForm");
-  const finalForm = document.getElementById("finalForm");
+  const formData = new FormData();
 
-  let formData = new FormData(); //create a FormData object Object to store all form data
-
-  // Function to collect data from a form
   function collectFormData(currentForm) {
-    const inputs = currentForm.querySelectorAll("input, select, textarea"); // Include select and textarea
+    const inputs = currentForm.querySelectorAll("input, select, textarea");
     inputs.forEach((input) => {
-      if (input.type === "file") {
-        for (let i = 0; i < input.files.length; i++) {
-          formData.append(input.name, input.files[i]);
-        }
+      if (input.type === "file" && input.files.length > 0) {
+        formData.append(input.name, input.files[0]);
       } else if (input.type === "radio" || input.type === "checkbox") {
-        if (input.checked) {
-          formData.append(input.name, input.value);
-        }
+        if (input.checked) formData.append(input.name, input.value);
       } else {
         formData.append(input.name, input.value);
       }
     });
   }
-  
-  
 
-  // show second form when the next "Next" button is clicked
-  document.getElementById("nextBtn1").addEventListener("click", function () {
-    document.getElementById("firstForm").style.display = "none";
-    document.getElementById("secondForm").style.display = "block";
-  });
-  
-  // Show final form when the next "Next" button is clicked
-  document.getElementById("nextBtn2").addEventListener("click", function () {
-    document.getElementById("secondForm").style.display = "none";
-    document.getElementById("finalForm").style.display = "block";
-  });
+  document.getElementById("submitBtn").addEventListener("click", async (event) => {
+    event.preventDefault();
+    const submitButton = document.getElementById("submitBtn");
+    const loadingSpinner = document.getElementById("loadingSpinner");
+    const modal = document.getElementById("agentFormGeneral");
 
-  // Back to second form when the previous "Prev" button is clicked
-  document.getElementById("nextBtnPrev1").addEventListener("click", function () {
-    document.getElementById("secondForm").style.display = "none";
-    document.getElementById("firstForm").style.display = "block";
-  });
-
-  // Back to second form when the previous "Prev" button is clicked
-  document.getElementById("nextBtnPrev2").addEventListener("click", function () {
-    document.getElementById("finalForm").style.display = "none";
-    document.getElementById("secondForm").style.display = "block";
-  });
-
-  // Submit Button
-  document.getElementById("submitBtn").addEventListener("click", async () => {
-    // Collect data from all forms
-    collectFormData(firstForm);
-    collectFormData(secondForm);
-    collectFormData(finalForm);
+    submitButton.disabled = true;  // Disable submit button
+    submitButton.innerHTML = '<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div> Submitting...';  // Change button text to "Submitting..." and add spinner
+    loadingSpinner.classList.remove("d-none"); // Show the spinner (remove the hidden class)
 
     try {
+      // Collect data from all form fields
+      collectFormData(document.getElementById("firstForm"));
+      collectFormData(document.getElementById("secondForm"));
+      collectFormData(document.getElementById("finalForm"));
+
       const response = await fetch("http://localhost:3000/submit-form", {
         method: "POST",
-        body: formData, // Send the FormData object
+        body: formData,
       });
-      console.log(...formData);
-      if (response.ok) {
-        alert("Form submitted successfully!");
-      } else {
+
+      if (!response.ok) {
         const errorText = await response.text();
         console.error("Error from server:", errorText);
         alert("Error submitting form. Please try again.");
+      } else {
+        const result = await response.json();
+        console.log('Success:', result);
+        alert("Form submitted successfully!");
+        // Close the modal
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.hide(); // This hides the modal
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An unexpected error occurred.");
-    }
+      console.error('Error:', error);
+      alert('An unexpected error occurred.');
+    } finally {
+      loadingSpinner.classList.add("d-none"); // Hide spinner (add the hidden class back)
+      submitButton.innerHTML = 'Submit';  // Reset button text
+      submitButton.disabled = false;  // Re-enable the submit button
+    } 
   });
 });

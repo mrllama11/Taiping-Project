@@ -16,9 +16,11 @@ const port = 3000;
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 app.use(cors()); // Cross-Origin Resource Sharing (CORS) restrictions
+// Allow OPTIONS requests on all routes
+app.options('*', (req, res) => res.sendStatus(200));
 
 const storage = multer.memoryStorage(); // Store files in memory before uploading to Cloudinary
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage });
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -169,13 +171,17 @@ app.get("/vehicles-rates-comprehensive", (req, res) => {
 });
 
 // Route to handle form submission
+app.get('/submit-form', (req, res) => {
+  res.status(405).json({ message: 'This route only supports POST requests' });
+});
+
 app.post('/submit-form',upload.fields([
-  { name: 'photo', maxCount: 1 }, // Single photo file
-  { name: 'Kartu_Tanda_Penduduk', maxCount: 1 },   // Single KTP file
-  { name: 'NPWP', maxCount: 1 },  // Single NPWP file
-  { name: 'AAUI', maxCount: 1 },  // Single AAUI file
-  {name: 'Bukutabungan', maxCount: 1 }, // single buku tabungan
-  { name: 'OtherCerti', maxCount: 1 } // Single Certification file
+  { name: 'photo' }, // Single photo file use maxcount: 1
+  { name: 'Kartu_Tanda_Penduduk'},   
+  { name: 'AAUI' },  
+  { name: 'NPWP' },  
+  {name: 'Bukutabungan' }, 
+  { name: 'OtherCerti' } 
 ]), async (req, res) => {
   // Extract text fields from req.body
   const {
@@ -210,18 +216,21 @@ app.post('/submit-form',upload.fields([
 
   // Upload files to Cloudinary
   try {
-    const fileFields = ['photo', 'KTP', 'NPWP', 'AAUI', 'Bukutabungan' , 'OtherCerti'];
+    const fileFields = ['photo', 'Kartu_Tanda_Penduduk', 'AAUI', 'NPWP', 'Bukutabungan', 'OtherCerti'];
+
 
     for (const field of fileFields) {
       if (req.files[field]) {
         const file = req.files[field][0]; // Get the uploaded file for the current field
-        const result = await cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
-          if (error) {
-            console.error(`Failed to upload ${field}:`, error);
-            throw error;
-          }
-          return result;
-        }).end(file.buffer); // Send file buffer to Cloudinary
+        const result = await new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+            if (error) {
+              console.error(`Failed to upload ${field}:`, error);
+              return reject(error);
+            }
+            resolve(result);
+          }).end(file.buffer); // Send file buffer to Cloudinary
+        });
         uploadedFileUrls[field] = result.secure_url; // Store the URL of the uploaded file
       }
     }
@@ -232,10 +241,14 @@ app.post('/submit-form',upload.fields([
 
     // Check what's inside req.files
   console.log('Files received:', req.files);
+  console.log('Uploaded Fields', upload.fields);
 
   // Ensure the files exist
   if (!req.files.photo) {
     console.error('Photo file is missing.');
+  }
+  if (!req.files.Kartu_Tanda_Penduduk) {
+    console.error('Kartu_Tanda_Penduduk file is missing.');
   }
   if (!req.files.NPWP) {
     console.error('NPWP file is missing.');
@@ -243,10 +256,13 @@ app.post('/submit-form',upload.fields([
   if (!req.files.AAUI) {
     console.error('AAUI file is missing.');
   }
+  if (!req.files.Bukutabungan) {
+    console.error('Bukutabungan file is missing.');
+  }
   if (!req.files.OtherCerti) {
     console.error('OtherCerti file is missing.');
   }
-
+  
   console.log('Uploaded file URLs:', uploadedFileUrls); // Log file URLs for debugging
 
 
@@ -292,12 +308,13 @@ app.post('/submit-form',upload.fields([
     agentRole,
     office_location,
     uploadedFileUrls.photo || null,
-    uploadedFileUrls.Kartu_Tanda_Penduduk || null,
+    uploadedFileUrls.Kartu_Tanda_Penduduk || null, 
     uploadedFileUrls.NPWP || null,
     uploadedFileUrls.AAUI || null,
     uploadedFileUrls.Bukutabungan || null,
     uploadedFileUrls.OtherCerti || null
   ];
+  
 
   db.query(query, values, (err, result) => {
     if (err) {
