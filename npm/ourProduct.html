@@ -132,7 +132,15 @@
                   Liability insurance covers legal responsibility for
                   third-party damages.
                 </p>
-                <a href="ourProductLiabilityInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductLiabilityInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -152,7 +160,15 @@
                 <p class="card-text">
                   Marine insurance covers loss or damage to ships and cargo.
                 </p>
-                <a href="ourProductMarineInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductMarineInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -173,7 +189,15 @@
                   Fire insurance covers damage or loss caused by fire to
                   property.
                 </p>
-                <a href="ourProductFireInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductFireInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -193,7 +217,15 @@
                 <p class="card-text">
                   Motor Insurance covers loss or damage to motor vehicles(Car)
                 </p>
-                <a href="ourProductMotorInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductMotorInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -212,7 +244,15 @@
                 <p class="card-text">
                   Property All Risk Insurance (also known as Industrial All Risk Insurance) is a comprehensive insurance policy designed to cover a wide range of risks and perils that can affect a company's physical assets.
                 </p>
-                <a href="ourProductProAllriskInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductProAllriskInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -231,7 +271,15 @@
                 <p class="card-text">
                   Overseas Travel Insurance is a type of insurance policy designed to provide financial protection and assistance to travelers when they are abroad.
                 </p>
-                <a href="ourProductOverseasInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductOverseasInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -250,7 +298,15 @@
                 <p class="card-text">
                   Personal Accident Insurance is a type of insurance policy that provides financial compensation to the insured in case of bodily injury, disability, or death due to an accident.
                 </p>
-                <a href="ourProductPersonalAccInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductPersonalAccInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -269,7 +325,15 @@
                 <p class="card-text">
                   Cash insurance, also known as "cash in transit" insurance or "money insurance," is a type of insurance policy designed to protect businesses against the loss or damage of cash or other valuable items while in transit or on the business premises.
                 </p>
-                <a href="ourProductCashInsurance.html" class="btn btn-primary">Learn More</a>
+                <a 
+                data-href="ourProductCashInsurance.html"  
+                class="buttonLearnMore btn btn-primary d-inline-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" 
+                aria-hidden="true" 
+                style="display: none;">
+                </span>
+                <span >Learn More</span>
+                </a>
               </div>
             </div>
           </div>
@@ -531,9 +595,38 @@
         .bindPopup('Main Office: Gedung Perkantoran The Tower Lt.16, Jakarta.')
         .openPopup();
     </script>
+    <script>
+      // Select all "Learn More" buttons
+    const buttons = document.querySelectorAll('.buttonLearnMore');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent immediate navigation
+        
+        const spinner = this.querySelector('.spinner-border');
+        const buttonText = this.querySelector('span:not(.spinner-border)'); // Get the button text (not the spinner)
+        
+        // Show spinner and hide button text
+        buttonText.style.display = 'none';
+        spinner.style.display = 'inline-block';
+
+        // Delay the navigation by 3 seconds
+        setTimeout(() => {
+          const targetUrl = this.dataset.href; // Get the link from data-href
+          window.location.href = targetUrl; // Navigate to the link
+        }, 3000); // 3-second delay
+      });
+    });
+
+
+    </script>
     <!-- Link to the shared JavaScript file -->
     <script src="newsletter.js"></script>  
     <script src="newsLetterSpinnerSend.js"></script>
     <script src="spinnerLoad.js"></script>
+    <script src="spinnerLearnMore.js"></script>
+    <script src="spinner.js"></script>
+
+    
   </body>
 </html>
