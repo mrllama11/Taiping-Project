@@ -73,3 +73,13 @@ h5 {
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+/* Initially hide the "Previous" buttons on first and second forms */
+#nextBtnPrev1, #nextBtnPrev2 {
+  display: none;
+}
+
+/* Ensure "Next" buttons are visible by default */
+#nextBtn1, #nextBtn2 {
+  display: block;
+}
