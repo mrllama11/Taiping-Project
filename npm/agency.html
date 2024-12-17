@@ -142,7 +142,7 @@
           </div>
 
           <!-- Card 2 -->
-          <div class="col-md-6 ">
+          <!-- <div class="col-md-6 ">
             <div class="card bg-light text-dark h-100">
               <img
                 src="imagesNpm/agentlife.png"
@@ -154,9 +154,9 @@
                 <h5 class="card-title">LifeAgent</h5>
                 <p class="card-text">
                   Contact Life Insurance Agent
-                </p>
+                </p> -->
                 <!-- Learn More button -->
-                <button type="button" 
+                <!-- <button type="button" 
                 id="buttonLearnMore"
                 class="btn btn-primary">
                 <span id="spinnerLearnMore" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none;"></span>
@@ -164,7 +164,7 @@
                 </button>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -961,26 +961,79 @@
         .openPopup();
     </script>
     <script>
-      // show second form when the next "Next" button is clicked
-      document.getElementById('nextBtn1').addEventListener('click',function(){
-        document.getElementById('firstForm').style.display ='none';
-        document.getElementById('secondForm').style.display ='block';
-      });
-      // Back to Second form when the previous "prev" button is clicked
-      document.getElementById('nextBtnPrev1').addEventListener('click',function(){
-        document.getElementById('secondForm').style.display = 'none';
-        document.getElementById('firstForm').style.display = 'block';
-      })
-      // Back to Second form when the previous "prev" button is clicked
-      document.getElementById('nextBtnPrev2').addEventListener('click',function(){
-        document.getElementById('finalForm').style.display = 'none';
+          document.addEventListener("DOMContentLoaded", function() {
+      // Show second form when the "Next" button from first form is clicked
+      document.getElementById('nextBtn1').addEventListener('click', function() {
+        console.log("Next button from first form clicked");
+
+        document.getElementById('firstForm').style.display = 'none';
         document.getElementById('secondForm').style.display = 'block';
-      })
-      // Show final form when the next "Next" button is clicked
+
+        // Hide "Next" button of the first form, show the "Previous" button of the second form
+        document.getElementById('nextBtn1').style.display = 'none';
+        document.getElementById('nextBtnPrev1').style.display = 'block';
+        document.getElementById('nextBtn2').style.display = 'block';
+
+        console.log("Buttons after first form transition: ", {
+          nextBtn1: document.getElementById('nextBtn1').style.display,
+          nextBtnPrev1: document.getElementById('nextBtnPrev1').style.display,
+          nextBtn2: document.getElementById('nextBtn2').style.display
+        });
+      });
+
+      // Back to first form when the "Previous" button from second form is clicked
+      document.getElementById('nextBtnPrev1').addEventListener('click', function() {
+        console.log("Previous button from second form clicked");
+
+        document.getElementById('firstForm').style.display = 'block';
+        document.getElementById('secondForm').style.display = 'none';
+
+        // Hide "Previous" button of the second form, show the "Next" button of the first form
+        document.getElementById('nextBtnPrev1').style.display = 'none';
+        document.getElementById('nextBtn1').style.display = 'block';
+
+        console.log("Buttons after second form transition: ", {
+          nextBtnPrev1: document.getElementById('nextBtnPrev1').style.display,
+          nextBtn1: document.getElementById('nextBtn1').style.display
+        });
+      });
+
+      // Back to second form when the "Previous" button from final form is clicked
+      document.getElementById('nextBtnPrev2').addEventListener('click', function() {
+        console.log("Previous button from final form clicked");
+
+        document.getElementById('secondForm').style.display = 'block';
+        document.getElementById('finalForm').style.display = 'none';
+
+        // Show "Next" button of second form, hide the "Previous" button of final form
+        document.getElementById('nextBtnPrev2').style.display = 'none';
+        document.getElementById('nextBtn2').style.display = 'block';
+
+        console.log("Buttons after final form transition: ", {
+          nextBtnPrev2: document.getElementById('nextBtnPrev2').style.display,
+          nextBtn2: document.getElementById('nextBtn2').style.display
+        });
+      });
+
+      // Show final form when the "Next" button from second form is clicked
       document.getElementById('nextBtn2').addEventListener('click', function() {
+        console.log("Next button from second form clicked");
+
         document.getElementById('secondForm').style.display = 'none';
         document.getElementById('finalForm').style.display = 'block';
+
+        // Hide "Next" button of second form, show "Previous" button of final form
+        document.getElementById('nextBtn2').style.display = 'none';
+        document.getElementById('nextBtnPrev2').style.display = 'block';
+
+        console.log("Buttons after second-to-final form transition: ", {
+          nextBtn2: document.getElementById('nextBtn2').style.display,
+          nextBtnPrev2: document.getElementById('nextBtnPrev2').style.display
+        });
       });
+    });
+
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="newsletter.js"></script>

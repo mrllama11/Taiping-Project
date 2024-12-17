@@ -17,6 +17,118 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+      }
+    
+      .coverage-section {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+    
+      .coverage-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+    
+      .coverage-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+    
+      .coverage-table th, 
+      .coverage-table td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+    
+      .coverage-table th {
+        background-color: #2196F3;
+        color: #fff;
+        font-size: 1.2rem;
+      }
+    
+      .coverage-table td {
+        background-color: #f9f9f9;
+        font-size: 1rem;
+      }
+    
+      .coverage-table td span.icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+    
+      .coverage-table tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+    
+      .coverage-table tr:hover td {
+        background-color: #e1f5fe;
+      }
+    
+      @media (max-width: 768px) {
+        .coverage-table th, 
+        .coverage-table td {
+          font-size: 0.9rem;
+          padding: 15px;
+        }
+      }
+    
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #2196F3;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+    
+      .cta-button:hover {
+        background-color: #1976D2;
+      }
+      .icon-info {
+        cursor: pointer;
+        color: #2196F3;
+      }
+      .icon-info:hover::after {
+        content: 'More information about this feature';
+        background: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        font-size: 0.9rem;
+      }
+      .cta-button:hover {
+        animation: pulse 0.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+
+    
+    </style>
   </head>
   <body>
     <!-- NAVIGATION BAR -->
@@ -82,12 +194,17 @@
         <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60"  >
           <h1>
             <span class="text-warning text-center align-items-center"
-              >Fire Insurance - Protect Your Property from Fire Risks</span
+              >Protect Your Home, Business, and Peace of Mind with Fire Insurance</span
             >
           </h1>
         </div>
         <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
-          <h5>
+          <h3 style="font-size: 20px;">
+            Stay ahead of the unexpected. Get instant coverage from fire, lightning, and explosions — when you need it most.
+          </h3>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h5 style="font-size: 12px;">
             <span class="text-dark">
               2024, Created By: Xiao Bin 彬
             </span>
@@ -96,7 +213,7 @@
         <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
           <img
           class="img-fluid text-center align-items-center justify-content-center"
-          src="imagesNpm/Fire-Insurance-min.webp"
+          src="imagesNpm/fire-insurance-yes.jpg"
           alt="OfficeImage"
           width="700"
           height="700"
@@ -116,12 +233,22 @@
                 <br>
                 In this article, we will summarize liability assurance. For more details, read carefully until the end!
               </span>
-            </p>
-            
+              <br>
+              <br>
+              <span>
+                🛡️ Did you know?
+                <br>
+                "Indonesia ranks among the top 10 countries in the world for urban fire incidents, with most fires occurring in densely populated areas like Jakarta, Surabaya, and Bandung. These fires often result from electrical faults or accidents in crowded residential and industrial zones.
+              </span>
+              <br>
+              <span>
+                🛡️ Interesting Fact:
+                <br>
+                "In Jakarta alone, over 1,000 fire incidents occur annually, causing losses worth billions of rupiah. Protecting your property with fire insurance is not just a precaution; it’s a necessity."
+              </span>
+            </p> 
           </div>
-
         </div>
-        
         <div class="container" >
           <div>
             <p class="lead">
@@ -174,14 +301,16 @@
               
             </p>
         </div>
+        
+
         <div class="container" >
           <div>
             <p class="lead">
               <h5>
-                <strong>Fire Insurance Benefits</strong>
+                <strong>Why Choose Us? </strong>
               </h5>
                   <ol>
-                    <li>Comprehensive Coverage: Protects both your property and contents against a wide range of fire-related risks.</li><li>Flexible Payment Options: Pay your premium monthly or annually based on your budget.</li><li>Fast Claims Process: In case of a claim, expect quick and hassle-free assistance from our team.</li><li>24/7 Customer Support: Our team is available around the clock to answer any questions or assist with claims.</li>
+                    <li>🕒 Fast Claims – Receive payment within 7 days of filing.</li><li>🔥 Comprehensive Coverage – Fire, lightning, explosion, floods, and more.</li><li>📱 Online Management – Get quotes, track claims, and manage policies online.</li><li>24/7 Customer Support: Our team is available around the clock to answer any questions or assist with claims.</li>
                   </ol>
                 
               
@@ -189,7 +318,60 @@
             </p>
           </div>
         </div>
-
+        <section class="coverage-section">
+          <h1>📋 What Does Fire Insurance Cover?</h1>
+        
+          <table class="coverage-table">
+            <tr>
+              <th>🌐 **Coverage**</th>
+              <th>🔥 **Basic Fire Insurance**</th>
+              <th>🌟 **Comprehensive Fire Insurance**</th>
+            </tr>
+        
+            <tr>
+              <td style="padding: 15px;">🔥 **Fire Damage**</td>
+              <td style="padding: 15px;">✅ Covers loss or damage caused by fire.</td>
+              <td style="padding: 15px;">✅ Covers loss or damage caused by fire.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🌪️ **Lightning Damage**</td>
+              <td style="padding: 15px;">✅ Covers damage caused by lightning strikes.</td>
+              <td style="padding: 15px;">✅ Covers damage caused by lightning strikes.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">💨 **Explosion**</td>
+              <td style="padding: 15px;">❌ Not included.</td>
+              <td style="padding: 15px;">✅ Covers explosion damage.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🌊 **Flood & Storm Damage**</td>
+              <td style="padding: 15px;">❌ Not included.</td>
+              <td style="padding: 15px;">✅ Optional add-on for flood and storm damage.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">💸 **Third-Party Liability**</td>
+              <td style="padding: 15px;">❌ Not included.</td>
+              <td style="padding: 15px;">✅ Covers damages to third-party properties caused by a fire spreading from your property.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🛠️ **Debris Removal**</td>
+              <td style="padding: 15px;">❌ Not included.</td>
+              <td style="padding: 15px;">✅ Covers the cost of removing debris after a fire incident.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">⚖️ **Legal Liability Coverage**</td>
+              <td style="padding: 15px;">❌ Not included.</td>
+              <td style="padding: 15px;">✅ Covers legal expenses if sued due to fire-related damages.</td>
+            </tr>
+          </table>
+          <br>
+          <span>
+            <h5>
+              📞 Don’t wait until it’s too late! Protect your home, office, or business with the right fire insurance plan.
+            </h5>
+            <a href="agency.html" class="cta-button">Contact Our Agent</a>
+          </span> 
+        </section>
       </div>
     </section>
         

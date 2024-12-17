@@ -17,6 +17,118 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+      }
+    
+      .coverage-section {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+    
+      .coverage-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+    
+      .coverage-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+    
+      .coverage-table th, 
+      .coverage-table td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+    
+      .coverage-table th {
+        background-color: #2196F3;
+        color: #fff;
+        font-size: 1.2rem;
+      }
+    
+      .coverage-table td {
+        background-color: #f9f9f9;
+        font-size: 1rem;
+      }
+    
+      .coverage-table td span.icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+    
+      .coverage-table tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+    
+      .coverage-table tr:hover td {
+        background-color: #e1f5fe;
+      }
+    
+      @media (max-width: 768px) {
+        .coverage-table th, 
+        .coverage-table td {
+          font-size: 0.9rem;
+          padding: 15px;
+        }
+      }
+    
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #2196F3;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+    
+      .cta-button:hover {
+        background-color: #1976D2;
+      }
+      .icon-info {
+        cursor: pointer;
+        color: #2196F3;
+      }
+      .icon-info:hover::after {
+        content: 'More information about this feature';
+        background: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        font-size: 0.9rem;
+      }
+      .cta-button:hover {
+        animation: pulse 0.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+
+    
+    </style>
   </head>
   <body>
     <!-- NAVIGATION BAR -->
@@ -82,12 +194,17 @@
         <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60"  >
           <h1>
             <span class="text-warning text-center align-items-center"
-              >Marine Insurance: What's Marine Insurance?, What does marine Insurance Cover?, Why we need that insurance?</span
+              >Protect Your Cargo & Vessels with Marine Insurance</span
             >
           </h1>
         </div>
         <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
-          <h5>
+          <h3 style="font-size: 18px;">
+            Your Shield Against Unexpected Claims
+          </h3>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h5 style="font-size: 12px;">
             <span class="text-dark">
               2024, Created By: Xiao Bin 彬
             </span>
@@ -112,6 +229,13 @@
                 Marine insurance is a type of insurance policy that provides financial protection against losses or damages to ships, cargo, and other goods transported over water. It covers risks associated with maritime transport, such as storms, ship collisions, theft, and other hazards that could affect the safety of the ship, its crew, and the cargo. 
   
                 In this article, we will summarize liability assurance. For more details, read carefully until the end!
+              </span>
+              <br>
+              <br>
+              <span>
+                🛡️ Interesting Fact:
+                <br>
+                "Indonesia’s economy relies heavily on maritime trade, with over 90% of its exports and imports transported by sea. Protecting your cargo with marine insurance ensures that your goods arrive safely, even if the unexpected happens."
               </span>
             </p>
             
@@ -225,11 +349,67 @@
               </ul>
             </p>
         </div>
-
-      </div>
-    </section>
-    
+        <section class="coverage-section">
+          <h1>📋What Does Marine Insurance Cover?</h1>
         
+          <table class="coverage-table">
+            <tr>
+              <th>🌐 **Coverage**</th>
+              <th>🚢 **Marine Cargo Insurance**</th>
+              <th>⛴️ **Marine Hull Insurance**</th>
+            </tr>
+        
+            <tr>
+              <td style="padding: 15px;">⚠️ **Loss or Damage to Cargo**</td>
+              <td style="padding: 15px;">✅ Covers loss, theft, or damage to cargo during transit (sea, air, or land).</td>
+              <td style="padding: 15px;">❌ Not applicable to hull insurance.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">⚓ **Damage to Ship or Vessel**</td>
+              <td style="padding: 15px;">❌ Not covered under cargo insurance.</td>
+              <td style="padding: 15px;">✅ Covers damage to the ship, including repairs, collisions, and sinking.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🌀 **Natural Disasters (Storms, Tsunamis)**</td>
+              <td style="padding: 15px;">✅ Protects cargo from storm-related damage, floods, and other natural disasters.</td>
+              <td style="padding: 15px;">✅ Covers ships from damage caused by storms, typhoons, and floods.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🏴‍☠️ **Piracy & Theft**</td>
+              <td style="padding: 15px;">✅ Covers the loss of cargo if hijacked or stolen during transit.</td>
+              <td style="padding: 15px;">✅ Covers vessel and crew protection if hijacked by pirates.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">📦 **Goods in Warehouse (Before Transit)**</td>
+              <td style="padding: 15px;">✅ Covers your cargo while it is in storage before departure.</td>
+              <td style="padding: 15px;">❌ Not applicable to hull insurance.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🛠️ **Loading & Unloading Damage**</td>
+              <td style="padding: 15px;">✅ Covers damage to cargo during loading and unloading at ports.</td>
+              <td style="padding: 15px;">❌ Not applicable to hull insurance.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">💸 **Legal Liability for Third-Party Damage**</td>
+              <td style="padding: 15px;">✅ If your cargo causes damage to another party’s property, this is covered.</td>
+              <td style="padding: 15px;">✅ Covers third-party liability for ship collisions and damages caused to other vessels.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">⚖️ **General Average Contribution**</td>
+              <td style="padding: 15px;">✅ Covers your share of the general average costs during emergency sacrifices at sea.</td>
+              <td style="padding: 15px;">✅ Covers general average contributions for the ship’s owner as well.</td>
+            </tr>
+          </table>
+          <br>
+          <span>
+            <h5>
+              📞 Don’t leave your cargo unprotected. With Marine Insurance, you’re safeguarded from financial loss caused by piracy, storms, and cargo damage. Protect your shipments with ease!
+            </h5>
+            <a href="agency.html" class="cta-button">Contact Our Agent</a>
+          </span> 
+        </section>
+      </div>
+    </section>  
     <section>
       <!-- Loading Overlay -->
       <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center;">
@@ -238,9 +418,9 @@
         </div>
       </div>
     </section>
-<!-- helo -->
+
     <!-- Newsletter Section -->
-    <section class=" text-dark p-5 text-center">
+    <section class=" text-dark text-center">
       <div class="container">
         <!-- flex column biar dia kek sandwich nge stack -->
         <div class="d-md-flex flex-column justify-content-between align-items-center">

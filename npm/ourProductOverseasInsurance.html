@@ -17,6 +17,118 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+      }
+    
+      .coverage-section {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+    
+      .coverage-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+    
+      .coverage-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+    
+      .coverage-table th, 
+      .coverage-table td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+    
+      .coverage-table th {
+        background-color: #2196F3;
+        color: #fff;
+        font-size: 1.2rem;
+      }
+    
+      .coverage-table td {
+        background-color: #f9f9f9;
+        font-size: 1rem;
+      }
+    
+      .coverage-table td span.icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+    
+      .coverage-table tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+    
+      .coverage-table tr:hover td {
+        background-color: #e1f5fe;
+      }
+    
+      @media (max-width: 768px) {
+        .coverage-table th, 
+        .coverage-table td {
+          font-size: 0.9rem;
+          padding: 15px;
+        }
+      }
+    
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #2196F3;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+    
+      .cta-button:hover {
+        background-color: #1976D2;
+      }
+      .icon-info {
+        cursor: pointer;
+        color: #2196F3;
+      }
+      .icon-info:hover::after {
+        content: 'More information about this feature';
+        background: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        font-size: 0.9rem;
+      }
+      .cta-button:hover {
+        animation: pulse 0.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+
+    
+    </style>
   </head>
   <body>
     <!-- NAVIGATION BAR -->
@@ -77,144 +189,135 @@
       </div>
     </nav>
     <!-- showcase -->
-    <section class=" text-dark text-center text-sm-start mt-5">
-      <div class="container" id="home">
+    <section class=" text-dark text-center text-sm-start mt-5 w-60">
+      <div class="container" id="home" style="max-width: 1000px;">
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60"  >
+          <h1>
+            <span class="text-warning text-center align-items-center"
+              >Travel Worry-Free with Our Comprehensive Overseas Insurance</span
+            >
+          </h1>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h3 style="font-size: 20px;">
+            Get Coverage for Medical Emergencies, Lost Baggage, Trip Cancellations, and More!
+          </h3>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h5 style="font-size: 12px;">
+            <span class="text-dark">
+              2024, Created By: Xiao Bin 彬
+            </span>
+          </h5>
+        </div>
+        <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
+          <img
+          class="img-fluid text-center align-items-center justify-content-center"
+          src="imagesNpm/travel-insuranceyes.jpg"
+          alt="OfficeImage"
+          width="700"
+          height="700"
+        />
+        </div>
+        <br>
         <div
-          class="d-flex flex-column flex-sm-row align-items-center justify-content-between"
+          class="d-flex flex-column flex-sm-row align-items-center "
         >
-          <div>
-            <h1>
-              <span class="text-warning"
-                >Motor Insurance</span
-              >
-            </h1>
+          <div style=" font-size: 20px;">
             <p class="lead">
-              <ol>
+              <h5>
+                <strong>Why Do You Need Overseas Insurance?</strong>
+              </h5>
+              <ul>
                 <li>
-                  Comprehensive (All Risk), covers you from risk of loss entirely, in small to big accident, including stolen/theft.
+                  🏥Unforeseen Medical Emergencies: "Medical bills abroad can be shockingly expensive. Stay covered for emergencies and hospitalization costs.
                 </li>
                 <li>
-                  Total Lost Only / TLO offers you a complete replacement for your vehicle if the loss amount from accident occurred is ≥ 75% from your vehicle value, including stolen/theft.object
+                  🛄Lost or Delayed Baggage: "Don't get stranded without your essentials. Get compensated for lost or delayed baggage.
                 </li>
-              </ol>
+                <li>
+                  ❌Trip Cancellation or Interruption: "Sometimes plans change. Get reimbursed if you have to cancel or cut your trip short.
+                </li>
+                <li>
+                  🤕Accidents & Personal Liability: "Accidental damages abroad can cost you big. Get protection for liabilities and damages you may cause.
+                </li>
+              </ul>
+              <span>
+                🛡️ Did You Know?
+                <br>
+                When traveling abroad, medical expenses in countries like Singapore, Japan, or Europe can be up to 10x higher than in Indonesia! For example, a simple hospital visit in Singapore can cost around IDR 5-10 million per day, while emergency medical treatment in Japan can cost over IDR 50 million if you don't have insurance.
+              </span>
+            </p>            
+          </div>
+        </div>
+        
+        
+        <div class="container" >
+          <div>
+            <p class="lead">
+              <h5>
+                <strong>How Does This Insurance Work?</strong>
+              </h5>
+                <span>
+                  4-Step simple Process: 
+                </span>                                            
+                  <ol>
+                    <li>📝 Get a Quote: Use our premium calculator to get an instant quote.</li><li>⚙️ Customize Your Plan: Choose the coverage options that suit your needs.</li><li>💸 Pay Your Premium: Flexible monthly or annual payment plans.</li><li>🚀 Stay Protected: Travel with peace of mind knowing you're covered.</li>
+                  </ol>
+                
+              
+              </span>
             </p>
-                    <!-- Products -->
-            <section class="p-5" id="ourProduct">
-              <div class="container" >
-                <div class="container p-5 align-items-center text-center justify-content-center display-4 "><strong>Our Product's</strong></div>
-                <div class="row justify-content-center text-center align-items-center">
-                  <!-- Liability Insurance Card -->
-                  <div class="col-md-3 col-md-6 mb-4">
-                    <div class="card bg-light text-dark h-100">
-                      <img
-                        src="imagesNpm/comprehensivemotor.avif"
-                        class="card-img-top"
-                        alt="Comprehensive"
-                        height="115"
-                      />
-                      <div class="card-body">
-                        <i class="bi bi-card-checklist"></i>
-                        <h5 class="card-title">Comprehensive / All Risk</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Motor Insurance -->
-                  <div class="col-md-3 col-md-6 mb-4">
-                    <div class="card bg-light text-dark h-100">
-                      <img
-                        src="imagesNpm/totallostmotor.jpg"
-                        class="card-img-top"
-                        alt="All risk"
-                        height="140"
-                      />
-                      <div class="card-body">
-                        <i class="bi bi-fire"></i>
-                        <h5 class="card-title">Total Lost Only / TLO</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
-            <img
-            class="img-fluid text-center align-items-center justify-content-center"
-            src="imagesNpm/motorinsurance2.avif"
-            alt="OfficeImage"
-            width="500"
-            height="500"
-          />
-          </div>
-
-        </div>
-      </div>
-    </section>
-    <!-- content -->
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto mt-5 mb-5">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Scope of Cover/Extended Coverage</h4>
-              <ul>
-                <li>Crashing, collision, flipping, slipping or falling</li>
-                <li>Criminal act</li>
-                <li>Theft, including theft with violence or threats as mentioned in Chapter 362, 363, verses (3), (4), (5)and Chapter 365 Kitab Undang Undang Hukum Pidana (KUHP)<br></li>
-                <li>Fire :<br>-&nbsp;Fire caused by nearby object or motor vehicle garage<br>-&nbsp;Fire caused by lightning<br>- Damage caused by water or by other equipment used for fire extinguishing or prevention<br>- Destroyed entirely or partially
-                          as commanded by the authorized in attempt to prevent fire accident</li>
-              </ul>
-            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- content -->
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto"></div>
-          <div class="card border-0">
-              <div class="card-body">
-                  <h4 class="card-title">Insurance Application Procedure</h4>
-                  <ul>
-                      <li>Direct<br>Insured fill the Insurance Application Form/SPPA (Surat Permintaan Penutupan Asuransi)</li>
-                      <li>Agen<br>Contact Our Agent</li>
-                      <li>Broker<br>Contact Our Broker</li>
-                  </ul>
-              </div>
-          </div>
-        </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Claim Procedure</h4>
-              <p>In a matter of Insured claiming Loss in accordance to this Policy, Insured must</p>
-              <ul>
-                <li>Fill claim report form which provided by insurer and submitted to the Insurer</li>
-                <li>Submit a copy of the policy and hand in the news report or Letter of Statement about the loss event or the damage</li>
-                <li>Submit a report with complete detail in sincere from his/her knowledge about the cause and reason for the loss event</li>
-                <li>Giving relevant and reasonable Explanation and other Evidence as required by the Insurer</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Complaint Procedure</h4>
-                <p>Contact the information service center listed on the website&nbsp;
-                <a href="agency.html">Agency</a> and The contact Info is all at the bottom of the page <br>The insured is obliged to provide data in accordance with the actual conditions.
-                </p>
-            </div>
-          </div>
-        </div>
+        <section class="coverage-section">
+          <h1>📋What’s Covered Under Our Overseas Insurance Plans?</h1>
+        
+          <table class="coverage-table">
+            <tr>
+              <th>🌍 Comprehensive Overseas Plan</th>
+              <th>✈️ Basic Travel Protection Plan</th>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">🏥</span> Medical & Hospitalization</td>
+              <td><span class="icon">🏥</span> Emergency Medical Assistance Only</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">💼</span> Lost Baggage & Personal Belongings</td>
+              <td><span class="icon">❌</span> Not Covered</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">✈️</span> Trip Cancellation & Interruption</td>
+              <td><span class="icon">❌</span> Not Covered</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">🎒</span> Travel Delay Compensation</td>
+              <td><span class="icon">🎒</span> Limited to Certain Conditions</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">💸</span> Emergency Cash Assistance</td>
+              <td><span class="icon">❌</span> Not Covered</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">⚖️</span> Personal Liability</td>
+              <td><span class="icon">❌</span> Not Covered</td>
+            </tr>
+          </table>
+          <br>
+          <span>
+            <h5>
+              📞 Need More Information, Contact Our agent Today!
+            </h5>
+            <a href="agency.html" class="cta-button">Contact Our Agent</a>
+          </span>
+          
+        </section>                        
       </div>
     </section>
         
@@ -228,7 +331,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class=" text-dark p-5 text-center">
+    <section class=" text-dark  text-center">
       <div class="container">
         <!-- flex column biar dia kek sandwich nge stack -->
         <div class="d-md-flex flex-column justify-content-between align-items-center">

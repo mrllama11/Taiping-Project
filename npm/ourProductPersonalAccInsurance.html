@@ -17,6 +17,118 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        line-height: 1.6;
+      }
+    
+      .coverage-section {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+    
+      .coverage-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+    
+      .coverage-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+    
+      .coverage-table th, 
+      .coverage-table td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+    
+      .coverage-table th {
+        background-color: #4CAF50;
+        color: #fff;
+        font-size: 1.2rem;
+      }
+    
+      .coverage-table td {
+        background-color: #f9f9f9;
+        font-size: 1rem;
+      }
+    
+      .coverage-table td span.icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+    
+      .coverage-table tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+    
+      .coverage-table tr:hover td {
+        background-color: #e1f5fe;
+      }
+    
+      @media (max-width: 768px) {
+        .coverage-table th, 
+        .coverage-table td {
+          font-size: 0.9rem;
+          padding: 15px;
+        }
+      }
+    
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #2196F3;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+    
+      .cta-button:hover {
+        background-color: #1976D2;
+      }
+      .icon-info {
+        cursor: pointer;
+        color: #2196F3;
+      }
+      .icon-info:hover::after {
+        content: 'More information about this feature';
+        background: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        font-size: 0.9rem;
+      }
+      .cta-button:hover {
+        animation: pulse 0.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+
+    
+    </style>
   </head>
   <body>
     <!-- NAVIGATION BAR -->
@@ -77,144 +189,144 @@
       </div>
     </nav>
     <!-- showcase -->
-    <section class=" text-dark text-center text-sm-start mt-5">
-      <div class="container" id="home">
+    <section class=" text-dark text-center text-sm-start mt-5 w-60">
+      <div class="container" id="home" style="max-width: 1000px;">
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60"  >
+          <h1>
+            <span class="text-warning text-center align-items-center"
+              >Protect Yourself and Your Loved Ones with Personal Accident Insurance</span
+            >
+          </h1>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h3 style="font-size: 20px;">
+            Accidents can happen anytime and everywhere. Protect your loved ones and yourself today with our personal accident insurance.
+          </h3>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h5 style="font-size: 12px;">
+            <span class="text-dark">
+              2024, Created By: Xiao Bin 彬
+            </span>
+          </h5>
+        </div>
+        <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
+          <img
+          class="img-fluid text-center align-items-center justify-content-center"
+          src="imagesNpm/payes.jpg"
+          alt="OfficeImage"
+          width="700"
+          height="700"
+        />
+        </div>
+        <br>
         <div
-          class="d-flex flex-column flex-sm-row align-items-center justify-content-between"
+          class="d-flex flex-column flex-sm-row align-items-center "
         >
-          <div>
-            <h1>
-              <span class="text-warning"
-                >Motor Insurance</span
-              >
-            </h1>
+          <div style=" font-size: 20px;">
             <p class="lead">
-              <ol>
-                <li>
-                  Comprehensive (All Risk), covers you from risk of loss entirely, in small to big accident, including stolen/theft.
-                </li>
-                <li>
-                  Total Lost Only / TLO offers you a complete replacement for your vehicle if the loss amount from accident occurred is ≥ 75% from your vehicle value, including stolen/theft.object
-                </li>
-              </ol>
+              <h5>
+                <strong>Why Do You Need Personal Accident Insurance?</strong>
+              </h5>
+              
+              <span>
+                🤷‍♀️Did you know?
+                <br>
+                In Indonesia, traffic accidents are one of the leading causes of injuries and fatalities, especially for motorcycle riders. According to the Indonesian National Police, over 100,000 road accidents happen every year, affecting both drivers and passengers. Medical bills, loss of income, and rehabilitation costs can put significant strain on families.
+              </span>
+              <br>
+              <br>
+              <span>
+                😉Interesting Fact:
+                <br>
+                "80% of traffic accidents in Indonesia involve motorcycles, and most victims face high medical expenses. Personal Accident Insurance can provide financial protection during these difficult times."
+              </span>
+            </p>            
+          </div>
+        </div>
+        
+        <div class="container" >
+          <div>
+            <p class="lead">
+              <h5>
+                <strong>What is Personal Accident Insurance?</strong>
+              </h5>
+              Personal Accident Insurance provides financial compensation in case of death, disability, or injury caused by an accident. It ensures that you and your family receive funds to cover medical treatment, hospital expenses, and loss of income during recovery.
+              <br>
+              <strong>With this protection, you can focus on recovery, not bills.</strong>
             </p>
-                    <!-- Products -->
-            <section class="p-5" id="ourProduct">
-              <div class="container" >
-                <div class="container p-5 align-items-center text-center justify-content-center display-4 "><strong>Our Product's</strong></div>
-                <div class="row justify-content-center text-center align-items-center">
-                  <!-- Liability Insurance Card -->
-                  <div class="col-md-3 col-md-6 mb-4">
-                    <div class="card bg-light text-dark h-100">
-                      <img
-                        src="imagesNpm/comprehensivemotor.avif"
-                        class="card-img-top"
-                        alt="Comprehensive"
-                        height="115"
-                      />
-                      <div class="card-body">
-                        <i class="bi bi-card-checklist"></i>
-                        <h5 class="card-title">Comprehensive / All Risk</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Motor Insurance -->
-                  <div class="col-md-3 col-md-6 mb-4">
-                    <div class="card bg-light text-dark h-100">
-                      <img
-                        src="imagesNpm/totallostmotor.jpg"
-                        class="card-img-top"
-                        alt="All risk"
-                        height="140"
-                      />
-                      <div class="card-body">
-                        <i class="bi bi-fire"></i>
-                        <h5 class="card-title">Total Lost Only / TLO</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
-            <img
-            class="img-fluid text-center align-items-center justify-content-center"
-            src="imagesNpm/motorinsurance2.avif"
-            alt="OfficeImage"
-            width="500"
-            height="500"
-          />
-          </div>
-
-        </div>
-      </div>
-    </section>
-    <!-- content -->
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto mt-5 mb-5">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Scope of Cover/Extended Coverage</h4>
-              <ul>
-                <li>Crashing, collision, flipping, slipping or falling</li>
-                <li>Criminal act</li>
-                <li>Theft, including theft with violence or threats as mentioned in Chapter 362, 363, verses (3), (4), (5)and Chapter 365 Kitab Undang Undang Hukum Pidana (KUHP)<br></li>
-                <li>Fire :<br>-&nbsp;Fire caused by nearby object or motor vehicle garage<br>-&nbsp;Fire caused by lightning<br>- Damage caused by water or by other equipment used for fire extinguishing or prevention<br>- Destroyed entirely or partially
-                          as commanded by the authorized in attempt to prevent fire accident</li>
-              </ul>
-            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- content -->
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto"></div>
-          <div class="card border-0">
-              <div class="card-body">
-                  <h4 class="card-title">Insurance Application Procedure</h4>
+        <div class="container" >
+          <div>
+            <p class="lead">
+              <h5>
+                <strong>Why Choose Our Personal Accident Insurance?</strong>
+              </h5>                            
                   <ul>
-                      <li>Direct<br>Insured fill the Insurance Application Form/SPPA (Surat Permintaan Penutupan Asuransi)</li>
-                      <li>Agen<br>Contact Our Agent</li>
-                      <li>Broker<br>Contact Our Broker</li>
+                    <li>✅ All-in-One Protection – Protects you from death, disability, medical expenses, and family support.</li><li>✅ Affordable Premiums – Low-cost protection for individuals and families.</li><li>✅ Quick Payouts – Claims are processed quickly to ensure immediate support.</li><li>✅ Family Protection – Cover your spouse and children under one plan.</li>
                   </ul>
-              </div>
+                </li>
+              
+              </span>
+            </p>
           </div>
         </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Claim Procedure</h4>
-              <p>In a matter of Insured claiming Loss in accordance to this Policy, Insured must</p>
-              <ul>
-                <li>Fill claim report form which provided by insurer and submitted to the Insurer</li>
-                <li>Submit a copy of the policy and hand in the news report or Letter of Statement about the loss event or the damage</li>
-                <li>Submit a report with complete detail in sincere from his/her knowledge about the cause and reason for the loss event</li>
-                <li>Giving relevant and reasonable Explanation and other Evidence as required by the Insurer</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Complaint Procedure</h4>
-                <p>Contact the information service center listed on the website&nbsp;
-                <a href="agency.html">Agency</a> and The contact Info is all at the bottom of the page <br>The insured is obliged to provide data in accordance with the actual conditions.
-                </p>
-            </div>
-          </div>
-        </div>
+        <section class="coverage-section">
+          <h1>📋 What Does Personal Accident Insurance Cover?</h1>
+        
+          <table class="coverage-table">
+            <tr>
+              <th>🌐 **Coverage**</th>
+              <th>💼 **Standard Plan**</th>
+              <th>🌟 **Comprehensive Plan**</th>
+            </tr>
+        
+            <tr>
+              <td style="padding: 15px;">🤕 **Accidental Death**</td>
+              <td style="padding: 15px;">✅ Lump-sum payout to the beneficiary.</td>
+              <td style="padding: 15px;">✅ Higher payout for accidental death.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🦽 **Permanent Disability**</td>
+              <td style="padding: 15px;">✅ Lump-sum payout based on the severity of the disability.</td>
+              <td style="padding: 15px;">✅ Higher payout and expanded coverage for all disabilities.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">🏥 **Medical Expenses**</td>
+              <td style="padding: 15px;">❌ Not included in this plan.</td>
+              <td style="padding: 15px;">✅ Covers hospitalization, surgery, and therapy bills.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">💸 **Daily Hospital Cash**</td>
+              <td style="padding: 15px;">❌ Not included in this plan.</td>
+              <td style="padding: 15px;">✅ Provides daily cash for each day of hospitalization.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">⚖️ **Legal Fees Coverage**</td>
+              <td style="padding: 15px;">❌ Not included in this plan.</td>
+              <td style="padding: 15px;">✅ Covers legal expenses in case of legal disputes from accidents.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">👶 **Child Education Support**</td>
+              <td style="padding: 15px;">❌ Not included in this plan.</td>
+              <td style="padding: 15px;">✅ Provides education support for children if the policyholder dies or is permanently disabled.</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px;">👨‍👩‍👧‍👦 **Family Coverage**</td>
+              <td style="padding: 15px;">❌ Only covers the policyholder.</td>
+              <td style="padding: 15px;">✅ Covers the policyholder, spouse, and children.</td>
+            </tr>
+            
+          </table>
+          <span>
+            <h5>
+              📞 Don’t wait until it’s too late! Protect yourself and your family from the unexpected.
+            </h5>
+            <a href="agency.html" class="cta-button">Contact Our Agent</a>
+          </span>
+          
+        </section>            
       </div>
     </section>
         

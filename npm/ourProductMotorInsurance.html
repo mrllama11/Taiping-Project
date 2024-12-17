@@ -17,6 +17,101 @@
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
+    <style>
+      .coverage-section {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .coverage-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .coverage-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .coverage-table th, 
+      .coverage-table td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      .coverage-table th {
+        background-color: #4CAF50;
+        color: #fff;
+        font-size: 1.2rem;
+      }
+
+      .coverage-table td {
+        background-color: #f9f9f9;
+        font-size: 1rem;
+      }
+
+      .coverage-table td span.icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+
+      .coverage-table tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+
+      .coverage-table tr:hover td {
+        background-color: #f1f1f1;
+      }
+
+      @media (max-width: 768px) {
+        .coverage-table th, 
+        .coverage-table td {
+          font-size: 0.9rem;
+          padding: 15px;
+        }
+      }
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #2196F3;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+    
+      .cta-button:hover {
+        background-color: #1976D2;
+      }
+      .icon-info {
+        cursor: pointer;
+        color: #2196F3;
+      }
+      .icon-info:hover::after {
+        content: 'More information about this feature';
+        background: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        position: absolute;
+        font-size: 0.9rem;
+      }
+      .cta-button:hover {
+        animation: pulse 0.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+    </style>
   </head>
   <body>
     <!-- NAVIGATION BAR -->
@@ -76,148 +171,156 @@
         </div>
       </div>
     </nav>
+    
     <!-- showcase -->
-    <section class=" text-dark text-center text-sm-start mt-5">
-      <div class="container" id="home">
+    <section class=" text-dark text-center text-sm-start mt-5 w-60">
+      <div class="container" id="home" style="max-width: 1000px;">
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60"  >
+          <h1>
+            <span class="text-warning text-center align-items-center"
+              >Drive with Confidence – Protect Your Ride with Motor Insurance</span
+            >
+          </h1>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h3 style="font-size: 20px;">
+            Accidents happen. Be ready for them. Get instant coverage for your motorcycle or car with affordable, customizable plans.
+          </h3>
+        </div>
+        <div class="d-flex justify-content-center justify-content-md-start align-items-center w-60">
+          <h5 style="font-size: 12px;">
+            <span class="text-dark">
+              2024, Created By: Xiao Bin 彬
+            </span>
+          </h5>
+        </div>
+        <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
+          <img
+          class="img-fluid text-center align-items-center justify-content-center"
+          src="imagesNpm/Motorinsu.png"
+          alt="OfficeImage"
+          width="700"
+          height="700"
+        />
+        </div>
+        <br>
         <div
-          class="d-flex flex-column flex-sm-row align-items-center justify-content-between"
+          class="d-flex flex-column flex-sm-row align-items-center "
         >
-          <div>
-            <h1>
-              <span class="text-warning"
-                >Motor Insurance</span
-              >
-            </h1>
+          <div style=" font-size: 20px;">
             <p class="lead">
-              <ol>
+              <h5>
+                <strong>Why Do You Need Overseas Insurance?</strong>
+              </h5>
+              <ul>
                 <li>
-                  Comprehensive (All Risk), covers you from risk of loss entirely, in small to big accident, including stolen/theft.
+                  💥 Accident Protection: Cover damage caused to your motorbike or others.
                 </li>
                 <li>
-                  Total Lost Only / TLO offers you a complete replacement for your vehicle if the loss amount from accident occurred is ≥ 75% from your vehicle value, including stolen/theft.object
+                  🚘 Third-Party Liability: Legally required protection for third-party damages.
                 </li>
-              </ol>
-            </p>
-                    <!-- Products -->
-            <section class="p-5" id="ourProduct">
-              <div class="container" >
-                <div class="container p-5 align-items-center text-center justify-content-center display-4 "><strong>Our Product's</strong></div>
-                <div class="row justify-content-center text-center align-items-center">
-                  <!-- Liability Insurance Card -->
-                  <div class="col-md-3 col-md-6 mb-4">
-                    <div class="card bg-light text-dark h-100">
-                      <img
-                        src="imagesNpm/comprehensivemotor.avif"
-                        class="card-img-top"
-                        alt="Comprehensive"
-                        height="115"
-                      />
-                      <div class="card-body">
-                        <i class="bi bi-card-checklist"></i>
-                        <h5 class="card-title">Comprehensive / All Risk</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Motor Insurance -->
-                  <div class="col-md-3 col-md-6 mb-4">
-                    <div class="card bg-light text-dark h-100">
-                      <img
-                        src="imagesNpm/totallostmotor.jpg"
-                        class="card-img-top"
-                        alt="All risk"
-                        height="140"
-                      />
-                      <div class="card-body">
-                        <i class="bi bi-fire"></i>
-                        <h5 class="card-title">Total Lost Only / TLO</h5>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div class="d-flex d-md-flex d-sm-flex justify-content-center w-100">
-            <img
-            class="img-fluid text-center align-items-center justify-content-center"
-            src="imagesNpm/motorinsurance2.avif"
-            alt="OfficeImage"
-            width="500"
-            height="500"
-          />
-          </div>
-
-        </div>
-      </div>
-    </section>
-    <!-- content -->
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto mt-5 mb-5">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Scope of Cover/Extended Coverage</h4>
-              <ul>
-                <li>Crashing, collision, flipping, slipping or falling</li>
-                <li>Criminal act</li>
-                <li>Theft, including theft with violence or threats as mentioned in Chapter 362, 363, verses (3), (4), (5)and Chapter 365 Kitab Undang Undang Hukum Pidana (KUHP)<br></li>
-                <li>Fire :<br>-&nbsp;Fire caused by nearby object or motor vehicle garage<br>-&nbsp;Fire caused by lightning<br>- Damage caused by water or by other equipment used for fire extinguishing or prevention<br>- Destroyed entirely or partially
-                          as commanded by the authorized in attempt to prevent fire accident</li>
+                <li>
+                  🔧 Repair Assistance: Repair costs covered to get you back on the road.
+                </li>
               </ul>
-            </div>
+              <span>
+                "Did you know that in Indonesia, third-party liability insurance is mandatory for all vehicles?  If you want to save a lot of money"
+              </span>
+            </p>            
           </div>
         </div>
-      </div>
-    </section>
-    <!-- content -->
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto"></div>
-          <div class="card border-0">
-              <div class="card-body">
-                  <h4 class="card-title">Insurance Application Procedure</h4>
-                  <ul>
-                      <li>Direct<br>Insured fill the Insurance Application Form/SPPA (Surat Permintaan Penutupan Asuransi)</li>
-                      <li>Agen<br>Contact Our Agent</li>
-                      <li>Broker<br>Contact Our Broker</li>
-                  </ul>
-              </div>
-          </div>
-        </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Claim Procedure</h4>
-              <p>In a matter of Insured claiming Loss in accordance to this Policy, Insured must</p>
-              <ul>
-                <li>Fill claim report form which provided by insurer and submitted to the Insurer</li>
-                <li>Submit a copy of the policy and hand in the news report or Letter of Statement about the loss event or the damage</li>
-                <li>Submit a report with complete detail in sincere from his/her knowledge about the cause and reason for the loss event</li>
-                <li>Giving relevant and reasonable Explanation and other Evidence as required by the Insurer</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="container">
-        <div class="card-group w-75 mr-auto ml-auto">
-          <div class="card border-0">
-            <div class="card-body">
-              <h4 class="card-title">Complaint Procedure</h4>
-                <p>Contact the information service center listed on the website&nbsp;
-                <a href="agency.html">Agency</a> and The contact Info is all at the bottom of the page <br>The insured is obliged to provide data in accordance with the actual conditions.
-                </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
         
+        <div class="container" >
+          <div>
+            <p class="lead">
+              <h5>
+                <strong>Why Thousands of Riders Trust Our Motor Insurance</strong>
+              </h5>
+              <ul>
+                <li>✅ Fast Claims Process – Get your claim settled within 7 working days.</li>
+                <li>✅ Comprehensive Coverage – Accidents, theft, floods, and fire are all covered.</li>
+                <li>✅ 24/7 Roadside Assistance – Emergency help whenever you need it.</li>
+                <li>✅ Customizable Plans – Pay only for the coverage you need.</li>
+            </ul>
+            </p>
+          </div>
+        </div>
+        <div class="container" >
+          <div>
+            <p class="lead">
+              <h5>
+                <strong>How Does Motor Insurance Work?</strong>
+              </h5>
+              
+                <li>4-Step simple Process: 
+                  
+                  <ol>
+                    <li>📝 Get a Quote: Use our premium calculator to get an instant quote.</li><li>⚙️ Customize Your Plan: Choose the coverage options that suit your needs.</li><li>💸 Pay Your Premium: Flexible monthly or annual payment plans.</li><li>🚀 Stay Protected: Ride with peace of mind knowing you're covered.</li>
+                  </ol>
+                </li>
+              
+              </span>
+            </p>
+          </div>
+        </div>
+        <section class="coverage-section">
+          <h1>What’s Covered Under Our Motor Insurance Plans?</h1>
+        
+          <table class="coverage-table">
+            <tr>
+              <th>🚀 Comprehensive Plan</th>
+              <th>🚗 Total Loss Only (TLO) Plan</th>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">🔥</span> Damage from Fire</td>
+              <td><span class="icon">🚗</span> Total Vehicle Loss</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">🚘</span> Theft Protection</td>
+              <td><span class="icon">🚘</span> Vehicle Theft Only</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">💥</span> Accident Damage</td>
+              <td><span class="icon">❌</span> No Accident Damage Coverage</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">🌊</span> Flood Damage (Optional)</td>
+              <td><span class="icon">❌</span> Not Available for TLO</td>
+            </tr>
+        
+            <tr>
+              <td><span class="icon">💸</span> Third-Party Liability (Optional)</td>
+              <td><span class="icon">💸</span> Third-Party Liability (Optional)</td>
+            </tr>
+            
+          </table>
+          <a href="service.html" class="cta-button">Car Premium Demo Calculator</a>
+        </section>
+        
+
+        <div class="container" >
+          <div>
+            <p class="lead">
+              <h5>
+                <strong>Why Choose Us? </strong>
+              </h5>
+                  <ol>
+                    <li>🕒 Fast Claims – Receive payment within 7 days of filing.</li><li>🔥 Comprehensive Coverage – Fire, lightning, explosion, floods, and more.</li><li>📱 Online Management – Get quotes, track claims, and manage policies online.</li><li>24/7 Customer Support: Our team is available around the clock to answer any questions or assist with claims.</li>
+                  </ol>
+                
+              
+              </span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <section>
       <!-- Loading Overlay -->
       <div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center;">
