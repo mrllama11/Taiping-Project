@@ -95,6 +95,38 @@ body {
   margin-bottom: 0; 
 }
 
+/* this nav for the tabbar */
+/* Default background for all tabs */
+.nav-link {
+  background-color: #f8f9fa; /* light gray color */
+  color: #000; /* black text */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Active tab background color */
+.nav-link.active {
+  background-color: #007bff !important; /* Blue background for the active tab */
+  color: #fff !important; /* White text */
+}
+
+/* Hover effect for better UX */
+.nav-link:hover {
+  background-color: #dcdcdc; /* Light gray hover effect */
+}
+
+/* Override padding and layout issues for .nav-link inside dropdown */
+.dropdown-menu .nav-link {
+  padding: 0.5rem 1rem !important;  /* Reset padding */
+  color: #212529 !important;       /* Default text color */
+  background-color: transparent !important;  /* No background for the link */
+  display: block !important;      /* Force block display */
+}
+
+.dropdown-menu .nav-link:hover {
+  background-color: #007bff !important; /* Optional: add hover effect */
+  color: #fff !important;              /* Change text color on hover */
+}
+
 
 
 

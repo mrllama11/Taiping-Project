@@ -12,6 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+    <!-- Bootstrap 5 CSS nav dropdown? -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styless.css" />
     <link
       rel="stylesheet"
@@ -56,28 +58,41 @@
           </div>
         </div>
 
-        <div class="collapse text-center navbar-collapse" id="navmenu">
-          <ul class="navbar-nav ms-auto">
+        <div class="collapse text-center navbar-collapse" id="navmenu" role="tablist">
+          <ul class="navbar-nav ms-auto nav nav-tabs" id="myTab" >
             <li class="nav-item">
-              <a href="index.html" class="nav-link">HOME</a>
+              <a href="index.html" class="nav-link " id="home-tab" role="tabpanel" aria-labelledby="home-tab" >HOME</a>
             </li>
             <li class="nav-item">
-              <a href="news.html" class="nav-link">News</a>
+              <a href="news.html" class="nav-link" id="news-tab">News</a>
+            </li>
+            <li class="nav-item dropdown">
+              <!-- Add an ID to the dropdown toggle for easy reference -->
+              <a id="productDropdown" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Our Product</a>
+              <ul class="dropdown-menu">
+                <li><a class=" dropdown-item nav-link" href="ourProductLiabilityInsurance.html">Liability Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductMarineInsurance.html">Marine Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductFireInsurance.html">Fire Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductMotorInsurance.html">Motor Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductProAllriskInsurance.html">Property All Risk Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductOverseasInsurance.html">Overseas Travel Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductPersonalAccInsurance.html">Personal Accident Insurance</a></li>
+                <li><a class="dropdown-item nav-link" href="ourProductCashInsurance.html">Cash Insurance</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item nav-link" href="ourProduct.html">All Our Products</a></li>
+              </ul>
             </li>
             <li class="nav-item">
-              <a href="ourProduct.html" class="nav-link">Our Product</a>
+              <a href="service.html" class="nav-link" id="service-tab">Service</a>
             </li>
             <li class="nav-item">
-              <a href="service.html" class="nav-link">Service</a>
+              <a href="agency.html" class="nav-link" id="agency-tab">Agency</a>
             </li>
             <li class="nav-item">
-              <a href="agency.html" class="nav-link">Agency</a>
+              <a href="newsCompanyProfile.html" class="nav-link" id="about-tab">About US</a>
             </li>
             <li class="nav-item">
-              <a href="newsCompanyProfile.html" class="nav-link">About US</a>
-            </li>
-            <li class="nav-item">
-              <a href="careerWithUs.html" class="nav-link">Career With Us</a>
+              <a href="careerWithUs.html" class="nav-link" id="career-tab">Career With Us</a>
             </li>
           </ul>
         </div>
@@ -619,6 +634,84 @@
     });
 
 
+    </script>
+    <script>
+      document.querySelector('.buttonLearnMore').addEventListener('click', function() {
+      const spinner = this.querySelector('.spinner-border');
+      spinner.style.display = 'inline-block';
+      setTimeout(() => {
+      window.location.href = "newsCompanyProfile.html";
+      }, 3000);
+    });
+
+    </script>
+    <!-- for the dropdown from bootstrap5 -->
+    <script>
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl)
+      });
+    </script>
+    
+    <script>
+            // Get references to key elements
+      const productDropdown = document.getElementById('productDropdown');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+
+      // 🛑 1. Prevent "Our Product" click from triggering document listener
+      productDropdown.addEventListener('click', function(event) {
+        event.stopImmediatePropagation(); // Stops all other listeners
+      });
+
+      // 🛑 2. Handle clicks on child links, but NOT "Our Product" link
+      document.addEventListener('click', function(event) {
+        // ✅ Ignore clicks on "Our Product" or its entire dropdown menu
+        if (event.target.closest('#productDropdown') || event.target.closest('.dropdown-menu')) {
+          return; // Do nothing if "Our Product" or its child menu is clicked
+        }
+
+        // ✅ Check if the clicked element is a child menu item
+        const dropdownItem = event.target.closest('.dropdown-item');
+        if (dropdownItem) {
+          event.preventDefault(); // Prevent link navigation
+          
+          // ✅ Show the spinner
+          loadingSpinner.classList.remove('d-none');
+
+          // ✅ Simulate loading for 3 seconds
+          setTimeout(() => {
+            loadingSpinner.classList.add('d-none');
+            window.location.href = dropdownItem.href; // Navigate to the link
+          }, 3000);
+        }
+      });
+
+    </script>
+    <script>
+            // Get all nav links
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      // Loop through each link and add a click event
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+          // Remove active class from all links
+          navLinks.forEach(nav => nav.classList.remove('active'));
+
+          // Add active class to the clicked link
+          this.classList.add('active');
+        });
+      });
+
+      // Highlight the current tab based on the URL (optional)
+      window.addEventListener('DOMContentLoaded', () => {
+        const currentPage = window.location.pathname.split('/').pop(); // Get the current page file name
+        navLinks.forEach(link => {
+          const linkPage = link.getAttribute('href');
+          if (linkPage === currentPage) {
+            link.classList.add('active'); // Highlight the tab for the current page
+          }
+        });
+      });
     </script>
     <!-- Link to the shared JavaScript file -->
     <script src="newsletter.js"></script>  
