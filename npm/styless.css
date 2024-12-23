@@ -127,6 +127,29 @@ body {
   color: #fff !important;              /* Change text color on hover */
 }
 
+.navbar-nav {
+  display: flex; /* Ensure it's a flex container */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  justify-content: space-between; /* Distribute items */
+  
+}
+
+
+.nav-item {
+  flex-shrink: 0; /* Prevent tabs from shrinking */
+  width: auto; /* Ensure width adjusts dynamically to content */
+}
+
+.nav-link {
+  white-space: nowrap; /* Prevent text wrapping */
+  text-align: center; /* Center-align text */
+  padding: 0.5rem 1rem; /* Add padding for spacing */
+}
+
+.careerCTII{
+  margin-left: 5rem;
+}
+
 
 
 
